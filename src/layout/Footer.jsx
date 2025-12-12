@@ -3,19 +3,19 @@ import logoImage from '../assets/logo.png';
 
 function Footer() {
     return (
-        <footer className=" text-white relative">
+        <footer className="text-white relative bg-black" >
             {/* Gradient border at top */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500 to-transparent"></div>
+            <div className="absolute top-0 left-0 right-0 bottom-0 h-px bg-gradient-to-r from-transparent via-emerald-500 to-transparent"></div>
             
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-8 bg-transparent">
                 {/* First Row - Logo and branding */}
-                <div className="flex  space-x-3 pb-6">
+                <div className="flex space-x-3 pb-6">
                     <img 
                         src={logoImage} 
                         alt="IEMA.AI Logo" 
                         className="w-10 h-10 rounded-lg"
                     />
-                    <div className="flex flex-col ">
+                    <div className="flex flex-col">
                         <h3 className="text-lg font-semibold">IEMA.AI</h3>
                         <p className="text-xs text-gray-400">Powered by IEM-UEM Group</p>
                     </div>

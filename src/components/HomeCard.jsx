@@ -42,13 +42,13 @@ function HomeCard() {
   ];
 
   return (
-    <div className="pb-20   flex items-center justify-center">
-      <div className="max-w-10xl ">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div className="pb-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center bg-bl">
+      <div className="w-full max-w-9xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 bg-bl">
           {cards.map((card, index) => (
             <div
               key={index}
-              className="group relative bg-slate-900/40 backdrop-blur-sm rounded-2xl p-6 border border-slate-800/50 hover:border-slate-700/50 transition-all duration-500 overflow-hidden"
+              className="group relative bg-[#171a1c] backdrop-blur-sm rounded-2xl p-4 border border-slate-800/50 hover:border-slate-700/50 transition-all duration-500 overflow-hidden"
             >
               {/* Subtle glow effect on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-emerald-500/3 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -57,18 +57,21 @@ function HomeCard() {
               <div className="relative z-10">
                 {/* Icon with hover effect */}
                 <div className="mb-5 w-fit">
-                  <div className="w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-slate-800/80 group-hover:rotate-6 group-hover:scale-110">
-                    <card.icon className="w-6 h-6 text-slate-500 group-hover:text-slate-400 transition-colors duration-300" strokeWidth={1.5} />
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-[#124e37] group-hover:rotate-2 group-hover:scale-110">
+                    <card.icon
+                      className="w-5 h-5 text-slate-500 group-hover:text-[#02e986] transition-colors duration-300"
+                      strokeWidth={1.5}
+                    />
                   </div>
                 </div>
 
                 {/* Title */}
-                <h3 className="text-lg font-semibold text-white mb-3">
+                <h3 className="text-lg font-semibold text-white mb-3 text-left group-hover:text-[#02e986]">
                   {card.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-slate-500 text-[13px] leading-relaxed mb-6">
+                <p className="text-slate-500 text-[13px] leading-relaxed mb-6 text-left">
                   {card.description}
                 </p>
 
@@ -77,12 +80,12 @@ function HomeCard() {
                   {card.links.map((link, linkIndex) => (
                     <button
                       key={linkIndex}
-                      className="w-full group/btn flex items-center justify-between px-0 py-2 rounded-lg transition-all duration-300 text-left"
+                      className=" group/btn flex items-center justify-between p-2.5 rounded-2xl transition-all duration-300 text-left bg-[#202328] hover:bg-[#00ff91] hover:shadow-[0_0_20px_rgba(0,255,145,0.5)]"
                     >
-                      <span className="text-sm font-normal text-slate-400 group-hover/btn:text-white transition-colors duration-300">
+                      <span className="text-sm font-normal text-slate-400 group-hover/btn:text-black transition-colors duration-300 p-1 text-white">
                         {link.text}
                       </span>
-                      <ArrowRight className="w-4 h-4 text-slate-600 group-hover/btn:text-slate-400 transform group-hover/btn:translate-x-1 transition-all duration-300" strokeWidth={2} />
+                      <ArrowRight className="w-4 h-4 text-slate-600 group-hover/btn:text-black transform group-hover/btn:translate-x-1 transition-all duration-300 text-white" strokeWidth={2} />
                     </button>
                   ))}
                 </div>
