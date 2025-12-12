@@ -20,7 +20,7 @@ function HomeCard({ cards = [] }) {
               <div className="relative z-10">
                 {/* Icon with hover effect */}
                 <div className="mb-5 w-fit">
-                  <div className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-[#124e37] group-hover:rotate-2 group-hover:scale-110">
+                  <div className="w-10 h-10 rounded-2xl flex items-center justify-center transition-all duration-300 bg-[#22262A] group-hover:rotate-2 group-hover:scale-110">
                     <card.icon
                       className="w-5 h-5 text-slate-500 group-hover:text-[#02e986] transition-colors duration-300"
                       strokeWidth={1.5}
@@ -34,7 +34,7 @@ function HomeCard({ cards = [] }) {
                 </h3>
 
                 {/* Description */}
-                <p className="text-slate-500 text-[13px] leading-relaxed mb-6 text-left">
+                <p className="text-slate-500 text-[13px] leading-relaxed mb-6 text-left font-[500]">
                   {card.description}
                 </p>
 
@@ -49,13 +49,13 @@ function HomeCard({ cards = [] }) {
                       <span className="absolute inset-0 bg-[#00ff91] w-0 group-hover/btn:w-full transition-all duration-300"></span>
 
                       {/* text */}
-                      <span className="relative text-sm font-normal text-white group-hover/btn:text-black transition-colors duration-300 p-1">
+                      <span className="relative text-sm text-[#FAFAFA] group-hover/btn:text-black transition-colors duration-300 p-1 font-semibold">
                         {link.text}
                       </span>
 
                       {/* icon */}
                       <ArrowRight
-                        className="relative w-4 h-4 text-white group-hover/btn:text-black transform group-hover/btn:translate-x-1 transition-all duration-300"
+                        className="relative w-4 h-4 text-[#FAFAFA] group-hover/btn:text-black transform group-hover/btn:translate-x-1 transition-all duration-300"
                         strokeWidth={2}
                       />
                     </button>
