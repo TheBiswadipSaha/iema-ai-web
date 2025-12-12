@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Bell, User, Sparkles, Menu, X } from 'lucide-react';
-import logoImg from '../assets/logo.png'
+import { Bell, User, Sparkles, Menu, X, ArrowLeft } from 'lucide-react';
+import logoImg from '../assets/logo.png';
 
 function Header({ 
   logo = "IEMA AI",
@@ -15,7 +15,12 @@ function Header({
   notificationCount = 0,
   onNavigate = () => {},
   onButtonClick = () => {},
-  currentPath = '/'
+  currentPath = '/',
+  isChatScreen = false,
+  onBack = () => {},
+  user = null,
+  logout = () => {},
+  navigate = () => {}
 }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -25,13 +30,72 @@ function Header({
     setIsMobileMenuOpen(false);
   };
 
+  // Chat Screen Header
+  if (isChatScreen) {
+    return (
+      <header className="bg-black text-white shadow-lg border-b border-gray-800">
+        <div className="px-4 py-3">
+          <div className="flex justify-between items-center">
+            {/* Left Side - Back Button + Logo */}
+            <div className="flex items-center space-x-3">
+              <button 
+                onClick={onBack}
+                className="p-2 hover:bg-gray-800 rounded-lg transition"
+                aria-label="Go back"
+              >
+                <ArrowLeft size={20} className="text-gray-300" />
+              </button>
+              
+              <div className="flex items-center space-x-2">
+                <img src={logoImg} className='w-10 h-10 rounded-xl' alt="Logo" />
+                <span className="text-lg font-bold hidden sm:inline">{logo}</span>
+              </div>
+            </div>
+
+            {/* Right Side - Notifications, Credits, User */}
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              {/* Notifications */}
+              <button 
+                className="relative p-2 hover:bg-gray-800 rounded-full transition bg-gray-900"
+                aria-label="Notifications"
+              >
+                <Bell size={18} className="text-gray-300" />
+                {notificationCount > 0 && (
+                  <span className="absolute top-0 right-0 bg-emerald-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                    {notificationCount}
+                  </span>
+                )}
+              </button>
+
+              {/* Credits Display */}
+              <div className="flex items-center space-x-2 bg-gray-900 px-3 sm:px-4 py-2 rounded-full">
+                <span className="text-xs sm:text-sm font-medium text-white">
+                  Credits: <span className="text-emerald-400">{credits}</span>
+                </span>
+              </div>
+
+              {/* User Icon */}
+              <button 
+                className="p-2 hover:bg-gray-700 rounded-full transition bg-gray-900"
+                aria-label="User profile"
+              >
+                <User size={18} className="text-gray-300" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // Regular Header (existing code)
   return (
     <header className="bg-black text-white shadow-lg border-b border-gray-800">
       <div className="px-4 py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <img src={logoImg} className='w-10 h-10 sm:w-12 sm:h-12 rounded-xl'/>
+            <img src={logoImg} className='w-10 h-10 sm:w-12 sm:h-12 rounded-xl' alt="Logo" />
             <span className="text-lg sm:text-xl font-bold">{logo}</span>
           </div>
 
