@@ -27,7 +27,7 @@ function Header({
 
   return (
     <header className="bg-black text-white shadow-lg border-b border-gray-800">
-      <div className="container mx-auto px-4 sm:px-6 py-3">
+      <div className="px-4 py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center space-x-2">

@@ -1,50 +1,13 @@
 import React from 'react';
-import { Sparkles, BookOpen, Code, Briefcase, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
-function HomeCard() {
-  const cards = [
-    {
-      icon: Sparkles,
-      title: 'Create Content',
-      description: 'Transform your ideas into engaging blogs, stunning images, and captivating videos with the power of AI.',
-      links: [
-        { text: 'Video Generator', href: '#' },
-        { text: 'Image Creator', href: '#' }
-      ]
-    },
-    {
-      icon: BookOpen,
-      title: 'Study & Learn',
-      description: 'Let AI assist you in mastering new subjects with personalized tutoring, instant summaries, and smart notes.',
-      links: [
-        { text: 'AI Tutor', href: '#' },
-        { text: 'Blog Generator', href: '#' }
-      ]
-    },
-    {
-      icon: Code,
-      title: 'Build with AI',
-      description: 'Your one-stop shop for coding, debugging, and development. Generate production-ready code effortlessly.',
-      links: [
-        { text: 'Code Generator', href: '#' },
-        { text: 'App Builder', href: '#' }
-      ]
-    },
-    {
-      icon: Briefcase,
-      title: 'Business & Productivity',
-      description: 'Harness generative AI to craft professional emails, documents, and comprehensive reports in seconds.',
-      links: [
-        { text: 'Email Generator', href: '#' },
-        { text: 'Web Summariser', href: '#' }
-      ]
-    }
-  ];
+function HomeCard({ cards = [] }) {
+
 
   return (
     <div className="pb-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center bg-bl">
       <div className="w-full ">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 bg-bl w-full">
+        <div className="flex gap-2 flex-wrap lg:flex-nowrap justify-center">
           {cards.map((card, index) => (
             <div
               key={index}
@@ -52,7 +15,7 @@ function HomeCard() {
             >
               {/* Subtle glow effect on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-emerald-500/3 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
+
               {/* Content */}
               <div className="relative z-10">
                 {/* Icon with hover effect */}
@@ -80,12 +43,21 @@ function HomeCard() {
                   {card.links.map((link, linkIndex) => (
                     <button
                       key={linkIndex}
-                      className=" group/btn flex items-center justify-between p-2.5 rounded-2xl transition-all duration-300 text-left bg-[#202328] hover:bg-[#00ff91] hover:shadow-[0_0_20px_rgba(0,255,145,0.5)]"
+                      className="group/btn relative overflow-hidden flex items-center justify-between p-2.5 rounded-2xl transition-all duration-300 bg-[#202328]"
                     >
-                      <span className="text-sm font-normal text-slate-400 group-hover/btn:text-black transition-colors duration-300 p-1 text-white">
+                      {/* fill animation */}
+                      <span className="absolute inset-0 bg-[#00ff91] w-0 group-hover/btn:w-full transition-all duration-300"></span>
+
+                      {/* text */}
+                      <span className="relative text-sm font-normal text-white group-hover/btn:text-black transition-colors duration-300 p-1">
                         {link.text}
                       </span>
-                      <ArrowRight className="w-4 h-4 text-slate-600 group-hover/btn:text-black transform group-hover/btn:translate-x-1 transition-all duration-300 text-white" strokeWidth={2} />
+
+                      {/* icon */}
+                      <ArrowRight
+                        className="relative w-4 h-4 text-white group-hover/btn:text-black transform group-hover/btn:translate-x-1 transition-all duration-300"
+                        strokeWidth={2}
+                      />
                     </button>
                   ))}
                 </div>

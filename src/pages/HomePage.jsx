@@ -1,11 +1,52 @@
 import React from "react";
 import SearchComponent from "../components/SearchComponent";
 import HomeCard from "../components/HomeCard";
+import { Sparkles, BookOpen, Code, Briefcase } from 'lucide-react';
 
 export default function HomePage() {
+
+    const cards = [
+        {
+            icon: Sparkles,
+            title: 'Create Content',
+            description: 'Transform your ideas into engaging blogs, stunning images, and captivating videos with the power of AI.',
+            links: [
+                { text: 'Video Generator', href: '#' },
+                { text: 'Image Creator', href: '#' }
+            ]
+        },
+        {
+            icon: BookOpen,
+            title: 'Study & Learn',
+            description: 'Let AI assist you in mastering new subjects with personalized tutoring, instant summaries, and smart notes.',
+            links: [
+                { text: 'AI Tutor', href: '#' },
+                { text: 'Blog Generator', href: '#' }
+            ]
+        },
+        {
+            icon: Code,
+            title: 'Build with AI',
+            description: 'Your one-stop shop for coding, debugging, and development. Generate production-ready code effortlessly.',
+            links: [
+                { text: 'Code Generator', href: '#' },
+                { text: 'App Builder', href: '#' }
+            ]
+        },
+        {
+            icon: Briefcase,
+            title: 'Business & Productivity',
+            description: 'Harness generative AI to craft professional emails, documents, and comprehensive reports in seconds.',
+            links: [
+                { text: 'Email Generator', href: '#' },
+                { text: 'Web Summariser', href: '#' }
+            ]
+        }
+    ];
+
     return (
         <div className="relative flex min-h-screen w-full items-center justify-center py-8 px-4">
-            <div className="absolute h-200 w-200 bg-[#05a014a4] blur-[500px] -z-10">
+            <div className="absolute h-200 min-w-0 lg:w-200 max-w-200  bg-[#05a014a4] blur-[500px] -z-10">
 
             </div>
             {/* Grid pattern */}
@@ -55,7 +96,7 @@ export default function HomePage() {
                     </div>
                 </div>
                 <div className="mt-12 sm:mt-16 md:mt-20 w-full max-w-[90%] md:max-w-[80%] lg:max-w-[100%]">
-                    <HomeCard/>
+                    <HomeCard cards={cards}/>
                     <SearchComponent />
                 </div>
 
