@@ -49,7 +49,7 @@ export default function HomePage() {
                     <h1 className="mb-4 text-center text-5xl text-white">
                         <span className="font-bold">Welcome to</span> <span className="italic text-emerald-400">GenAI Studio</span>
                     </h1>
-                    <div className="w-[500px] text-center text-[#7c7c7c] text-[15px] font-[500]">
+                    <div className="w-[500px] text-center text-[#7c7c7c] text-[15px] font-[500px]">
                         A comprehensive AI platform designed to enhance creativity, learning,
                         development, and productivity.
                     </div>
