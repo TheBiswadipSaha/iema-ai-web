@@ -43,8 +43,8 @@ function HomeCard() {
 
   return (
     <div className="pb-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center bg-bl">
-      <div className="w-full max-w-9xl">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 bg-bl">
+      <div className="w-full ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 bg-bl w-full">
           {cards.map((card, index) => (
             <div
               key={index}
