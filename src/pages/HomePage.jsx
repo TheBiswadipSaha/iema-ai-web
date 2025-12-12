@@ -1,5 +1,6 @@
 import React from "react";
 import SearchComponent from "../components/SearchComponent";
+import HomeCard from "../components/HomeCard";
 
 export default function HomePage() {
     return (
@@ -54,6 +55,7 @@ export default function HomePage() {
                     </div>
                 </div>
                 <div className="mt-20 w-[50%]">
+                    <HomeCard/>
                     <SearchComponent />
                 </div>
 
