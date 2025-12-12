@@ -6,12 +6,15 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { ChatScreen } from "./pages/ChatScreen";
+import SelectTutor from "./pages/SelectTutor";
 
 const AppContent = () => {
   const location = useLocation();
   
   // Define paths where footer should be hidden and chat header should be shown
   const chatPaths = [
+    "/select-tutor/",
+    "/select-tutor",
     "/select-tutor/ai-tutor",
     "/blog-generator",
     "/img-playground",
@@ -31,6 +34,7 @@ const AppContent = () => {
         <Route path="/login" element={<LoginPage />} />
 
         {/* Chat Pages */}
+        <Route path="/select-tutor" element={<SelectTutor />} />
         <Route path="/select-tutor/ai-tutor" element={<ChatScreen />} />
         <Route path="/blog-generator" element={<ChatScreen />} />
         <Route path="/img-playground" element={<ChatScreen />} />

@@ -1,8 +1,28 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 function HomeCard({ cards = [] }) {
+  const navigate = useNavigate();
 
+  // Route mapping for each button
+  const routeMap = {
+    'Video Generator': '/video-generator',
+    'Image Creator': '/img-playground',
+    'AI Tutor': '/select-tutor',
+    'Blog Generator': '/blog-generator',
+    'Code Generator': '/code-generator',
+    'App Builder': '/app-builder',
+    'Email Generator': '/email-generator',
+    'Web Summariser': '/web-summarizer'
+  };
+
+  const handleNavigation = (linkText) => {
+    const route = routeMap[linkText];
+    if (route) {
+      navigate(route);
+    }
+  };
 
   return (
     <div className="pb-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center bg-bl">
@@ -43,7 +63,8 @@ function HomeCard({ cards = [] }) {
                   {card.links.map((link, linkIndex) => (
                     <button
                       key={linkIndex}
-                      className="group/btn relative overflow-hidden flex items-center justify-between p-2.5 rounded-2xl transition-all duration-300 bg-[#202328]"
+                      onClick={() => handleNavigation(link.text)}
+                      className="group/btn relative overflow-hidden cursor-pointer flex items-center justify-between p-2.5 rounded-2xl transition-all duration-300 bg-[#202328] w-full"
                     >
                       {/* fill animation */}
                       <span className="absolute inset-0 bg-[#00ff91] w-0 group-hover/btn:w-full transition-all duration-300"></span>
