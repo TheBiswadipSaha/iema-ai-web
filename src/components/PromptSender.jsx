@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, Link } from 'react-router-dom';
-import { Send, Image, Paperclip,Mic, Sparkles, FileText, Globe, Mail, Code, MessageSquare, Crown, Settings, History } from 'lucide-react';
+import { Send, Paperclip, Mic, Sparkles } from 'lucide-react';
 
-
-// import { Send, Paperclip, Mic, Sparkles } from "lucide-react"
-
-export const PromptSender = ({ pageConfig }) => {
-  const [prompt, setPrompt] = useState("")
-  const [uploadedFiles, setUploadedFiles] = useState([])
+export const PromptSender = ({ pageConfig, onSendMessage }) => {
+  const [prompt, setPrompt] = useState("");
+  const [uploadedFiles, setUploadedFiles] = useState([]);
 
   const handleFileUpload = (e) => {
-    const files = Array.from(e.target.files)
-    setUploadedFiles((prev) => [...prev, ...files])
-  }
+    const files = Array.from(e.target.files);
+    setUploadedFiles((prev) => [...prev, ...files]);
+  };
+
+  const handleSend = () => {
+    if (prompt.trim()) {
+      onSendMessage(prompt);
+      setPrompt("");
+    }
+  };
 
   return (
-    <div className="w-4xl bg-[#000000] border-t border-gray-800 rounded-2xl">
-      <div className="max-w-4xl mx-auto px-4 py-4">
+    <div className="w-full max-w-4xl bg-[#000000] border-t border-gray-800 rounded-2xl">
+      <div className="mx-auto px-4 py-4">
         {/* Action Buttons */}
         {pageConfig?.actions && pageConfig.actions.length > 0 && (
           <div className="flex gap-3 mb-4">
@@ -47,11 +50,11 @@ export const PromptSender = ({ pageConfig }) => {
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder={pageConfig?.placeholder || "Message Wesley..."}
-              className="w-full text-gray-200 placeholder:text-gray-500 px-4 py-3 rounded-lg focus:outline-none"
+              className="w-full bg-transparent text-gray-200 placeholder:text-gray-500 px-4 py-3 rounded-lg focus:outline-none"
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault()
-                  // Handle send
+                  e.preventDefault();
+                  handleSend();
                 }
               }}
             />
@@ -63,7 +66,11 @@ export const PromptSender = ({ pageConfig }) => {
           </button>
 
           {/* Send Button */}
-          <button className="text-gray-400 hover:text-gray-200 transition-colors">
+          <button 
+            onClick={handleSend}
+            className="text-gray-400 hover:text-emerald-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={!prompt.trim()}
+          >
             <Send size={20} />
           </button>
         </div>
@@ -74,5 +81,5 @@ export const PromptSender = ({ pageConfig }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

@@ -12,10 +12,11 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [protectionEnabled, setProtectionEnabled] = useState(true);
+  
+  // Change this value to enable/disable route protection
+  const protectionEnabled = false; // Set to true to enable protection
 
   const login = (username, password) => {
-    // Simulate login - accept any non-empty credentials
     if (username && password) {
       setUser({ username, id: Date.now() });
       return true;
@@ -27,18 +28,13 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  const toggleProtection = () => {
-    setProtectionEnabled(prev => !prev);
-  };
-
   return (
     <AuthContext.Provider value={{ 
       user, 
       login, 
       logout, 
       isAuthenticated: !!user,
-      protectionEnabled,
-      toggleProtection
+      protectionEnabled
     }}>
       {children}
     </AuthContext.Provider>

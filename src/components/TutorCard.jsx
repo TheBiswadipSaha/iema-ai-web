@@ -32,7 +32,8 @@ function TutorCard({ tutor, isLive, index }) {
                 duration: 0.4,
                 ease: 'power2.in',
                 onComplete: () => {
-                    navigate('/select-tutor/ai-tutor');
+                    // Navigate to chat route with ai-tutor type
+                    navigate('/chat/ai-tutor');
                 }
             });
         }
@@ -92,11 +93,6 @@ function TutorCard({ tutor, isLive, index }) {
                         alt={tutor.name}
                         className="w-14 h-14 rounded-full object-cover"
                     />
-                    {tutor.badge && (
-                        <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-                            <span className="text-white text-xs">✓</span>
-                        </div>
-                    )}
                 </div>
                 <div className="flex-1">
                     <h3 className="text-white text-base font-semibold mb-1">

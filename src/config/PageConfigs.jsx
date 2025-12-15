@@ -2,7 +2,7 @@ import React from 'react';
 import { Send, Image, Paperclip, Sparkles, FileText, Globe, Mail, Code, MessageSquare, Crown, Settings, History, Bot } from 'lucide-react';
 
 export const PageConfigs = {
-    '/select-tutor/ai-tutor': {
+    'ai-tutor': {
       title: 'AI Tutor',
       subtitle: 'Physics Specialist',
       icon: <Bot size={20} />,
@@ -12,21 +12,23 @@ export const PageConfigs = {
           heading: 'Response Tone',
           icon: <MessageSquare size={16} />,
           options: [
-            { type: 'select', label: 'Tone', values: ['Professional', 'Friendly', 'Creative'] }
+            { type: 'select', label: 'Professional', icon: '👔' },
+            { type: 'select', label: 'Friendly', icon: '😊' },
+            { type: 'select', label: 'Creative', icon: '🎨' }
           ]
         },
         {
           heading: 'Teaching Style',
           icon: <FileText size={16} />,
           options: [
-            { type: 'checkbox', label: 'Explain quantum computing' },
-            { type: 'checkbox', label: 'Why does gravity work?' },
-            { type: 'checkbox', label: 'Teach calculus' }
+            { type: 'checkbox', label: 'Step-by-step', icon: '📝' },
+            { type: 'checkbox', label: 'Visual examples', icon: '🖼️' },
+            { type: 'checkbox', label: 'Practice problems', icon: '💡' }
           ]
         }
       ]
     },
-    '/blog-generator': {
+    'blog-generator': {
       title: 'Blog Generator',
       subtitle: 'Create engaging content',
       icon: <FileText size={20} />,
@@ -36,23 +38,24 @@ export const PageConfigs = {
           heading: 'Content Settings',
           icon: <FileText size={16} />,
           options: [
-            { type: 'select', label: 'Tone', values: ['Professional', 'Casual', 'Persuasive', 'Informative'] },
-            { type: 'select', label: 'Length', values: ['Short (300-500 words)', 'Medium (500-1000 words)', 'Long (1000+ words)'] }
+            { type: 'select', label: 'Professional', icon: '💼' },
+            { type: 'select', label: 'Casual', icon: '😎' },
+            { type: 'select', label: 'Persuasive', icon: '🎯' },
+            { type: 'select', label: 'Informative', icon: '📚' }
           ]
         },
         {
-          heading: 'Style Options',
+          heading: 'Length',
           icon: <Sparkles size={16} />,
           options: [
-            { type: 'checkbox', label: 'Include introduction' },
-            { type: 'checkbox', label: 'Add conclusion' },
-            { type: 'checkbox', label: 'Use bullet points' },
-            { type: 'checkbox', label: 'Add call-to-action' }
+            { type: 'checkbox', label: 'Short', icon: '📄' },
+            { type: 'checkbox', label: 'Medium', icon: '📃' },
+            { type: 'checkbox', label: 'Long', icon: '📖' }
           ]
         }
       ]
     },
-    '/img-playground': {
+    'img-playground': {
       title: 'Image Playground',
       subtitle: 'Analyze & understand images',
       icon: <Image size={20} />,
@@ -63,22 +66,24 @@ export const PageConfigs = {
           heading: 'Analysis Type',
           icon: <Sparkles size={16} />,
           options: [
-            { type: 'checkbox', label: 'Detailed description' },
-            { type: 'checkbox', label: 'Object detection' },
-            { type: 'checkbox', label: 'Text extraction' },
-            { type: 'checkbox', label: 'Color analysis' }
+            { type: 'checkbox', label: 'Detailed description', icon: '🔍' },
+            { type: 'checkbox', label: 'Object detection', icon: '🎯' },
+            { type: 'checkbox', label: 'Text extraction', icon: '📝' },
+            { type: 'checkbox', label: 'Color analysis', icon: '🎨' }
           ]
         },
         {
           heading: 'Output Format',
           icon: <FileText size={16} />,
           options: [
-            { type: 'select', label: 'Format', values: ['Paragraph', 'Bullet points', 'Technical report'] }
+            { type: 'select', label: 'Paragraph', icon: '📄' },
+            { type: 'select', label: 'Bullet points', icon: '•' },
+            { type: 'select', label: 'Technical report', icon: '📊' }
           ]
         }
       ]
     },
-    '/web-summarizer': {
+    'web-summarizer': {
       title: 'Web Summarizer',
       subtitle: 'Summarize any webpage',
       icon: <Globe size={20} />,
@@ -88,22 +93,23 @@ export const PageConfigs = {
           heading: 'Summary Style',
           icon: <FileText size={16} />,
           options: [
-            { type: 'select', label: 'Length', values: ['Brief', 'Detailed', 'Comprehensive'] },
-            { type: 'select', label: 'Format', values: ['Paragraph', 'Bullet points', 'Key takeaways'] }
+            { type: 'select', label: 'Brief', icon: '⚡' },
+            { type: 'select', label: 'Detailed', icon: '📝' },
+            { type: 'select', label: 'Comprehensive', icon: '📚' }
           ]
         },
         {
           heading: 'Focus Areas',
           icon: <Sparkles size={16} />,
           options: [
-            { type: 'checkbox', label: 'Main ideas only' },
-            { type: 'checkbox', label: 'Include statistics' },
-            { type: 'checkbox', label: 'Extract quotes' }
+            { type: 'checkbox', label: 'Main ideas only', icon: '💡' },
+            { type: 'checkbox', label: 'Include statistics', icon: '📊' },
+            { type: 'checkbox', label: 'Extract quotes', icon: '💬' }
           ]
         }
       ]
     },
-    '/email-generator': {
+    'email-generator': {
       title: 'Email Generator',
       subtitle: 'Craft professional emails',
       icon: <Mail size={20} />,
@@ -113,29 +119,25 @@ export const PageConfigs = {
           heading: 'Email Type',
           icon: <Mail size={16} />,
           options: [
-            { type: 'select', label: 'Type', values: ['Professional', 'Follow-up', 'Cold outreach', 'Thank you', 'Apology'] }
+            { type: 'select', label: 'Professional', icon: '💼' },
+            { type: 'select', label: 'Follow-up', icon: '📧' },
+            { type: 'select', label: 'Cold outreach', icon: '🎯' },
+            { type: 'select', label: 'Thank you', icon: '🙏' },
+            { type: 'select', label: 'Apology', icon: '😔' }
           ]
         },
         {
           heading: 'Tone & Length',
           icon: <MessageSquare size={16} />,
           options: [
-            { type: 'select', label: 'Tone', values: ['Formal', 'Semi-formal', 'Casual'] },
-            { type: 'select', label: 'Length', values: ['Short', 'Medium', 'Long'] }
-          ]
-        },
-        {
-          heading: 'Options',
-          icon: <Sparkles size={16} />,
-          options: [
-            { type: 'checkbox', label: 'Include subject line' },
-            { type: 'checkbox', label: 'Add signature' },
-            { type: 'checkbox', label: 'Include call-to-action' }
+            { type: 'select', label: 'Formal', icon: '🎩' },
+            { type: 'select', label: 'Semi-formal', icon: '👔' },
+            { type: 'select', label: 'Casual', icon: '😊' }
           ]
         }
       ]
     },
-    '/img-generator': {
+    'img-generator': {
       title: 'Image Generator',
       subtitle: 'Create stunning visuals',
       icon: <Image size={20} />,
@@ -146,28 +148,26 @@ export const PageConfigs = {
           heading: 'Image Style',
           icon: <Sparkles size={16} />,
           options: [
-            { type: 'select', label: 'Style', values: ['Photorealistic', 'Digital Art', 'Oil Painting', '3D Render', 'Anime', 'Sketch'] }
+            { type: 'select', label: 'Photorealistic', icon: '📷' },
+            { type: 'select', label: 'Digital Art', icon: '🎨' },
+            { type: 'select', label: 'Oil Painting', icon: '🖌️' },
+            { type: 'select', label: '3D Render', icon: '🎮' },
+            { type: 'select', label: 'Anime', icon: '🎌' },
+            { type: 'select', label: 'Sketch', icon: '✏️' }
           ]
         },
         {
           heading: 'Dimensions',
           icon: <Image size={16} />,
           options: [
-            { type: 'select', label: 'Aspect Ratio', values: ['1:1 (Square)', '16:9 (Landscape)', '9:16 (Portrait)', '4:3 (Standard)'] },
-            { type: 'select', label: 'Quality', values: ['Standard', 'High', 'Ultra'] }
-          ]
-        },
-        {
-          heading: 'Advanced',
-          icon: <Settings size={16} />,
-          options: [
-            { type: 'range', label: 'Creativity', min: 0, max: 100, default: 50 },
-            { type: 'range', label: 'Detail Level', min: 0, max: 100, default: 70 }
+            { type: 'checkbox', label: '1:1 Square', icon: '◻️' },
+            { type: 'checkbox', label: '16:9 Landscape', icon: '▭' },
+            { type: 'checkbox', label: '9:16 Portrait', icon: '▯' }
           ]
         }
       ]
     },
-    '/code-generator': {
+    'code-generator': {
       title: 'Code Generator',
       subtitle: 'Write code faster',
       icon: <Code size={20} />,
@@ -177,26 +177,77 @@ export const PageConfigs = {
           heading: 'Programming Language',
           icon: <Code size={16} />,
           options: [
-            { type: 'select', label: 'Language', values: ['JavaScript', 'Python', 'Java', 'C++', 'Go', 'Rust', 'TypeScript'] }
+            { type: 'select', label: 'JavaScript', icon: '🟨' },
+            { type: 'select', label: 'Python', icon: '🐍' },
+            { type: 'select', label: 'Java', icon: '☕' },
+            { type: 'select', label: 'C++', icon: '⚡' },
+            { type: 'select', label: 'Go', icon: '🔵' },
+            { type: 'select', label: 'Rust', icon: '🦀' },
+            { type: 'select', label: 'TypeScript', icon: '💙' }
           ]
         },
         {
           heading: 'Code Style',
           icon: <FileText size={16} />,
           options: [
-            { type: 'checkbox', label: 'Include comments' },
-            { type: 'checkbox', label: 'Add error handling' },
-            { type: 'checkbox', label: 'Use best practices' },
-            { type: 'checkbox', label: 'Include tests' }
+            { type: 'checkbox', label: 'Include comments', icon: '💬' },
+            { type: 'checkbox', label: 'Error handling', icon: '🛡️' },
+            { type: 'checkbox', label: 'Best practices', icon: '✅' },
+            { type: 'checkbox', label: 'Include tests', icon: '🧪' }
+          ]
+        }
+      ]
+    },
+    'video-generator': {
+      title: 'Video Generator',
+      subtitle: 'Create amazing videos',
+      icon: <Sparkles size={20} />,
+      placeholder: 'Describe the video you want to create...',
+      filters: [
+        {
+          heading: 'Video Style',
+          icon: <Sparkles size={16} />,
+          options: [
+            { type: 'select', label: 'Cinematic', icon: '🎬' },
+            { type: 'select', label: 'Animated', icon: '🎨' },
+            { type: 'select', label: 'Documentary', icon: '📹' }
           ]
         },
         {
-          heading: 'Complexity',
-          icon: <Sparkles size={16} />,
+          heading: 'Duration',
+          icon: <FileText size={16} />,
           options: [
-            { type: 'select', label: 'Level', values: ['Beginner', 'Intermediate', 'Advanced', 'Expert'] }
+            { type: 'checkbox', label: 'Short', icon: '⏱️' },
+            { type: 'checkbox', label: 'Medium', icon: '⏲️' },
+            { type: 'checkbox', label: 'Long', icon: '⏰' }
+          ]
+        }
+      ]
+    },
+    'app-builder': {
+      title: 'App Builder',
+      subtitle: 'Build applications',
+      icon: <Code size={20} />,
+      placeholder: 'Describe the app you want to build...',
+      filters: [
+        {
+          heading: 'App Type',
+          icon: <Code size={16} />,
+          options: [
+            { type: 'select', label: 'Web App', icon: '🌐' },
+            { type: 'select', label: 'Mobile App', icon: '📱' },
+            { type: 'select', label: 'Desktop App', icon: '💻' }
+          ]
+        },
+        {
+          heading: 'Framework',
+          icon: <FileText size={16} />,
+          options: [
+            { type: 'checkbox', label: 'React', icon: '⚛️' },
+            { type: 'checkbox', label: 'Vue', icon: '💚' },
+            { type: 'checkbox', label: 'Angular', icon: '🅰️' }
           ]
         }
       ]
     }
-  };
+};

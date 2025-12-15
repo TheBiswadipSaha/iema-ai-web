@@ -5,16 +5,16 @@ import { useNavigate } from 'react-router-dom';
 function HomeCard({ cards = [] }) {
   const navigate = useNavigate();
 
-  // Route mapping for each button
+  // Route mapping - all chat routes now use /chat/:type pattern
   const routeMap = {
-    'Video Generator': '/video-generator',
-    'Image Creator': '/img-playground',
-    'AI Tutor': '/select-tutor',
-    'Blog Generator': '/blog-generator',
-    'Code Generator': '/code-generator',
-    'App Builder': '/app-builder',
-    'Email Generator': '/email-generator',
-    'Web Summariser': '/web-summarizer'
+    'Video Generator': '/chat/video-generator',
+    'Image Creator': '/chat/img-playground',
+    'AI Tutor': '/select-tutor', // This goes to select tutor page, not direct chat
+    'Blog Generator': '/chat/blog-generator',
+    'Code Generator': '/chat/code-generator',
+    'App Builder': '/chat/app-builder',
+    'Email Generator': '/chat/email-generator',
+    'Web Summariser': '/chat/web-summarizer'
   };
 
   const handleNavigation = (linkText) => {
