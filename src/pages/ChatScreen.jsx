@@ -18,10 +18,8 @@ export const ChatScreen = () => {
     const buttonsRef = useRef(null);
 
     useEffect(() => {
-        // Create animation timeline
         const tl = gsap.timeline();
         
-        // Animate from top-left corner to center
         tl.fromTo(
             avatarRef.current,
             {
