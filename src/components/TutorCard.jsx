@@ -9,7 +9,6 @@ function TutorCard({ tutor, isLive, index }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Animate cards sliding in from left on mount
         gsap.fromTo(
             cardRef.current,
             {
@@ -28,7 +27,6 @@ function TutorCard({ tutor, isLive, index }) {
 
     const handleClick = () => {
         if (!isLive) {
-            // Animate card sliding out to left before navigation
             gsap.to(cardRef.current, {
                 x: -200,
                 opacity: 0,
