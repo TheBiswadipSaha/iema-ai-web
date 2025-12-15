@@ -3,10 +3,12 @@ import { useRouter } from '../context/RouterContext';
 import { useAuth } from '../context/AuthContext';
 import Header from './Header';
 import Footer from './Footer';
+import { useNavigate } from 'react-router-dom';
 
 const Layout = ({ children, hideFooter = false, isChatScreen }) => {
   const { navigate, currentPath } = useRouter();
   const { user, logout } = useAuth();
+  const navigation= useNavigate()
 
   const handleNavigation = (e, path) => {
     e.preventDefault();
@@ -49,7 +51,7 @@ const Layout = ({ children, hideFooter = false, isChatScreen }) => {
         isChatScreen={isChatScreen}
         onBack={handleBack}
         onNavigate={(path) => navigate(path)}
-        onButtonClick={() => console.log('Button clicked')}
+        onButtonClick={() => navigation('/login')}
       />
 
       {/* Main Content */}

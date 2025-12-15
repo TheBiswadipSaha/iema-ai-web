@@ -29,18 +29,18 @@ const AppNavigator = () => {
           <Route 
             path="/login" 
             element={
-              <Layout>
+              <>
                 <LoginPage />
-              </Layout>
+              </>
             } 
           />
 
           <Route 
             path="/signup" 
             element={
-              <Layout>
+              <>
                 <SignUpPage />
-              </Layout>
+              </>
             } 
           />
           
