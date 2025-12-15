@@ -1,6 +1,8 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./ProtectedRoute";
+import ChatRouteValidator from "./ChatRouteValidator";
 import Layout from "./layout/layout";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -8,52 +10,83 @@ import NotFoundPage from "./pages/NotFoundPage";
 import { ChatScreen } from "./pages/ChatScreen";
 import SelectTutor from "./pages/SelectTutor";
 
-const AppContent = () => {
-  const location = useLocation();
-  
-  // Define paths where footer should be hidden and chat header should be shown
-  const chatPaths = [
-    "/select-tutor/",
-    "/select-tutor",
-    "/select-tutor/ai-tutor",
-    "/blog-generator",
-    "/img-playground",
-    "/web-summarizer",
-    "/email-generator",
-    "/img-generator",
-    "/code-generator"
-  ];
-  
-  const shouldHideFooter = chatPaths.includes(location.pathname);
-  const isChatScreen = chatPaths.includes(location.pathname);
-
-  return (
-    <Layout hideFooter={shouldHideFooter} isChatScreen={isChatScreen}>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-
-        {/* Chat Pages */}
-        <Route path="/select-tutor" element={<SelectTutor />} />
-        <Route path="/select-tutor/ai-tutor" element={<ChatScreen />} />
-        <Route path="/blog-generator" element={<ChatScreen />} />
-        <Route path="/img-playground" element={<ChatScreen />} />
-        <Route path="/web-summarizer" element={<ChatScreen />} />
-        <Route path="/email-generator" element={<ChatScreen />} />
-        <Route path="/img-generator" element={<ChatScreen />} />
-        <Route path="/code-generator" element={<ChatScreen />} />
-
-        {/* Fallback */}
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </Layout>
-  );
-};
-
 const AppNavigator = () => {
   return (
     <BrowserRouter>
-      <AppContent />
+      <AuthProvider>
+        <Routes>
+          {/* Public Routes with Layout */}
+          <Route 
+            path="/" 
+            element={
+              <Layout>
+                <HomePage />
+              </Layout>
+            } 
+          />
+          
+          <Route 
+            path="/login" 
+            element={
+              <Layout>
+                <LoginPage />
+              </Layout>
+            } 
+          />
+          
+          {/* Select Tutor - Protected Route with Layout (no footer, chat screen mode) */}
+          <Route 
+            path="/select-tutor" 
+            element={
+              <ProtectedRoute>
+                <Layout hideFooter={true} isChatScreen={true}>
+                  <SelectTutor />
+                </Layout>
+              </ProtectedRoute>
+            } 
+          />
+          
+          {/* Single Chat Route - All chat types pass through here */}
+          <Route 
+            path="/chat/:type" 
+            element={
+              <ProtectedRoute>
+                <ChatRouteValidator>
+                  <Layout hideFooter={true} isChatScreen={true}>
+                    <ChatScreen />
+                  </Layout>
+                </ChatRouteValidator>
+              </ProtectedRoute>
+            } 
+          />
+
+          {/* Chat Route with Chat ID */}
+          <Route 
+            path="/chat/:type/:chatId" 
+            element={
+              <ProtectedRoute>
+                <ChatRouteValidator>
+                  <Layout hideFooter={true} isChatScreen={true}>
+                    <ChatScreen />
+                  </Layout>
+                </ChatRouteValidator>
+              </ProtectedRoute>
+            } 
+          />
+          
+          {/* 404 Page - No Layout */}
+          <Route 
+            path="/404" 
+            element={<NotFoundPage />} 
+          />
+          
+          {/* Catch all - Redirect to 404 */}
+          <Route 
+            path="*" 
+            element={<Navigate to="/404" replace />} 
+          />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 };

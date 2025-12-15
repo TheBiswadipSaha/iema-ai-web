@@ -1,15 +1,17 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
-import LoginPage from './pages/LoginPage';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, protectionEnabled } = useAuth();
-
-  if (protectionEnabled && !isAuthenticated) {
-    return <LoginPage />;
+  
+  // If protection is disabled, allow access to all routes
+  if (!protectionEnabled) {
+    return children;
   }
-
-  return children;
+  
+  // If protection is enabled, check authentication
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
 export default ProtectedRoute;
