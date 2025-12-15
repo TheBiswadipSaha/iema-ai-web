@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { ChatScreen } from "./pages/ChatScreen";
 import SelectTutor from "./pages/SelectTutor";
+import SignUpPage from "./pages/SignUpPage";
 
 const AppNavigator = () => {
   return (
@@ -30,6 +31,15 @@ const AppNavigator = () => {
             element={
               <Layout>
                 <LoginPage />
+              </Layout>
+            } 
+          />
+
+          <Route 
+            path="/signup" 
+            element={
+              <Layout>
+                <SignUpPage />
               </Layout>
             } 
           />

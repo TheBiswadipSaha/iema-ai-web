@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff, Sparkles, ArrowRight, User, Check, X } from 'lucide-react';
 
-export default function SignUpPage() {
+const SignUpPage=()=> {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -352,3 +352,5 @@ export default function SignUpPage() {
     </div>
   );
 }
+
+export default SignUpPage;
