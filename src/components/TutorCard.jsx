@@ -3,7 +3,6 @@ import { ChevronRight, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 
-// TutorCard Component with GSAP animation
 function TutorCard({ tutor, isLive, index }) {
     const cardRef = useRef(null);
     const navigate = useNavigate();
