@@ -1,7 +1,7 @@
 // src/Hooks/useHttp.jsx
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useNotification } from "../Context/NotificationContext";
+import { useNotification } from "../context/NotificationContext";
 import { useAuth } from "../context/AuthContext";
 
 export const useHttp = () => {
@@ -118,12 +118,12 @@ export const useHttp = () => {
         setTimeout(clearAllCaches, 100);
 
         try {
-            const fullUrl = `${BASE_URL}/${url}`;
+            const fullUrl = `${BASE_URL}${url}`;
 
             const headers = { 'Accept': 'application/json' };
             if (token) headers.Authorization = `Bearer ${token}`;
 
-            console.log('usehttp token', token)
+            console.log('usehttp token', token);
 
             const response = await fetch(fullUrl, {
                 method: 'GET',
@@ -146,7 +146,7 @@ export const useHttp = () => {
         setError(null);
 
         try {
-            const fullUrl = `${BASE_URL}/${url}`;
+            const fullUrl = `${BASE_URL}${url}`;
 
             const headers = { 'Accept': 'application/json' };
             if (token) headers.Authorization = `Bearer ${token}`;
@@ -188,7 +188,7 @@ export const useHttp = () => {
         setError(null);
 
         try {
-            const fullUrl = `${BASE_URL}/${url}`;
+            const fullUrl = `${BASE_URL}${url}`;
 
             const headers = { 'Accept': 'application/json' };
             if (token) headers.Authorization = `Bearer ${token}`;
@@ -230,7 +230,7 @@ export const useHttp = () => {
         setError(null);
 
         try {
-            const fullUrl = `${BASE_URL}/${url}`;
+            const fullUrl = `${BASE_URL}${url}`;
 
             const headers = { 'Accept': 'application/json' };
             if (token) headers.Authorization = `Bearer ${token}`;
@@ -272,7 +272,7 @@ export const useHttp = () => {
         setError(null);
 
         try {
-            const fullUrl = `${BASE_URL}/${url}`;
+            const fullUrl = `${BASE_URL}${url}`;
 
             const headers = { 'Accept': 'application/json' };
             if (token) headers.Authorization = `Bearer ${token}`;

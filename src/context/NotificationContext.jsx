@@ -1,6 +1,7 @@
+// src/context/NotificationContext.jsx
 import React from "react";
 import { createContext, useContext, useState } from "react";
-import { ErrorPopup } from "../lib/ErrorPopup";
+import { ErrorPopup } from "../utils/ErrorPopup";
 
 const NotificationContext = createContext();
 
@@ -11,7 +12,6 @@ export const useNotification = () => {
   }
   return context;
 };
-
 
 export const NotificationProvider = ({ children }) => {
   const [popup, setPopup] = useState({ 
