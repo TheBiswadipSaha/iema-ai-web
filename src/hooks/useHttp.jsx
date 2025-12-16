@@ -1,114 +1,317 @@
-import { useState, useCallback } from 'react';
-import { useAuth } from '../context/AuthContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// src/Hooks/useHttp.jsx
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useNotification } from "../Context/NotificationContext";
+import { useAuth } from "../Context/AuthContext";
+import { BASE_URL } from "../Config/config";
 
-const BASE_URL = 'https://revampbackend.iema.ai/';
-// const BASE_URL = 'http://192.168.1.220:5000/';
-// const BASE_URL = 'http://192.168.90.12:5000/';
-
-export function useHttp() {
+export const useHttp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [response, setResponse] = useState(null);
-  const { logout } = useAuth();
+  const { showNotification } = useNotification();
+  const { logout, role } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const request = useCallback(
-    async (method, url, data = null, isMultipart = false, token = null) => {
-      setLoading(true);
-      setError(null);
-      setResponse(null);
-
-      console.log(`[HTTP ${method}] ${BASE_URL}${url}`);
-
-      try {
-        const headers = {};
-
-        if (!isMultipart) {
-          headers['Content-Type'] = 'application/json';
-        }
-
-        let authToken = token;
-        if (!authToken) {
-          authToken = await AsyncStorage.getItem('accessToken');
-        }
-        if (authToken) {
-          headers['Authorization'] = `Bearer ${authToken}`;
-        }
-
-        const body = isMultipart ? data : data ? JSON.stringify(data) : null;
-
-        const res = await fetch(`${BASE_URL}${url}`, {
-          method,
-          headers,
-          body,
-        });
-
-        const contentType = res.headers.get('Content-Type') || '';
-        const isJson = contentType.includes('application/json');
-        const result = isJson ? await res.json() : await res.text();
-
-        console.log(`[HTTP ${res.status}]`, result);
-
-        // Handle error responses
-        if (!res.ok) {
-          const errorMsg = result?.message || `Request failed with status ${res.status}`;
-
-          // Check for authentication errors
-          const isAuthError =
-            res.status === 401 ||
-            res.status === 403 ||
-            (result?.message &&
-              (result.message.toLowerCase().includes('invalid token') ||
-                result.message.toLowerCase().includes('token expired') ||
-                result.message.toLowerCase().includes('unauthorized')));
-
-          if (isAuthError) {
-            console.log('[AUTH ERROR] Invalid token detected, logging out...');
-            // Let AuthContext handle navigation to Landing
-            await logout(false);
+  // Clear all caches silently without affecting requests
+  const clearAllCaches = () => {
+    if ('caches' in window) {
+      caches.keys().then(names => {
+        names.forEach(name => {
+          if (name.includes('intellitest')) {
+            caches.delete(name);
           }
+        });
+      }).catch(() => {}); // Silent fail
+    }
+  };
 
-          const err = new Error(errorMsg);
-          err.status = res.status;
-          err.response = result;
-          throw err;
-        }
-
-        setResponse(result);
-        return result;
-      } catch (err) {
-        console.error(`[HTTP ERROR] ${method} ${url}:`, err.message);
-        const errorMessage = err.message || 'Something went wrong';
-        setError(errorMessage);
-        throw err;
-      } finally {
-        setLoading(false);
+  // Handle response
+  const handleResponse = async (response) => {
+    const isSuccessStatus = (response.status >= 200 && response.status < 300) || response.status === 304;
+    
+    if (isSuccessStatus) {
+      if (response.status === 204) {
+        return { success: true, message: "Operation successful" };
       }
-    },
-    [logout]
-  );
+      
+      if (response.status === 304) {
+        return { success: true, message: "Resource not modified" };
+      }
+      
+      try {
+        const data = await response.json();
+        if (data.success === undefined) {
+          data.success = true;
+        }
+        return data;
+      } catch (parseError) {
+        return { success: true, message: "Operation successful" };
+      }
+    }
 
-  const get = useCallback(
-    (url, token = null) => request('GET', url, null, false, token),
-    [request]
-  );
+    let message = `Request failed with status ${response.status}`;
+    
+    try {
+      const errorData = await response.json();
+      message = errorData?.message || errorData?.error || message;
+    } catch (parseError) {
+      switch (true) {
+        case response.status >= 500:
+          message = `Server error (${response.status}). Please try again later.`;
+          break;
+        case response.status >= 400:
+          message = `Client error (${response.status}). Please check your request.`;
+          break;
+        default:
+          message = `Unexpected error (${response.status}). Please try again.`;
+      }
+    }
+    
+    showNotification(message, "error");
 
-  const post = useCallback(
-    (url, data, isMultipart = false, token = null) =>
-      request('POST', url, data, isMultipart, token),
-    [request]
-  );
+    // Handle unauthorized access - Use AuthContext logout
+    // if ([401, 403].includes(response.status)) {
+    //   showNotification("Session expired. Please login again.", "error");
+      
+    //   logout();
+      
+    //   const path = location.pathname;
+    //   let redirectPath = "/signin"; 
+      
+    //   if (path.includes("admin") || role === "superadmin") {
+    //     redirectPath = "/admin/signin";
+    //   } else if (path.includes("faculty") || role === "faculty") {
+    //     redirectPath = "/faculty/signin";
+    //   }
+      
+    //   setTimeout(() => {
+    //     navigate(redirectPath, { replace: true });
+    //   }, 100);
+    // }
 
-  const put = useCallback(
-    (url, data, isMultipart = false, token = null) =>
-      request('PUT', url, data, isMultipart, token),
-    [request]
-  );
+    return { success: false, message };
+  };
 
-  const deleteApi = useCallback(
-    (url, token = null) => request('DELETE', url, null, false, token),
-    [request]
-  );
+  // Handle errors
+  const handleError = (err) => {
+    console.error('HTTP Request Error:', err);
+    
+    let errorMessage = "An unexpected error occurred.";
+    
+    if (err.name === 'TypeError' && err.message.includes('fetch')) {
+      errorMessage = "Network error. Please check your connection and try again.";
+    } else if (err.message) {
+      errorMessage = err.message;
+    }
 
-  return { loading, error, response, get, post, put, deleteApi: deleteApi };
-}
+    showNotification(errorMessage, "error");
+    return { success: false, message: errorMessage };
+  };
+
+  // GET request
+  const getReq = async (url, token = "") => {
+    setLoading(true);
+    setError(null);
+    
+    setTimeout(clearAllCaches, 100);
+    
+    try {
+      const fullUrl = `${BASE_URL}/${url}`;
+      
+      const headers = { 'Accept': 'application/json' };
+      if (token) headers.Authorization = `Bearer ${token}`;
+
+      console.log('usehttp token', token)
+      
+      const response = await fetch(fullUrl, {
+        method: 'GET',
+        credentials: 'include',
+        headers: headers,
+        cache: 'no-store'
+      });
+      
+      return await handleResponse(response);
+    } catch (err) {
+      return handleError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // POST request
+  const postReq = async (url, token = "", data, isFormData = false) => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const fullUrl = `${BASE_URL}/${url}`;
+      
+      const headers = { 'Accept': 'application/json' };
+      if (token) headers.Authorization = `Bearer ${token}`;
+
+      let body;
+      if (data) {
+        if (isFormData) {
+          body = data;
+        } else {
+          headers['Content-Type'] = 'application/json';
+          body = JSON.stringify(data);
+        }
+      }
+      
+      const response = await fetch(fullUrl, {
+        method: 'POST',
+        credentials: 'include',
+        headers: headers,
+        body: body
+      });
+      
+      const result = await handleResponse(response);
+      
+      if (result.success) {
+        setTimeout(clearAllCaches, 200);
+      }
+      
+      return result;
+    } catch (err) {
+      return handleError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // PUT request
+  const putReq = async (url, token = "", data, isFormData = false) => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const fullUrl = `${BASE_URL}/${url}`;
+      
+      const headers = { 'Accept': 'application/json' };
+      if (token) headers.Authorization = `Bearer ${token}`;
+
+      let body;
+      if (data) {
+        if (isFormData) {
+          body = data;
+        } else {
+          headers['Content-Type'] = 'application/json';
+          body = JSON.stringify(data);
+        }
+      }
+      
+      const response = await fetch(fullUrl, {
+        method: 'PUT',
+        credentials: 'include',
+        headers: headers,
+        body: body
+      });
+      
+      const result = await handleResponse(response);
+      
+      if (result.success) {
+        setTimeout(clearAllCaches, 200);
+      }
+      
+      return result;
+    } catch (err) {
+      return handleError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // PATCH request
+  const patchReq = async (url, token = "", data, isFormData = false) => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const fullUrl = `${BASE_URL}/${url}`;
+      
+      const headers = { 'Accept': 'application/json' };
+      if (token) headers.Authorization = `Bearer ${token}`;
+
+      let body;
+      if (data) {
+        if (isFormData) {
+          body = data;
+        } else {
+          headers['Content-Type'] = 'application/json';
+          body = JSON.stringify(data);
+        }
+      }
+      
+      const response = await fetch(fullUrl, {
+        method: 'PATCH',
+        credentials: 'include',
+        headers: headers,
+        body: body
+      });
+      
+      const result = await handleResponse(response);
+      
+      if (result.success) {
+        setTimeout(clearAllCaches, 200);
+      }
+      
+      return result;
+    } catch (err) {
+      return handleError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // DELETE request
+  const deleteReq = async (url, token = "", data = {}) => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const fullUrl = `${BASE_URL}/${url}`;
+      
+      const headers = { 'Accept': 'application/json' };
+      if (token) headers.Authorization = `Bearer ${token}`;
+
+      let body;
+      if (data && Object.keys(data).length > 0) {
+        headers['Content-Type'] = 'application/json';
+        body = JSON.stringify(data);
+      }
+      
+      const response = await fetch(fullUrl, {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: headers,
+        body: body
+      });
+      
+      const result = await handleResponse(response);
+      
+      if (result.success) {
+        setTimeout(clearAllCaches, 200);
+      }
+      
+      return result;
+    } catch (err) {
+      return handleError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    getReq,
+    postReq,
+    putReq,
+    patchReq,
+    deleteReq,
+    loading,
+    error,
+    setError,
+    baseURL: BASE_URL,
+  };
+};
