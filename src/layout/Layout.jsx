@@ -5,7 +5,7 @@ import Header from './Header';
 import Footer from './Footer';
 import { useNavigate } from 'react-router-dom';
 
-const Layout = ({ children, hideFooter = false, isChatScreen }) => {
+const Layout = ({ children, hideFooter = false, isChatScreen, isBackPresent= true }) => {
   const { navigate, currentPath } = useRouter();
   const { user, logout } = useAuth();
   const navigation= useNavigate()
@@ -23,7 +23,7 @@ const Layout = ({ children, hideFooter = false, isChatScreen }) => {
   const chatPaths = [
     "/select-tutor/ai-tutor",
     "/blog-generator",
-    "/img-playground",
+    "/image-generator",
     "/web-summarizer",
     "/email-generator",
     "/img-generator",
@@ -44,6 +44,7 @@ const Layout = ({ children, hideFooter = false, isChatScreen }) => {
         currentPath={currentPath} 
         navigate={handleNavigation} 
         user={user} 
+        isBackPresent={isBackPresent}
         logout={logout}
         isLoggedIn={!!user}
         credits={isChatScreen ? 50 : 250}
