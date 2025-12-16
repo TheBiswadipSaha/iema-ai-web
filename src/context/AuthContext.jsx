@@ -14,25 +14,36 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
   
   // Change this value to enable/disable route protection
   const protectionEnabled = true; // Set to true to enable protection
 
   // Initialize auth state from sessionStorage on mount
   useEffect(() => {
-    const storedToken = sessionStorage.getItem("token");
-    const storedUser = sessionStorage.getItem("user");
-    
-    if (storedToken) {
-      setToken(storedToken);
-    }
-    if (storedUser) {
+    const initializeAuth = () => {
       try {
-        setUser(JSON.parse(storedUser));
-      } catch (e) {
-        console.error("Failed to parse stored user:", e);
+        const storedToken = sessionStorage.getItem("token");
+        const storedUser = sessionStorage.getItem("user");
+        
+        if (storedToken) {
+          setToken(storedToken);
+        }
+        if (storedUser) {
+          try {
+            setUser(JSON.parse(storedUser));
+          } catch (e) {
+            console.error("Failed to parse stored user:", e);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to initialize auth:", error);
+      } finally {
+        setIsLoading(false); // Always set loading to false after check
       }
-    }
+    };
+
+    initializeAuth();
   }, []);
 
   const login = (userData, authToken, navigate) => {
@@ -67,6 +78,7 @@ export const AuthProvider = ({ children }) => {
       login, 
       logout, 
       isAuthenticated: !!token,
+      isLoading,
       protectionEnabled
     }}>
       {children}

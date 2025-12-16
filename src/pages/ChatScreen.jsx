@@ -18,6 +18,7 @@ export const ChatScreen = () => {
   const [currentChatId, setCurrentChatId] = useState(chatId || null);
   const [activeFilters, setActiveFilters] = useState({});
   const [isThinking, setIsThinking] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Refs for animation
   const avatarRef = useRef(null);
@@ -25,70 +26,128 @@ export const ChatScreen = () => {
   const subtitleRef = useRef(null);
   const buttonsRef = useRef(null);
 
+  // Load messages from sessionStorage on mount
   useEffect(() => {
-    const tl = gsap.timeline();
-
-    tl.fromTo(
-      avatarRef.current,
-      {
-        x: -300,
-        y: -200,
-        scale: 0.5,
-        opacity: 0,
-      },
-      {
-        x: 0,
-        y: 0,
-        scale: 1,
-        opacity: 1,
-        duration: 0.8,
-        ease: "power3.out",
+    const loadChatData = () => {
+      try {
+        if (chatId) {
+          // Load messages for this specific chat
+          const storedMessages = sessionStorage.getItem(`chat_messages_${chatId}`);
+          const storedFilters = sessionStorage.getItem(`chat_filters_${chatId}`);
+          
+          if (storedMessages) {
+            setMessages(JSON.parse(storedMessages));
+          }
+          
+          if (storedFilters) {
+            setActiveFilters(JSON.parse(storedFilters));
+          }
+        }
+      } catch (error) {
+        console.error("Failed to load chat data:", error);
+      } finally {
+        setIsLoading(false);
       }
-    )
-      .fromTo(
-        titleRef.current,
+    };
+
+    loadChatData();
+  }, [chatId]);
+
+  // Save messages to sessionStorage whenever they change
+  useEffect(() => {
+    if (currentChatId && messages.length > 0) {
+      try {
+        sessionStorage.setItem(
+          `chat_messages_${currentChatId}`,
+          JSON.stringify(messages)
+        );
+      } catch (error) {
+        console.error("Failed to save messages:", error);
+      }
+    }
+  }, [messages, currentChatId]);
+
+  // Save filters to sessionStorage whenever they change
+  useEffect(() => {
+    if (currentChatId && Object.keys(activeFilters).length > 0) {
+      try {
+        sessionStorage.setItem(
+          `chat_filters_${currentChatId}`,
+          JSON.stringify(activeFilters)
+        );
+      } catch (error) {
+        console.error("Failed to save filters:", error);
+      }
+    }
+  }, [activeFilters, currentChatId]);
+
+  // Animation effect - only run when messages are loaded
+  useEffect(() => {
+    if (!isLoading && messages.length === 0) {
+      const tl = gsap.timeline();
+
+      tl.fromTo(
+        avatarRef.current,
         {
-          y: -50,
+          x: -300,
+          y: -200,
+          scale: 0.5,
           opacity: 0,
         },
         {
+          x: 0,
           y: 0,
+          scale: 1,
           opacity: 1,
-          duration: 0.6,
-          ease: "power2.out",
-        },
-        "-=0.4"
+          duration: 0.8,
+          ease: "power3.out",
+        }
       )
-      .fromTo(
-        subtitleRef.current,
-        {
-          y: -30,
-          opacity: 0,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.6,
-          ease: "power2.out",
-        },
-        "-=0.4"
-      )
-      .fromTo(
-        buttonsRef.current.children,
-        {
-          y: 20,
-          opacity: 0,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.4,
-          stagger: 0.1,
-          ease: "power2.out",
-        },
-        "-=0.3"
-      );
-  }, []);
+        .fromTo(
+          titleRef.current,
+          {
+            y: -50,
+            opacity: 0,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            ease: "power2.out",
+          },
+          "-=0.4"
+        )
+        .fromTo(
+          subtitleRef.current,
+          {
+            y: -30,
+            opacity: 0,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            ease: "power2.out",
+          },
+          "-=0.4"
+        )
+        .fromTo(
+          buttonsRef.current.children,
+          {
+            y: 20,
+            opacity: 0,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.4,
+            stagger: 0.1,
+            ease: "power2.out",
+          },
+          "-=0.3"
+        );
+    }
+  }, [isLoading, messages.length]);
 
   // Handle sending messages
   const handleSendMessage = async (content, image = null) => {
@@ -107,13 +166,23 @@ export const ChatScreen = () => {
 
     if (res?.success) {
       if (!currentChatId && res.data?.conversationId) {
-        setCurrentChatId(res.data.conversationId);
-        navigate(`/chat/${type}/${res.data.conversationId}`, { replace: true });
+        const newChatId = res.data.conversationId;
+        setCurrentChatId(newChatId);
+        navigate(`/chat/${type}/${newChatId}`, { replace: true });
       }
 
       setMessages((prev) => [...prev, { text: res.data.reply, sender: "ai" }]);
     }
   };
+
+  // Show loading state while restoring messages
+  if (isLoading) {
+    return (
+      <div className="flex h-screen bg-[#101214] items-center justify-center">
+        <div className="text-gray-400">Loading chat...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen bg-[#101214]">
@@ -234,7 +303,6 @@ export const ChatScreen = () => {
           {isThinking && (
             <div className="flex justify-start">
               <div className="bg-gray-800 text-gray-300 px-4 py-3 rounded-2xl flex items-center gap-2">
-                {/* <span>Wesley is thinking</span> */}
                 <span style={{ display: "flex", gap: "2px" }}>
                   {[0, 1, 2].map((i) => (
                     <span
@@ -265,33 +333,3 @@ export const ChatScreen = () => {
     </div>
   );
 };
-
-<style>
-  {`
-/* Normal markdown text wraps properly */
-.markdown-wrap {
-  width: 100%;
-  max-width: 100%;
-  word-break: break-word;
-  overflow-wrap: anywhere;
-  white-space: normal;
-}
-
-/* Code blocks: wrap + allow scroll if needed */
-.markdown-wrap pre {
-  max-width: 100%;
-  white-space: pre-wrap;     /* wraps long lines */
-  word-break: break-word;
-  overflow-x: auto;          /* scroll if still too long */
-  background: #0f172a;
-  padding: 12px;
-  border-radius: 12px;
-}
-
-/* Inline + block code */
-.markdown-wrap code {
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-`}
-</style>;
