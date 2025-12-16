@@ -7,12 +7,11 @@ function HomeCard({ cards = [] }) {
 
   // Route mapping - all chat routes now use /chat/:type pattern
   const routeMap = {
-    'Video Generator': '/chat/video-generator',
+    'Image Analyzer': '/chat/image-analyzer',
     'Image Creator': '/chat/img-playground',
     'AI Tutor': '/select-tutor', // This goes to select tutor page, not direct chat
     'Blog Generator': '/chat/blog-generator',
     'Code Generator': '/chat/code-generator',
-    'App Builder': '/chat/app-builder',
     'Email Generator': '/chat/email-generator',
     'Web Summariser': '/chat/web-summarizer'
   };
@@ -64,10 +63,10 @@ function HomeCard({ cards = [] }) {
                     <button
                       key={linkIndex}
                       onClick={() => handleNavigation(link.text)}
-                      className="group/btn relative overflow-hidden cursor-pointer flex items-center justify-between p-2.5 rounded-2xl transition-all duration-300 bg-[#202328] w-full"
+                      className="group/btn relative overflow-hidden cursor-pointer flex items-end justify-between p-2.5 rounded-2xl transition-all duration-300 bg-[#202328] w-full"
                     >
                       {/* fill animation */}
-                      <span className="absolute inset-0 bg-[#00ff91] w-0 group-hover/btn:w-full transition-all duration-300"></span>
+                      <span className="absolute inset-0 bg-[#02e986] w-0 group-hover/btn:w-full transition-all duration-300"></span>
 
                       {/* text */}
                       <span className="relative text-sm text-[#FAFAFA] group-hover/btn:text-black transition-colors duration-300 p-1 font-semibold">
