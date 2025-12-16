@@ -7,18 +7,21 @@ import { PromptSender } from "../components/PromptSender";
 import { PageConfigs } from "../config/pageConfigs";
 import { useChatApi } from "../apis/useChatApi";
 import ReactMarkdown from "react-markdown";
+import { useHttp } from "../hooks/useHttp";
 
 export const ChatScreen = () => {
   const { type, chatId } = useParams();
   const navigate = useNavigate();
   const currentConfig = PageConfigs[type];
   const { generateResponse } = useChatApi();
+  const { getReq } = useHttp();
 
   const [messages, setMessages] = useState([]);
   const [currentChatId, setCurrentChatId] = useState(chatId || null);
   const [activeFilters, setActiveFilters] = useState({});
   const [isThinking, setIsThinking] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(!!chatId); // Only load if chatId exists
+  const token = sessionStorage.getItem("token");
 
   // Refs for animation
   const avatarRef = useRef(null);
@@ -26,64 +29,57 @@ export const ChatScreen = () => {
   const subtitleRef = useRef(null);
   const buttonsRef = useRef(null);
 
-  // Load messages from sessionStorage on mount
+  // Fetch conversation history from API when chatId is present
   useEffect(() => {
-    const loadChatData = () => {
+    const fetchConversationHistory = async () => {
+      if (!chatId) {
+        setIsLoading(false);
+        return;
+      }
+
       try {
-        if (chatId) {
-          // Load messages for this specific chat
-          const storedMessages = sessionStorage.getItem(`chat_messages_${chatId}`);
-          const storedFilters = sessionStorage.getItem(`chat_filters_${chatId}`);
-          
-          if (storedMessages) {
-            setMessages(JSON.parse(storedMessages));
+        const response = await getReq(`api/chat/conversations/${chatId}`, token);
+
+        if (response?.success) {
+          // Transform the API response to match your message format
+          // Adjust this based on your actual API response structure
+          if (response.data?.messages && Array.isArray(response.data.messages)) {
+            const formattedMessages = response.data.messages.map(msg => ({
+              text: msg.content || msg.text || msg.message,
+              sender: msg.role === "user" || msg.sender === "user" ? "user" : "ai",
+            }));
+            setMessages(formattedMessages);
           }
-          
-          if (storedFilters) {
-            setActiveFilters(JSON.parse(storedFilters));
+
+          // Set filters if they're returned from the API
+          if (response.data?.filters) {
+            setActiveFilters(response.data.filters);
           }
+        } else {
+          console.error("Failed to fetch conversation history");
+          // Optionally navigate to home or show error
+          // navigate(`/chat/${type}`, { replace: true });
         }
       } catch (error) {
-        console.error("Failed to load chat data:", error);
+        console.error("Error fetching conversation:", error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    loadChatData();
+    fetchConversationHistory();
   }, [chatId]);
 
-  // Save messages to sessionStorage whenever they change
+  // Update currentChatId when chatId param changes
   useEffect(() => {
-    if (currentChatId && messages.length > 0) {
-      try {
-        sessionStorage.setItem(
-          `chat_messages_${currentChatId}`,
-          JSON.stringify(messages)
-        );
-      } catch (error) {
-        console.error("Failed to save messages:", error);
-      }
+    if (chatId) {
+      setCurrentChatId(chatId);
     }
-  }, [messages, currentChatId]);
+  }, [chatId]);
 
-  // Save filters to sessionStorage whenever they change
+  // Animation effect - only run when messages are loaded and empty
   useEffect(() => {
-    if (currentChatId && Object.keys(activeFilters).length > 0) {
-      try {
-        sessionStorage.setItem(
-          `chat_filters_${currentChatId}`,
-          JSON.stringify(activeFilters)
-        );
-      } catch (error) {
-        console.error("Failed to save filters:", error);
-      }
-    }
-  }, [activeFilters, currentChatId]);
-
-  // Animation effect - only run when messages are loaded
-  useEffect(() => {
-    if (!isLoading && messages.length === 0) {
+    if (!isLoading && messages.length === 0 && avatarRef.current && titleRef.current && subtitleRef.current && buttonsRef.current) {
       const tl = gsap.timeline();
 
       tl.fromTo(
@@ -175,11 +171,11 @@ export const ChatScreen = () => {
     }
   };
 
-  // Show loading state while restoring messages
+  // Show loading state while fetching conversation
   if (isLoading) {
     return (
       <div className="flex h-screen bg-[#101214] items-center justify-center">
-        <div className="text-gray-400">Loading chat...</div>
+        <div className="text-gray-400 text-lg">Loading conversation...</div>
       </div>
     );
   }
@@ -301,7 +297,7 @@ export const ChatScreen = () => {
 
           {/* Loading Indicator */}
           {isThinking && (
-            <div className="flex justify-start">
+            <div className="flex justify-start max-w-[54.8rem] mx-auto">
               <div className="bg-gray-800 text-gray-300 px-4 py-3 rounded-2xl flex items-center gap-2">
                 <span style={{ display: "flex", gap: "2px" }}>
                   {[0, 1, 2].map((i) => (
