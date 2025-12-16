@@ -1,7 +1,10 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 function HomeCard({ cards = [] }) {
+  const navigate = useNavigate();
+
   // Route mapping - all chat routes now use /chat/:type pattern
   const routeMap = {
     'Image Analyzer': '/chat/image-analyzer',
@@ -16,8 +19,7 @@ function HomeCard({ cards = [] }) {
   const handleNavigation = (linkText) => {
     const route = routeMap[linkText];
     if (route) {
-      console.log('Navigating to:', route);
-      // navigate(route); - uncomment when using with react-router
+      navigate(route);
     }
   };
 
