@@ -92,7 +92,7 @@ const SignUpPage = () => {
       setApiResponse(response);
       
       if (response.success) {
-        alert('Account created successfully!');
+        // alert('Account created successfully!');
 
         showNotification(response?.message, "success")
         login(response?.data?.user, response?.data?.accessToken) 

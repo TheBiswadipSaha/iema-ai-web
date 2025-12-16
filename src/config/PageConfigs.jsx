@@ -157,7 +157,7 @@ export const PageConfigs = {
           ]
         },
         {
-          heading: 'Dimensions',
+          heading: 'Aspect Ratio',
           icon: <Image size={16} />,
           options: [
             { type: 'checkbox', label: '1:1 Square', icon: '◻️' },

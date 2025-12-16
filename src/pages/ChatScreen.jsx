@@ -120,12 +120,14 @@ export const ChatScreen = () => {
                         // Welcome Screen
                         <div className="flex items-center justify-center h-full">
                             <div className="text-center max-w-2xl">
+                                {currentConfig?.icon && (
                                 <div 
                                     ref={avatarRef}
                                     className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4"
                                 >
                                     {currentConfig?.icon}
                                 </div>
+                                )}
                                 
                                 <h1 
                                     ref={titleRef}
