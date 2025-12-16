@@ -3,12 +3,11 @@ import { Navigate, useParams } from 'react-router-dom';
 
 // Define valid chat types - matches all routes from HomeCard
 export const VALID_CHAT_TYPES = [
-  'video-generator',
+  'image-analyzer',
   'img-playground',
   'ai-tutor',
   'blog-generator',
   'code-generator',
-  'app-builder',
   'email-generator',
   'web-summarizer'
 ];

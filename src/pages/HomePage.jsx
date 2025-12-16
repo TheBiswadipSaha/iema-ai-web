@@ -13,7 +13,7 @@ export default function HomePage() {
             title: 'Create Content',
             description: 'Transform your ideas into engaging blogs, stunning images, and captivating videos with the power of AI.',
             links: [
-                { text: 'Video Generator', href: '#' },
+                { text: 'Image Analyzer', href: '#' },
                 { text: 'Image Creator', href: '#' }
             ]
         },
@@ -31,8 +31,7 @@ export default function HomePage() {
             title: 'Build with AI',
             description: 'Your one-stop shop for coding, debugging, and development. Generate production-ready code effortlessly.',
             links: [
-                { text: 'Code Generator', href: '#' },
-                { text: 'App Builder', href: '#' }
+                { text: 'Code Generator', href: '#' }
             ]
         },
         {

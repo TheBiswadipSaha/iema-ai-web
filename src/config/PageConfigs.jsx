@@ -198,14 +198,14 @@ export const PageConfigs = {
         }
       ]
     },
-    'video-generator': {
-      title: 'Video Generator',
-      subtitle: 'Create amazing videos',
+    'image-analyzer': {
+      title: 'Image Analyzer',
+      subtitle: 'Analyze & understand images',
       icon: <Sparkles size={20} />,
-      placeholder: 'Describe the video you want to create...',
+      placeholder: 'Describe the image you want to analyze...',
       filters: [
         {
-          heading: 'Video Style',
+          heading: 'Image Style',
           icon: <Sparkles size={16} />,
           options: [
             { type: 'select', label: 'Cinematic', icon: '🎬' },
@@ -220,32 +220,6 @@ export const PageConfigs = {
             { type: 'checkbox', label: 'Short', icon: '⏱️' },
             { type: 'checkbox', label: 'Medium', icon: '⏲️' },
             { type: 'checkbox', label: 'Long', icon: '⏰' }
-          ]
-        }
-      ]
-    },
-    'app-builder': {
-      title: 'App Builder',
-      subtitle: 'Build applications',
-      icon: <Code size={20} />,
-      placeholder: 'Describe the app you want to build...',
-      filters: [
-        {
-          heading: 'App Type',
-          icon: <Code size={16} />,
-          options: [
-            { type: 'select', label: 'Web App', icon: '🌐' },
-            { type: 'select', label: 'Mobile App', icon: '📱' },
-            { type: 'select', label: 'Desktop App', icon: '💻' }
-          ]
-        },
-        {
-          heading: 'Framework',
-          icon: <FileText size={16} />,
-          options: [
-            { type: 'checkbox', label: 'React', icon: '⚛️' },
-            { type: 'checkbox', label: 'Vue', icon: '💚' },
-            { type: 'checkbox', label: 'Angular', icon: '🅰️' }
           ]
         }
       ]
