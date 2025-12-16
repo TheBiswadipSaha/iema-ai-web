@@ -7,7 +7,7 @@ function HomeCard({ cards = [] }) {
 
   // Route mapping - all chat routes now use /chat/:type pattern
   const routeMap = {
-    'Image Playground': '/chat/image-playground',
+    'Image Analyzer': '/chat/image-analyzer',
     'Image Generator': '/chat/image-generator',
     'AI Tutor': '/select-tutor', // This goes to select tutor page, not direct chat
     'Blog Generator': '/chat/blog-generator',

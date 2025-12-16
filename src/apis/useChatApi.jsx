@@ -1,15 +1,38 @@
-import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { useHttp } from "../hooks/useHttp";
+
 
 export const useChatApi = () => {
     const { getReq, postReq, putReq, loading } = useHttp();
     const { token } = useAuth();
-    console.log({token})
 
+    /**
+     * Generate AI response with text or image input
+     * Supports DYNAMIC filters - any filter fields based on page configuration
+     * @param {Object} params - Request parameters
+     * @param {string} params.content - The text content or prompt
+     * @param {string} params.type - Type of input: "text" or "vision"
+     * @param {string} [params.toolName] - Optional tool name (e.g., "Blog Generator", "Code Generator")
+     * @param {string} [params.conversationId] - Optional conversation ID (empty string for first message)
+     * @param {File} [params.image] - Optional image file for vision requests
+     * @param {Object} [params.filters] - Optional DYNAMIC filters object - can contain ANY fields
+     * @returns {Promise<Object>} API response with conversationId and message
+     * 
+     * @example
+     * // Code Generator filters
+     * filters: { complexity: "Intermediate", language: "Java", subject_areas: "Physics" }
+     * 
+     * @example
+     * // Blog Generator filters
+     * filters: { tone: "Professional", length: "Long", style: "Technical" }
+     * 
+     * @example
+     * // Image Generator filters
+     * filters: { style: "Realistic", resolution: "4K", mood: "Dark" }
+     */
     const generateResponse = async ({ 
         content, 
-        type = "Blog Generator", 
+        type = "text", 
         toolName = "", 
         conversationId = "",
         image = null,
@@ -25,11 +48,14 @@ export const useChatApi = () => {
                 if (toolName) formData.append("toolName", toolName);
                 formData.append("conversationId", conversationId);
                 
-                // Add filters to FormData if present
-                if (filters) {
-                    if (filters.complexity) formData.append("filters[complexity]", filters.complexity);
-                    if (filters.language) formData.append("filters[language]", filters.language);
-                    if (filters.subject_areas) formData.append("filters[subject_areas]", filters.subject_areas);
+                // Add DYNAMIC filters to FormData if present
+                if (filters && typeof filters === 'object') {
+                    Object.entries(filters).forEach(([key, value]) => {
+                        // Only add non-empty values
+                        if (value !== null && value !== undefined && value !== '') {
+                            formData.append(`filters[${key}]`, value);
+                        }
+                    });
                 }
 
                 return await postReq(
@@ -40,7 +66,7 @@ export const useChatApi = () => {
                 );
             }
 
-            // Regular text request with filters
+            // Regular text request with DYNAMIC filters
             const payload = {
                 content,
                 type,
@@ -48,16 +74,22 @@ export const useChatApi = () => {
                 conversationId
             };
 
-            // Add filters only if they exist and have values
-            if (filters && Object.keys(filters).length > 0) {
-                // Filter out empty/null values
+            // Add filters dynamically - works with ANY filter fields
+            if (filters && typeof filters === 'object' && Object.keys(filters).length > 0) {
+                // Filter out empty/null/undefined values
                 const validFilters = Object.entries(filters)
-                    .filter(([_, value]) => value && value.trim() !== '')
+                    .filter(([_, value]) => {
+                        // Keep the filter if it has a valid value
+                        if (value === null || value === undefined) return false;
+                        if (typeof value === 'string' && value.trim() === '') return false;
+                        return true;
+                    })
                     .reduce((acc, [key, value]) => {
                         acc[key] = value;
                         return acc;
                     }, {});
                 
+                // Only add filters object if there are valid filters
                 if (Object.keys(validFilters).length > 0) {
                     payload.filters = validFilters;
                 }
@@ -238,8 +270,8 @@ function ChatScreen() {
     // Your component logic...
 }
 
-// Example 2: Send text message with filters
-const handleSendMessage = async (message) => {
+// Example 2: Send text message with DYNAMIC filters (Code Generator)
+const handleCodeGenerator = async () => {
     const result = await generateResponse({
         content: "Create a function to calculate projectile motion",
         type: "text",
@@ -253,10 +285,56 @@ const handleSendMessage = async (message) => {
     });
     
     if (result.success) {
-        // Update conversationId from response
         setCurrentChatId(result.data.conversationId);
-        console.log("Response:", result.data.response);
     }
+};
+
+// Example 2b: Blog Generator with different filters
+const handleBlogGenerator = async () => {
+    const result = await generateResponse({
+        content: "Write about AI trends in 2024",
+        type: "text",
+        toolName: "Blog Generator",
+        conversationId: currentChatId || "",
+        filters: {
+            tone: "Professional",
+            length: "2000 words",
+            style: "Technical",
+            audience: "Developers"
+        }
+    });
+};
+
+// Example 2c: Image Generator with different filters
+const handleImageGenerator = async () => {
+    const result = await generateResponse({
+        content: "A futuristic city at sunset",
+        type: "text",
+        toolName: "Image Generator",
+        conversationId: currentChatId || "",
+        filters: {
+            style: "Photorealistic",
+            resolution: "1024x1024",
+            mood: "Dramatic",
+            color_palette: "Warm"
+        }
+    });
+};
+
+// Example 2d: Quiz Generator with different filters
+const handleQuizGenerator = async () => {
+    const result = await generateResponse({
+        content: "Create a quiz about World War 2",
+        type: "text",
+        toolName: "Quiz Generator",
+        conversationId: currentChatId || "",
+        filters: {
+            difficulty: "Hard",
+            question_count: "10",
+            question_type: "Multiple Choice",
+            topic: "History"
+        }
+    });
 };
 
 // Example 3: Send image message
