@@ -2,8 +2,10 @@ import React from "react";
 import SearchComponent from "../components/SearchComponent";
 import HomeCard from "../components/HomeCard";
 import { Sparkles, BookOpen, Code, Briefcase } from 'lucide-react';
+import { useHttp } from "../hooks/useHttp";
 
 export default function HomePage() {
+    const {postReq}= useHttp();
 
     const cards = [
         {
