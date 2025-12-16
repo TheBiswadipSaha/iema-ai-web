@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff, Sparkles, ArrowRight, User, Check, X } from 'lucide-react';
+import { useHttp } from '../hooks/useHttp';
 
 const SignUpPage=()=> {
   const [name, setName] = useState('');
@@ -10,7 +11,8 @@ const SignUpPage=()=> {
   const [isLoading, setIsLoading] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
-
+    const { postReq} = useHttp()
+  
   // Password strength validation
   const getPasswordStrength = () => {
     if (!password) return { strength: 0, label: '', color: '' };
@@ -62,11 +64,54 @@ const SignUpPage=()=> {
     }
     
     setIsLoading(true);
-    // Simulate API call
-    setTimeout(() => {
+    
+    try {
+      const response = await fetch('api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim().toLowerCase(),
+          password,
+          isGoogleUser: false
+        })
+      });
+      
+      console.log('Response Status:', response.status);
+      console.log('Response OK:', response.ok);
+      
+      // Check if response has content before parsing JSON
+      const contentType = response.headers.get('content-type');
+      let data = null;
+      
+      if (contentType && contentType.includes('application/json')) {
+        data = await response.json();
+        console.log('Response Data:', data);
+      } else {
+        const text = await response.text();
+        console.log('Response Text:', text);
+      }
+      
+      if (response.ok) {
+        console.log('Sign up successful!');
+        // Handle success (e.g., redirect to dashboard)
+        setError(''); // Clear any errors
+        alert('Account created successfully!');
+      } else {
+        if (response.status === 404) {
+          setError('API endpoint not found. Please check your backend server.');
+        } else {
+          setError(data?.message || `Sign up failed with status ${response.status}`);
+        }
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      setError(`Network error: ${err.message || 'Please check your connection and try again.'}`);
+    } finally {
       setIsLoading(false);
-      console.log('Sign up attempt:', { name, email, password });
-    }, 1500);
+    }
   };
 
   const handleKeyPress = (e) => {
