@@ -11,7 +11,8 @@ export const useHttp = () => {
     const { logout, role } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
-    const BASE_URL = 'https://revampbackend.iema.ai/';
+    // const BASE_URL = 'https://revampbackend.iema.ai/';
+    const BASE_URL = 'http://192.168.90.88:5000/';
 
 
     // Clear all caches silently without affecting requests

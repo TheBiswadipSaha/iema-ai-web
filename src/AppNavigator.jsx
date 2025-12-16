@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./ProtectedRoute";
+import PublicRoute from "./components/PublicRoute";
 import ChatRouteValidator from "./ChatRouteValidator";
 import Layout from "./layout/layout";
 import HomePage from "./pages/HomePage";
@@ -10,37 +11,56 @@ import NotFoundPage from "./pages/NotFoundPage";
 import { ChatScreen } from "./pages/ChatScreen";
 import SelectTutor from "./pages/SelectTutor";
 import SignUpPage from "./pages/SignUpPage";
+import { useAuth } from "./context/AuthContext";
+
+// Wrapper component to conditionally render HomePage based on auth status
+const HomePageWrapper = () => {
+  const { isAuthenticated } = useAuth();
+  
+  if (isAuthenticated) {
+    // Protected home page - chat screen mode with footer and hideFooter true
+    return (
+      <Layout hideFooter={true} isChatScreen={true}>
+        <HomePage />
+      </Layout>
+    );
+  }
+  
+  // Public home page - normal mode with footer visible
+  return (
+    <Layout>
+      <HomePage />
+    </Layout>
+  );
+};
 
 const AppNavigator = () => {
   return (
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          {/* Public Routes with Layout */}
+          {/* Home Page - Works for both authenticated and unauthenticated users */}
           <Route 
             path="/" 
-            element={
-              <Layout>
-                <HomePage />
-              </Layout>
-            } 
+            element={<HomePageWrapper />} 
           />
           
+          {/* Login/Signup - Redirect to home if authenticated */}
           <Route 
             path="/login" 
             element={
-              <>
+              <PublicRoute>
                 <LoginPage />
-              </>
+              </PublicRoute>
             } 
           />
 
           <Route 
             path="/signup" 
             element={
-              <>
+              <PublicRoute>
                 <SignUpPage />
-              </>
+              </PublicRoute>
             } 
           />
           

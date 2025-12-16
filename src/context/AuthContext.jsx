@@ -13,23 +13,18 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [role, setRole] = useState(null);
   const [token, setToken] = useState(null);
   
   // Change this value to enable/disable route protection
-  const protectionEnabled = false; // Set to true to enable protection
+  const protectionEnabled = true; // Set to true to enable protection
 
-  // Initialize auth state from localStorage on mount
+  // Initialize auth state from sessionStorage on mount
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    const storedRole = localStorage.getItem("role");
-    const storedUser = localStorage.getItem("user");
+    const storedToken = sessionStorage.getItem("token");
+    const storedUser = sessionStorage.getItem("user");
     
     if (storedToken) {
       setToken(storedToken);
-    }
-    if (storedRole) {
-      setRole(storedRole);
     }
     if (storedUser) {
       try {
@@ -40,15 +35,18 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = (userData, userRole, authToken) => {
+  const login = (userData, authToken, navigate) => {
     if (userData && authToken) {
       setUser(userData);
-      setRole(userRole);
       setToken(authToken);
       
-      localStorage.setItem("token", authToken);
-      localStorage.setItem("role", userRole);
-      localStorage.setItem("user", JSON.stringify(userData));
+      sessionStorage.setItem("token", authToken);
+      sessionStorage.setItem("user", JSON.stringify(userData));
+      
+      // Always navigate to protected home page after login
+      if (navigate) {
+        navigate('/', { replace: true });
+      }
       return true;
     }
     return false;
@@ -56,18 +54,15 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setUser(null);
-    setRole(null);
     setToken(null);
     
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
   };
 
   return (
     <AuthContext.Provider value={{ 
       user,
-      role,
       token,
       login, 
       logout, 

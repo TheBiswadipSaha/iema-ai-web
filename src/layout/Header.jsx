@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Bell, User, Sparkles, Menu, X, ArrowLeft } from 'lucide-react';
 import logoImg from '../assets/logo.png';
+import { useAuth } from '../context/AuthContext';
 
 function Header({ 
   logo = "IEMA AI",
@@ -19,10 +20,11 @@ function Header({
   isChatScreen = false,
   onBack = () => {},
   user = null,
-  logout = () => {},
+  // logout = () => {},
   navigate = () => {}
 }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const {logout} = useAuth()
 
   const handleNavigation = (e, path) => {
     e.preventDefault();
@@ -46,7 +48,9 @@ function Header({
                 <ArrowLeft size={20} className="text-gray-300" />
               </button>
               
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2"
+              onClick={()=>{logout()}}
+              >
                 <img src={logoImg} className='w-10 h-10 rounded-xl' alt="Logo" />
                 <span className="text-lg font-bold hidden sm:inline">{logo}</span>
               </div>
