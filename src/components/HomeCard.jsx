@@ -1,10 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 
 function HomeCard({ cards = [] }) {
-  const navigate = useNavigate();
-
   // Route mapping - all chat routes now use /chat/:type pattern
   const routeMap = {
     'Image Analyzer': '/chat/image-analyzer',
@@ -19,7 +16,8 @@ function HomeCard({ cards = [] }) {
   const handleNavigation = (linkText) => {
     const route = routeMap[linkText];
     if (route) {
-      navigate(route);
+      console.log('Navigating to:', route);
+      // navigate(route); - uncomment when using with react-router
     }
   };
 
@@ -30,13 +28,13 @@ function HomeCard({ cards = [] }) {
           {cards.map((card, index) => (
             <div
               key={index}
-              className="group relative bg-[#171a1c] backdrop-blur-sm rounded-2xl p-4 border border-slate-800/50 hover:border-slate-700/50 transition-all duration-500 overflow-hidden"
+              className="group relative bg-[#171a1c] backdrop-blur-sm rounded-2xl p-4 border border-slate-800/50 hover:border-slate-700/50 transition-all duration-500 overflow-hidden flex flex-col"
             >
               {/* Subtle glow effect on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-emerald-500/3 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
               {/* Content */}
-              <div className="relative z-10">
+              <div className="relative z-10 flex flex-col h-full">
                 {/* Icon with hover effect */}
                 <div className="mb-5 w-fit">
                   <div className="w-10 h-10 rounded-2xl flex items-center justify-center transition-all duration-300 bg-[#22262A] group-hover:rotate-2 group-hover:scale-110">
@@ -58,7 +56,7 @@ function HomeCard({ cards = [] }) {
                 </p>
 
                 {/* Button Links */}
-                <div className="space-y-2">
+                <div className="space-y-2 mt-auto">
                   {card.links.map((link, linkIndex) => (
                     <button
                       key={linkIndex}
