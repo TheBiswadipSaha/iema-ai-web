@@ -86,7 +86,7 @@ export default function LoginPage() {
       <div className="z-10 flex flex-col items-center justify-center text-center text-white w-full max-w-md">
         {/* Badge with animation */}
         <div className="mb-6 sm:mb-8 flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 w-full max-w-[250px] justify-center mx-auto backdrop-blur-sm hover:border-emerald-500/50 transition-all duration-300">
-          <Sparkles className="h-4 w-4 text-emerald-400 animate-pulse" />
+                    <div className="h-3 w-3 rounded-full bg-[#b3a528]"></div>
           <span className="text-sm text-[#74818d] font-semibold text-[15px]">AI-Powered Platform</span>
         </div>
 
