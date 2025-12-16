@@ -9,6 +9,57 @@ import { useChatApi } from "../apis/useChatApi";
 import ReactMarkdown from "react-markdown";
 import { useHttp } from "../hooks/useHttp";
 
+// Skeleton Loader Component
+const SkeletonLoader = ({ currentConfig, setActiveFilters, onSendMessage }) => {
+  return (
+    <div className="flex h-screen bg-[#101214]">
+      <ChattingSidebar
+        pageConfig={currentConfig}
+        onFilterChange={setActiveFilters}
+      />
+
+      <div className="flex-1 flex flex-col">
+        <div className="flex-1 overflow-y-auto p-8">
+          <div className="max-w-[54.8rem] mx-auto space-y-4">
+            {/* AI Message Skeleton */}
+            <div className="flex justify-start">
+              <div className="max-w-[70%] w-96 h-20 bg-gray-800 rounded-2xl animate-pulse"></div>
+            </div>
+
+            {/* User Message Skeleton */}
+            <div className="flex justify-end">
+              <div className="max-w-[70%] w-72 h-16 bg-gray-700 rounded-2xl animate-pulse"></div>
+            </div>
+
+            {/* AI Message Skeleton */}
+            <div className="flex justify-start">
+              <div className="max-w-[70%] w-80 h-24 bg-gray-800 rounded-2xl animate-pulse"></div>
+            </div>
+
+            {/* User Message Skeleton */}
+            <div className="flex justify-end">
+              <div className="max-w-[70%] w-64 h-14 bg-gray-700 rounded-2xl animate-pulse"></div>
+            </div>
+
+            {/* AI Message Skeleton */}
+            <div className="flex justify-start">
+              <div className="max-w-[70%] w-full h-32 bg-gray-800 rounded-2xl animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Input Area Skeleton */}
+        <div className="flex justify-center items-center">
+          <PromptSender
+            pageConfig={currentConfig}
+            onSendMessage={onSendMessage}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const ChatScreen = () => {
   const { type, chatId } = useParams();
   const navigate = useNavigate();
@@ -171,12 +222,14 @@ export const ChatScreen = () => {
     }
   };
 
-  // Show loading state while fetching conversation
+  // Show skeleton loader while fetching conversation
   if (isLoading) {
     return (
-      <div className="flex h-screen bg-[#101214] items-center justify-center">
-        <div className="text-gray-400 text-lg">Loading conversation...</div>
-      </div>
+      <SkeletonLoader 
+        currentConfig={currentConfig}
+        setActiveFilters={setActiveFilters}
+        onSendMessage={handleSendMessage}
+      />
     );
   }
 
