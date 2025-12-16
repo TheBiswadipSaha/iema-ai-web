@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 
 function Header({ 
   logo = "IEMA AI",
+  isBackPresent = true,
   menuItems = [
     { label: 'Features', path: '/features' },
     { label: 'Pricing', path: '/pricing' },
@@ -40,13 +41,14 @@ function Header({
           <div className="flex justify-between items-center">
             {/* Left Side - Back Button + Logo */}
             <div className="flex items-center space-x-3">
-              <button 
+              {isBackPresent &&
+                <button 
                 onClick={onBack}
                 className="p-2 hover:bg-gray-800 rounded-lg transition"
                 aria-label="Go back"
               >
                 <ArrowLeft size={20} className="text-gray-300" />
-              </button>
+              </button>}
               
               <div className="flex items-center space-x-2"
               onClick={()=>{logout()}}

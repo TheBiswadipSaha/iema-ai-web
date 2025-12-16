@@ -13,8 +13,8 @@ export default function HomePage() {
             title: 'Create Content',
             description: 'Transform your ideas into engaging blogs, stunning images, and captivating videos with the power of AI.',
             links: [
-                { text: 'Image Analyzer', href: '#' },
-                { text: 'Image Creator', href: '#' }
+                { text: 'Image Playground', href: '#' },
+                { text: 'Image Generator', href: '#' }
             ]
         },
         {

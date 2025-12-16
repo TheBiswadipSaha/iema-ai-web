@@ -20,7 +20,7 @@ const HomePageWrapper = () => {
   if (isAuthenticated) {
     // Protected home page - chat screen mode with footer and hideFooter true
     return (
-      <Layout hideFooter={true} isChatScreen={true}>
+      <Layout hideFooter={false} isChatScreen={true} isBackPresent={false}>
         <HomePage />
       </Layout>
     );

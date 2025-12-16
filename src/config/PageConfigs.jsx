@@ -55,7 +55,7 @@ export const PageConfigs = {
         }
       ]
     },
-    'img-playground': {
+    'image-generator': {
       title: 'Image Playground',
       subtitle: 'Analyze & understand images',
       icon: <Image size={20} />,
@@ -198,8 +198,8 @@ export const PageConfigs = {
         }
       ]
     },
-    'image-analyzer': {
-      title: 'Image Analyzer',
+    'image-playground': {
+      title: 'Image Playground',
       subtitle: 'Analyze & understand images',
       icon: <Sparkles size={20} />,
       placeholder: 'Describe the image you want to analyze...',
