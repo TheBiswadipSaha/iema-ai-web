@@ -125,7 +125,7 @@ const SignUpPage=()=> {
       <div className="z-10 flex flex-col items-center justify-center text-center text-white w-full max-w-md">
         {/* Badge with animation */}
         <div className="mb-6 sm:mb-8 flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 w-full max-w-[250px] justify-center mx-auto backdrop-blur-sm hover:border-emerald-500/50 transition-all duration-300">
-          <Sparkles className="h-4 w-4 text-emerald-400 animate-pulse" />
+        <div className="h-3 w-3 rounded-full bg-[#b3a528]"></div>
           <span className="text-sm text-[#74818d] font-semibold text-[15px]">AI-Powered Platform</span>
         </div>
 
@@ -287,7 +287,7 @@ const SignUpPage=()=> {
             <button
               onClick={handleSubmit}
               disabled={isLoading}
-              className="w-full relative overflow-hidden bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-3.5 rounded-xl font-bold hover:from-emerald-600 hover:to-emerald-700 transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed group"
+              className="w-full relative overflow-hidden bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-3.5 rounded-xl font-bold hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed group cursor-pointer"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -303,17 +303,17 @@ const SignUpPage=()=> {
             </button>
 
             {/* Divider */}
-            <div className="relative my-6">
+            {/* <div className="relative my-6">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-700"></div>
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-4 bg-gradient-to-b from-[#1a1a1a]/90 to-[#0a0a0a]/90 text-gray-400">or sign up with</span>
               </div>
-            </div>
+            </div> */}
 
             {/* Social Sign Up Buttons */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-2 gap-4">
               <button 
                 onClick={() => handleSocialSignUp('Google')}
                 disabled={isLoading}
@@ -337,7 +337,7 @@ const SignUpPage=()=> {
                 </svg>
                 <span className="text-gray-300 group-hover:text-white transition cursor-pointer">GitHub</span>
               </button>
-            </div>
+            </div> */}
 
             {/* Sign In Link */}
             <div className="text-center text-sm text-gray-400 pt-2">

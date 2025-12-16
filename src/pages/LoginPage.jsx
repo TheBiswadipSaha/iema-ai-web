@@ -173,7 +173,7 @@ export default function LoginPage() {
             <button
               onClick={handleSubmit}
               disabled={isLoading}
-              className="w-full relative overflow-hidden bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-3.5 rounded-xl font-bold hover:from-emerald-600 hover:to-emerald-700 transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed group"
+              className="w-full relative overflow-hidden bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-3.5 rounded-xl font-bold   transition-all duration-300 hover:bg-emerald-600  hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed group cursor-pointer"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -181,7 +181,7 @@ export default function LoginPage() {
                   Signing In...
                 </span>
               ) : (
-                <span className="flex items-center justify-center gap-2 cursor-pointer">
+                <span className="flex items-center justify-center gap-2 cursor-pointer ">
                   Sign In
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
@@ -189,17 +189,17 @@ export default function LoginPage() {
             </button>
 
             {/* Divider with better styling */}
-            <div className="relative my-6">
+            {/* <div className="relative my-6">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-700"></div>
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-4 bg-gradient-to-b from-[#1a1a1a]/90 to-[#0a0a0a]/90 text-gray-400">or continue with</span>
               </div>
-            </div>
+            </div> */}
 
             {/* Social Login Buttons */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-2 gap-4">
               <button className="flex items-center justify-center gap-2 py-3 bg-[#0f0f0f] border border-gray-700 rounded-xl hover:border-emerald-500/50 hover:bg-[#1a1a1a] transition-all duration-300 group">
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -215,7 +215,7 @@ export default function LoginPage() {
                 </svg>
                 <span className="text-gray-300 group-hover:text-white transition cursor-pointer">GitHub</span>
               </button>
-            </div>
+            </div> */}
 
             {/* Sign Up Link with better styling */}
             <div className="text-center text-sm text-gray-400 pt-2">
