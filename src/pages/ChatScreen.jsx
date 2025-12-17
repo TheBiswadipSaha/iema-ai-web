@@ -8,6 +8,7 @@ import { PageConfigs } from "../config/pageConfigs";
 import { useChatApi } from "../apis/useChatApi";
 import ReactMarkdown from "react-markdown";
 import { useHttp } from "../hooks/useHttp";
+import { useNotification } from "../context/NotificationContext";
 
 // Image Viewer Modal Component
 const ImageViewerModal = ({ imageUrl, onClose }) => {
@@ -176,6 +177,7 @@ export const ChatScreen = () => {
   const currentConfig = PageConfigs[type];
   const { generateResponse } = useChatApi();
   const { getReq, postReq } = useHttp();
+  const { showNotification } = useNotification();
   console.log("Chat Type:", type);
   console.log("Current Config:", currentConfig);
 
@@ -332,8 +334,8 @@ useEffect(() => {
     ]);
     setIsThinking(true);
 
+    let res;
     try {
-      let res;
 
       // ============================
       // 🖼 IMAGE ANALYSIS / VISION FLOW (requires actual image)
@@ -410,6 +412,7 @@ useEffect(() => {
       }
     } catch (err) {
       console.error("Send message failed:", err);
+      showNotification(err, "error");
       setIsThinking(false);
     }
   };
