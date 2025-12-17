@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Send, Paperclip, Image as ImageIcon, X, Sparkles, ChevronDown } from 'lucide-react';
+import { Send, Paperclip, Image as ImageIcon, X, Sparkles, ChevronDown, PaperclipIcon } from 'lucide-react';
 
 export const PromptSender = ({ pageConfig, onSendMessage, disabled }) => {
   const [prompt, setPrompt] = useState("");
@@ -9,7 +9,7 @@ export const PromptSender = ({ pageConfig, onSendMessage, disabled }) => {
   const imageInputRef = useRef(null);
 
   // Check if current page supports image upload
-  const allowImageUpload = pageConfig?.type === 'vision' && pageConfig?.allowImageUpload;
+  const allowImageUpload = pageConfig?.allowImageUpload;
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -20,6 +20,7 @@ export const PromptSender = ({ pageConfig, onSendMessage, disabled }) => {
         setImagePreview(e.target.result);
       };
       reader.readAsDataURL(file);
+      console.log("image uploaded", file);
     }
   };
 
@@ -91,7 +92,7 @@ export const PromptSender = ({ pageConfig, onSendMessage, disabled }) => {
                 onChange={handleImageUpload} 
                 className="hidden" 
               />
-              <Image size={20} />
+              <PaperclipIcon size={20} />
             </label>
           )}
 

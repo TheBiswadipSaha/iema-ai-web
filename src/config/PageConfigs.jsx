@@ -11,6 +11,7 @@ import {
 export const PageConfigs = {
   'ai-tutor': {
     title: 'AI Tutor',
+    toolName: 'AI Tutor',
     subtitle: 'Physics Specialist',
     icon: <Bot size={20} />,
     type: 'text',
@@ -31,6 +32,7 @@ export const PageConfigs = {
   },
   'blog-generator': {
     title: 'Blog Generator',
+    toolName: 'Blog Generator',
     subtitle: 'Create engaging content',
     icon: <FileText size={20} />,
     type: 'text',
@@ -66,6 +68,7 @@ export const PageConfigs = {
   },
   'web-summarizer': {
     title: 'Web Summarizer',
+    toolName: 'Web Summarizer',
     subtitle: 'Summarize any webpage',
     icon: <Globe size={20} />,
     type: 'text',
@@ -97,6 +100,7 @@ export const PageConfigs = {
   },
   'email-generator': {
     title: 'Email Generator',
+    toolName: 'Email Generator',
     subtitle: 'Craft professional emails',
     icon: <Mail size={20} />,
     type: 'text',
@@ -130,12 +134,13 @@ export const PageConfigs = {
       }
     ]
   },
-  'img-generator': {
+  'image-generator': {
     title: 'Image Generator',
+    toolName: 'Image Generator',
     subtitle: 'Create stunning visuals',
     icon: <Image size={20} />,
-    type: 'vision',
-    allowImageUpload: true,
+    type: 'image',
+    allowImageUpload: false,
     placeholder: 'Describe the image you want to create...',
     actions: ['Generate', 'Enhance', 'Variation'],
     filters: [
@@ -189,6 +194,7 @@ export const PageConfigs = {
   },
   'code-generator': {
     title: 'Code Generator',
+    toolName: 'Code Generator',
     subtitle: 'Write code faster',
     icon: <Code size={20} />,
     type: 'text',
@@ -223,6 +229,7 @@ export const PageConfigs = {
   },
   'image-analyzer': {
     title: 'Image Analyzer',
+    toolName: 'Image Playground',
     subtitle: 'Analyze & understand images',
     icon: <Sparkles size={20} />,
     type: 'vision',
