@@ -45,7 +45,7 @@ export const PromptSender = ({ pageConfig, onSendMessage, disabled }) => {
   };
 
   return (
-    <div className="w-full max-w-4xl bg-[#1a1b1e] border border-gray-800 rounded-2xl shadow-lg">
+    <div className="w-full max-w-4xl bg-[#0e0e11] border border-[#24242e] rounded-2xl shadow-lg mb-10">
       <div className="px-4 py-4">
         {/* Action Buttons */}
         {pageConfig?.actions && pageConfig.actions.length > 0 && (
@@ -69,7 +69,7 @@ export const PromptSender = ({ pageConfig, onSendMessage, disabled }) => {
             <img 
               src={imagePreview} 
               alt="Upload preview" 
-              className="max-h-32 rounded-lg border border-gray-700"
+              className="max-h-32 rounded-lg"
             />
             <button
               onClick={removeImage}
@@ -81,7 +81,7 @@ export const PromptSender = ({ pageConfig, onSendMessage, disabled }) => {
         )}
 
         {/* Main Input Container */}
-        <div className="flex items-center gap-3 bg-gray-900/50 rounded-lg px-3 py-2 border border-gray-800 focus-within:border-emerald-500 transition-colors">
+        <div className="flex items-center gap-3 rounded-lg px-3 py-2 focus-within:border-emerald-500 transition-colors">
           {/* Image Upload Icon - Only for vision type */}
           {allowImageUpload && (
             <label className="cursor-pointer text-gray-400 hover:text-emerald-400 transition-colors">
@@ -115,19 +115,31 @@ export const PromptSender = ({ pageConfig, onSendMessage, disabled }) => {
           </div>
 
           {/* Send Button */}
-          <button 
-            onClick={handleSend}
-            className="text-gray-400 hover:text-emerald-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={disabled || (!prompt.trim() && !uploadedImage)}
-          >
-            <Send size={20} />
-          </button>
+          <button
+          onClick={handleSend}
+          disabled={disabled || (!prompt.trim() && !uploadedImage)}
+          className="
+            flex items-center gap-1 px-5 py-3 rounded-full justify-center
+            bg-[#39E48F]
+            text-[#000] hover:text-emerald-300
+            font-semibold
+            transition-colors
+            disabled:text-[#878792]
+            disabled:bg-[#22222A]
+            disabled:cursor-not-allowed
+            disabled:opacity-50
+          "
+        >
+          <span>Send</span>
+          <Send size={20} />
+        </button>
+
         </div>
 
         {/* Disclaimer Text */}
-        <div className="mt-3 text-center">
+        <div className="mt-2 text-center">
           <p className="text-xs text-gray-600">
-            Wesley can make mistakes. Consider checking important information.
+            Enter to send · AI can make mistakes · Please avoid sharing sensitive information.
           </p>
         </div>
       </div>

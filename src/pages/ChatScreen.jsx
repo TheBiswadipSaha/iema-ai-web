@@ -9,6 +9,7 @@ import { useChatApi } from "../apis/useChatApi";
 import ReactMarkdown from "react-markdown";
 import { useHttp } from "../hooks/useHttp";
 import { useNotification } from "../context/NotificationContext";
+import logoImg from '../assets/logo.png';
 
 // Image Viewer Modal Component
 const ImageViewerModal = ({ imageUrl, onClose }) => {
@@ -442,20 +443,24 @@ useEffect(() => {
             // Welcome Screen
             <div className="flex items-center justify-center h-full">
               <div className="text-center max-w-2xl">
-                {currentConfig?.icon && (
+                {/* {currentConfig?.icon && (
                   <div
                     ref={avatarRef}
                     className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4"
                   >
                     {currentConfig?.icon}
                   </div>
-                )}
+                )} */}
+                <div className="flex items-center justify-center space-x-2">
+                                  <img src={logoImg} className='w-20 h-20 rounded-xl' alt="Logo" />
+                                  {/* <span className="text-lg font-bold hidden sm:inline">{logo}</span> */}
+                                </div>
 
                 <h1
                   ref={titleRef}
                   className="text-3xl font-bold text-white mb-2"
                 >
-                  I am Wesley, your {currentConfig?.title}
+                  I am IEMA AI, Your {currentConfig?.title}
                 </h1>
 
                 <p ref={subtitleRef} className="text-gray-400 mb-8">

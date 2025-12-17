@@ -142,7 +142,7 @@ export const PageConfigs = {
     type: 'image',
     allowImageUpload: false,
     placeholder: 'Describe the image you want to create...',
-    actions: ['Generate', 'Enhance', 'Variation'],
+    // actions: ['Generate', 'Enhance', 'Variation'],
     filters: [
       {
         heading: 'Style',
@@ -198,7 +198,8 @@ export const PageConfigs = {
     subtitle: 'Write code faster',
     icon: <Code size={20} />,
     type: 'text',
-    placeholder: 'Describe what you want to build...',
+    allowImageUpload: true,
+    placeholder: 'Upload code file & Describe what you want to build...',
     filters: [
       {
         heading: 'Complexity',
