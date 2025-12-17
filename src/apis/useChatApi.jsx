@@ -30,84 +30,41 @@ export const useChatApi = () => {
      * // Image Generator filters
      * filters: { style: "Realistic", resolution: "4K", mood: "Dark" }
      */
-    const generateResponse = async ({ 
-        content, 
-        type = "text", 
-        toolName = "", 
-        conversationId = "",
-        image = null,
-        filters = null
+    const generateResponse = async ({
+    content,
+    type = "text",
+    toolName = "",
+    conversationId = "",
+    filters = null
     }) => {
-        try {
-            // Check if this is a vision request with an image
-            if (type === "vision" && image) {
-                const formData = new FormData();
-                formData.append("image", image);
-                formData.append("content", content);
-                formData.append("type", type);
-                if (toolName) formData.append("toolName", toolName);
-                formData.append("conversationId", conversationId);
-                
-                // Add DYNAMIC filters to FormData if present
-                if (filters && typeof filters === 'object') {
-                    Object.entries(filters).forEach(([key, value]) => {
-                        // Only add non-empty values
-                        if (value !== null && value !== undefined && value !== '') {
-                            formData.append(`filters[${key}]`, value);
-                        }
-                    });
-                }
+    try {
+        const payload = {
+        content,
+        type,
+        toolName,
+        conversationId
+        };
 
-                return await postReq(
-                    "api/chat/generate-response",
-                    token,
-                    formData,
-                    true // isFormData
-                );
-            }
-
-            // Regular text request with DYNAMIC filters
-            const payload = {
-                content,
-                type,
-                toolName,
-                conversationId
-            };
-
-            // Add filters dynamically - works with ANY filter fields
-            if (filters && typeof filters === 'object' && Object.keys(filters).length > 0) {
-                // Filter out empty/null/undefined values
-                const validFilters = Object.entries(filters)
-                    .filter(([_, value]) => {
-                        // Keep the filter if it has a valid value
-                        if (value === null || value === undefined) return false;
-                        if (typeof value === 'string' && value.trim() === '') return false;
-                        return true;
-                    })
-                    .reduce((acc, [key, value]) => {
-                        acc[key] = value;
-                        return acc;
-                    }, {});
-                
-                // Only add filters object if there are valid filters
-                if (Object.keys(validFilters).length > 0) {
-                    payload.filters = validFilters;
-                }
-            }
-
-            return await postReq(
-                "api/chat/generate-response",
-                token,
-                payload
-            );
-        } catch (error) {
-            console.error("Error generating response:", error);
-            return { 
-                success: false, 
-                message: "Failed to generate response" 
-            };
+        if (filters && typeof filters === "object") {
+        payload.filters = Object.fromEntries(
+            Object.entries(filters).filter(
+            ([_, v]) => v !== null && v !== undefined && v !== ""
+            )
+        );
         }
+
+        return await postReq(
+        "api/chat/generate-response",
+        token,
+        payload
+        );
+    } catch (error) {
+        console.error("Text response error:", error);
+        return { success: false };
+    }
     };
+
+
 
     /**
      * Get conversation by ID with all messages

@@ -65,13 +65,15 @@ export const ChatScreen = () => {
   const navigate = useNavigate();
   const currentConfig = PageConfigs[type];
   const { generateResponse } = useChatApi();
-  const { getReq } = useHttp();
+  const { getReq, postReq } = useHttp();
+  console.log("Chat Type:", type);
+  console.log("Current Config:", currentConfig);
 
   const [messages, setMessages] = useState([]);
   const [currentChatId, setCurrentChatId] = useState(chatId || null);
   const [activeFilters, setActiveFilters] = useState({});
   const [isThinking, setIsThinking] = useState(false);
-  const [isLoading, setIsLoading] = useState(!!chatId); // Only load if chatId exists
+  const [isLoading, setIsLoading] = useState(!!chatId);
   const token = sessionStorage.getItem("token");
 
   // Refs for animation
@@ -92,24 +94,21 @@ export const ChatScreen = () => {
         const response = await getReq(`api/chat/conversations/${chatId}`, token);
 
         if (response?.success) {
-          // Transform the API response to match your message format
-          // Adjust this based on your actual API response structure
           if (response.data?.messages && Array.isArray(response.data.messages)) {
             const formattedMessages = response.data.messages.map(msg => ({
-              text: msg.content || msg.text || msg.message,
-              sender: msg.role === "user" || msg.sender === "user" ? "user" : "ai",
+              text: msg.text || msg.content || msg.message,
+              sender: msg.sender === "user" ? "user" : "ai",
+              imageUrl: msg.imageUrl || null, // ✅ Store imageUrl from API
+              type: msg.type || "text"
             }));
             setMessages(formattedMessages);
           }
 
-          // Set filters if they're returned from the API
           if (response.data?.filters) {
             setActiveFilters(response.data.filters);
           }
         } else {
           console.error("Failed to fetch conversation history");
-          // Optionally navigate to home or show error
-          // navigate(`/chat/${type}`, { replace: true });
         }
       } catch (error) {
         console.error("Error fetching conversation:", error);
@@ -198,27 +197,84 @@ export const ChatScreen = () => {
 
   // Handle sending messages
   const handleSendMessage = async (content, image = null) => {
-    setMessages((prev) => [...prev, { text: content, sender: "user" }]);
+    // ✅ Create image preview URL for immediate display
+    const imagePreviewUrl = image ? URL.createObjectURL(image) : null;
+    
+    setMessages((prev) => [
+      ...prev, 
+      { 
+        text: content, 
+        sender: "user",
+        imageUrl: imagePreviewUrl, // ✅ Store preview URL temporarily
+        type: image ? "vision" : "text"
+      }
+    ]);
     setIsThinking(true);
 
-    const res = await generateResponse({
-      content,
-      type: image ? "vision" : "text",
-      conversationId: currentChatId,
-      image,
-      filters: activeFilters,
-    });
+    try {
+      let res;
 
-    setIsThinking(false);
+      // ============================
+      // 🖼 IMAGE / VISION FLOW
+      // ============================
+      if (image && currentConfig?.type === "vision") {
+        const formData = new FormData();
 
-    if (res?.success) {
-      if (!currentChatId && res.data?.conversationId) {
-        const newChatId = res.data.conversationId;
-        setCurrentChatId(newChatId);
-        navigate(`/chat/${type}/${newChatId}`, { replace: true });
+        formData.append("content", content || "");
+        formData.append("type", "vision");
+        formData.append("toolName", "Image Playground");
+
+        if (currentChatId) {
+          formData.append("conversationId", currentChatId);
+        }
+
+        formData.append("image", image);
+
+        console.log("Image Request Payload", {
+          content,
+          type: "vision",
+          toolName: "Image Playground",
+          conversationId: currentChatId
+        });
+
+        res = await postReq(
+          "api/chat/generate-image-response",
+          token,
+          formData,
+          true
+        );
       }
 
-      setMessages((prev) => [...prev, { text: res.data.reply, sender: "ai" }]);
+      // ============================
+      // 💬 TEXT FLOW
+      // ============================
+      else {
+        res = await generateResponse({
+          content,
+          type: "text",
+          toolName: currentConfig?.toolName,
+          conversationId: currentChatId || "",
+          filters: activeFilters
+        });
+      }
+
+      setIsThinking(false);
+
+      if (res?.success) {
+        if (!currentChatId && res.data?.conversationId) {
+          const newChatId = res.data.conversationId;
+          setCurrentChatId(newChatId);
+          navigate(`/chat/${type}/${newChatId}`, { replace: true });
+        }
+
+        setMessages((prev) => [
+          ...prev,
+          { text: res.data.reply, sender: "ai" }
+        ]);
+      }
+    } catch (err) {
+      console.error("Send message failed:", err);
+      setIsThinking(false);
     }
   };
 
@@ -335,6 +391,17 @@ export const ChatScreen = () => {
                         : "bg-gray-800 text-gray-200"
                     }`}
                   >
+                    {/* ✅ Display Image if Present */}
+                    {msg.imageUrl && msg.sender === "user" && (
+                      <div className="mb-2">
+                        <img 
+                          src={msg.imageUrl} 
+                          alt="Uploaded content" 
+                          className="max-w-full max-h-64 rounded-lg"
+                        />
+                      </div>
+                    )}
+                    
                     {msg.sender === "ai" ? (
                       <div className="markdown-wrap">
                         <ReactMarkdown>{msg.text}</ReactMarkdown>
