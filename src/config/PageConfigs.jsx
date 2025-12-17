@@ -117,13 +117,13 @@ export const PageConfigs = {
       }
     ]
   },
-  'img-generator': {
+  'image-generator': {
     title: 'Image Generator',
     toolName: 'Image Generator',
     subtitle: 'Create stunning visuals',
     icon: <Image size={20} />,
-    type: 'vision',
-    allowImageUpload: true,
+    type: 'image',
+    allowImageUpload: false,
     placeholder: 'Describe the image you want to create...',
     actions: ['Generate', 'Enhance', 'Variation'],
     filters: [
