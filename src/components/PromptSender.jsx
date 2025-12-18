@@ -7,9 +7,17 @@ export const PromptSender = ({ pageConfig, onSendMessage, disabled }) => {
   const [imagePreview, setImagePreview] = useState(null);
   
   const imageInputRef = useRef(null);
+  const MAX_HEIGHT = 120;
 
   // Check if current page supports image upload
   const allowImageUpload = pageConfig?.allowImageUpload;
+
+  const handleTextareaChange = (e) => {
+    setPrompt(e.target.value);
+
+    e.target.style.height = "auto";
+    e.target.style.height = Math.min(e.target.scrollHeight, MAX_HEIGHT) + "px";
+  };
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -98,12 +106,13 @@ export const PromptSender = ({ pageConfig, onSendMessage, disabled }) => {
 
           {/* Input Field */}
           <div className="flex-1 relative">
-            <input
+            <textarea
               type="text"
               value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              placeholder={pageConfig?.placeholder || "Message Wesley..."}
-              className="w-full bg-transparent text-gray-200 placeholder:text-gray-500 px-2 py-2 focus:outline-none"
+              onChange={handleTextareaChange}
+              placeholder={pageConfig?.placeholder || "Message IEMA AI..."}
+              className="w-full bg-transparent text-gray-200 placeholder:text-gray-500 px-2 py-2 resize-none focus:outline-none max-h-[120px] overflow-y-auto whitespace-pre-wrap break-words"
+              rows={1}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();

@@ -1,25 +1,33 @@
 import React, { useState } from 'react';
 import { Search } from 'lucide-react';
-import pythonImg from "../assets/PY.png"
+import cImg from "../assets/C.png";
+import cppImg from "../assets/C++.png";
+import csharpImg from "../assets/csharpImg.png";
+import goImg from "../assets/GO.png";
+import javaImg from "../assets/JAVA.png";
+import jsImg from "../assets/JS.png";
+import pyImg from "../assets/PY.png";
+import tsImg from "../assets/TS.png";
 
-const LanguageSelector = ({ onLanguageChange, defaultLanguage = 'Python' }) => {
+const LanguageSelector = ({ onLanguageChange, defaultLanguage = 'TypeScript' }) => {
   const [selectedLanguage, setSelectedLanguage] = useState(defaultLanguage);
   const [searchQuery, setSearchQuery] = useState('');
   console.log(defaultLanguage,"defaultLanguage")
-  console.log(onLanguageChange,"onLanguageChange")
+  // console.log(onLanguageChange,"onLanguageChange")
 
   // Import your language images here
   const languages = [
-    { name: 'TypeScript', color: 'bg-blue-500', image: '/path/to/typescript.png' },
-    { name: 'JavaScript', color: 'bg-yellow-400', image: '/path/to/javascript.png' },
-    { name: 'Python', color: 'bg-blue-400', image: (pythonImg) },
-    { name: 'Java', color: 'bg-red-500', image: '/path/to/java.png' },
-    { name: 'C#', color: 'bg-purple-500', image: '/path/to/csharp.png' },
-    { name: 'C++', color: 'bg-blue-600', image: '/path/to/cpp.png' },
-    { name: 'C', color: 'bg-blue-500', image: '/path/to/c.png' },
-    { name: 'Go', color: 'bg-cyan-400', image: '/path/to/go.png' },
-    { name: 'Rust', color: 'bg-orange-500', image: '/path/to/rust.png' }
+    { name: 'TypeScript', color: 'bg-blue-500', image: tsImg },
+    { name: 'JavaScript', color: 'bg-yellow-400', image: jsImg },
+    { name: 'Python', color: 'bg-blue-400', image: pyImg },
+    { name: 'Java', color: 'bg-red-500', image: javaImg },
+    { name: 'C#', color: 'bg-purple-500', image: csharpImg },
+    { name: 'C++', color: 'bg-blue-600', image: cppImg },
+    { name: 'C', color: 'bg-blue-500', image: cImg },
+    { name: 'Go', color: 'bg-cyan-400', image: goImg },
+    { name: 'Rust', color: 'bg-orange-500', image: csharpImg }
   ];
+
 
   const filteredLanguages = languages.filter(lang =>
     lang.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -46,34 +54,24 @@ const LanguageSelector = ({ onLanguageChange, defaultLanguage = 'Python' }) => {
         />
       </div>
 
-      {/* Language Grid */}
-      <div className="grid grid-cols-3 gap-2.5">
+      {/* Language List */}
+      <div className="flex flex-wrap gap-2.5">
         {filteredLanguages.map((lang) => (
           <button
             key={lang.name}
             onClick={() => handleLanguageSelect(lang.name)}
-            className={`flex flex-col items-center justify-center px-2 py-1 rounded-xl transition-all hover:scale-105 border ${
+            className={`w-[30%] flex flex-col items-center justify-center px-2 py-1 rounded-xl transition-all hover:scale-105 border ${
               selectedLanguage === lang.name
                 ? 'bg-emerald-500/10 border-emerald-500/50 ring-1 ring-emerald-500/30'
                 : 'bg-[#131316] border-gray-700/50 hover:bg-gray-800/50 hover:border-emerald-500/30'
             }`}
           >
-            <div
-              className={`w-8 h-8 rounded-lg flex items-center justify-center mb-1 overflow-hidden `}
-            >
-              <img 
-                src={lang.image} 
-                alt={lang.name}
-                className="w-7 h-7 object-contain"
-                onError={(e) => {
-                  // Fallback if image fails to load
-                  e.target.style.display = 'none';
-                  e.target.parentElement.innerHTML = `<span class="text-white font-bold text-xs">${lang.name.slice(0, 2)}</span>`;
-                }}
-              />
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-1 overflow-hidden">
+              <img src={lang.image} alt={lang.name} className="w-7 h-7 object-contain" />
             </div>
-            <span className={`text-[10px] text-center leading-tight font-medium ${
-              selectedLanguage === lang.name ? 'text-emerald-400' : 'text-gray-400'
+
+            <span className={`text-[10px] text-center font-medium ${
+              selectedLanguage === lang.name ? 'text-[#10B981]' : 'text-gray-400'
             }`}>
               {lang.name}
             </span>

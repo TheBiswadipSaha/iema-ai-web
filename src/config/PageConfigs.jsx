@@ -215,15 +215,15 @@ export const PageConfigs = {
         heading: 'Language',
         icon: <Code size={16} />,
         inputType: 'languageSelector',
-        default: 'Python',
+        default: 'TypeScript',
         options: [
+          { label: 'TypeScript', icon: <Code size={14} /> },
           { label: 'Python', icon: <Code size={14} /> },
           { label: 'JavaScript', icon: <Code size={14} /> },
           { label: 'Java', icon: <Code size={14} /> },
           { label: 'C++', icon: <Code size={14} /> },
           { label: 'Go', icon: <Code size={14} /> },
           { label: 'Rust', icon: <Code size={14} /> },
-          { label: 'TypeScript', icon: <Code size={14} /> }
         ],
       }
     ]
