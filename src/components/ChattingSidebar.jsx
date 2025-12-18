@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Image, Crown, History, WandSparkles, ChevronDown, X, Sliders, CreditCard } from 'lucide-react';
 import { useHttp } from '../hooks/useHttp';
+import LanguageSelector from './LanguageSelector';
 
 export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
   const [filters, setFilters] = useState({});
@@ -187,6 +188,19 @@ export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
                           }}
                         />
                       </div>
+                    )}
+
+                    {/* // In your filter rendering logic */}
+                    {section.inputType === 'languageSelector' && (
+                      <LanguageSelector 
+                        defaultLanguage={section.default}
+                        onLanguageChange={(language) => {
+                          updateFilters({
+                            ...filters,
+                            [section.heading]: language
+                          });
+                        }}
+                      />
                     )}
 
                     {/* Text/Number */}
