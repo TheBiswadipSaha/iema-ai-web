@@ -8,7 +8,8 @@ import { useNavigate } from 'react-router-dom';
 const Layout = ({ children, hideFooter = false, isChatScreen, isBackPresent= true }) => {
   const { navigate, currentPath } = useRouter();
   const { user, logout } = useAuth();
-  const navigation= useNavigate()
+  const navigation= useNavigate();
+  const score = localStorage.getItem('unknown') || sessionStorage.getItem('unknown') || 0;
 
   const handleNavigation = (e, path) => {
     e.preventDefault();
@@ -47,7 +48,7 @@ const Layout = ({ children, hideFooter = false, isChatScreen, isBackPresent= tru
         isBackPresent={isBackPresent}
         logout={logout}
         isLoggedIn={!!user}
-        credits={isChatScreen ? 50 : 250}
+        credits={score}
         notificationCount={isChatScreen ? 3 : 0}
         isChatScreen={isChatScreen}
         onBack={handleBack}

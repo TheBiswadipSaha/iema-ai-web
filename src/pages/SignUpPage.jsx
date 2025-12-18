@@ -324,7 +324,7 @@ const SignUpPage = () => {
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className="w-full relative overflow-hidden bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-3.5 rounded-xl font-bold hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed group cursor-pointer transition-all"
+              className="w-full relative overflow-hidden bg-gradient-to-r from-[#10B981] to-[#10B981] text-black py-3.5 rounded-xl font-bold hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed group cursor-pointer transition-all"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -342,7 +342,7 @@ const SignUpPage = () => {
             {/* Sign In Link */}
             <div className="text-center text-sm text-gray-400 pt-2">
               Already have an account?{' '}
-              <a href="/login" className="text-emerald-400 hover:text-emerald-300 font-bold transition hover:underline">
+              <a href="/login" className="text-[#10B981] hover:text-[#10B981] font-bold transition hover:underline">
                 Sign In
               </a>
             </div>

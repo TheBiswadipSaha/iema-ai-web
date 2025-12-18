@@ -10,6 +10,7 @@ import ReactMarkdown from "react-markdown";
 import { useHttp } from "../hooks/useHttp";
 import { useNotification } from "../context/NotificationContext";
 import logoImg from '../assets/logo.png';
+import { useAuth } from "../context/AuthContext";
 
 // Image Viewer Modal Component
 const ImageViewerModal = ({ imageUrl, onClose }) => {
@@ -187,7 +188,8 @@ export const ChatScreen = () => {
   const [activeFilters, setActiveFilters] = useState({});
   const [isThinking, setIsThinking] = useState(false);
   const [isLoading, setIsLoading] = useState(!!chatId);
-  const token = sessionStorage.getItem("token");
+  // const token = sessionStorage.getItem("token");
+  const { token, score, setScore  } = useAuth();
 
   // Refs for animation
   const avatarRef = useRef(null);
@@ -434,6 +436,7 @@ useEffect(() => {
       <ChattingSidebar
         pageConfig={currentConfig}
         onFilterChange={setActiveFilters}
+        score={score}
       />
 
       <div className="flex-1 flex flex-col">

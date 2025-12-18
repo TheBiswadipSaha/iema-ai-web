@@ -14,7 +14,7 @@ function Header({
     { label: 'Blog', path: '/blog' }
   ],
   isLoggedIn = false,
-  credits = 250,
+  credits = 0,
   notificationCount = 0,
   onNavigate = () => {},
   onButtonClick = () => {},

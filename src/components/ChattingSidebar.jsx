@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Image, Crown, History, WandSparkles, ChevronDown, X, Sliders, CreditCard } from 'lucide-react';
 import { useHttp } from '../hooks/useHttp';
+import { useAuth } from '../context/AuthContext';
 
 export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
   const [filters, setFilters] = useState({});
@@ -10,7 +11,11 @@ export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
   const [conversations, setConversations] = useState([]);
   const [loading, setLoading] = useState(false);
   const { getReq } = useHttp();
-  const token = sessionStorage.getItem('token');
+  // const token = sessionStorage.getItem('token');
+  const {token} = useAuth();
+  const score = localStorage.getItem('unknown') || sessionStorage.getItem('unknown') || 0;
+  const userData = JSON.parse(sessionStorage.getItem('user'));
+  // console.log(userData.email)
 
   const updateFilters = (newFilters) => {
     setFilters(newFilters);
@@ -47,6 +52,48 @@ export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
     }
   };
 
+   const loadRazorpay = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  const handlePay = async () => {
+    const loaded = await loadRazorpay();
+    if(!loaded){
+      alert("Razorpay SDK failed to load. Are you online?");
+      return;
+    }
+    const options = {
+      key: "rzp_test_RkJWx59iPfx6C5",
+      amount: 50*100,
+      currency: "INR",
+      name: "IEMA AI",
+      description: "Test Transaction",
+      handler: function (response) {
+        // alert("Payment Successful");
+        console.log({response});
+      },
+      theme: {
+        color: "#10B981",
+      },
+      prefill: {
+        name: userData?.name,
+        email: userData?.email
+      },
+      modal: {
+      backdropclose: false,
+      escape: false,
+    }
+    };
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  }
+
   const handleTabChange = (tab) => {
     setActiveTab(tab);
     if (tab === 'history' && conversations.length === 0) {
@@ -64,11 +111,11 @@ export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
       <div className="p-6 border-b border-gray-800/50">
         <div className="flex items-center gap-3 mb-4">
           <div className="p-3 bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 rounded-xl border border-emerald-500/30">
-            <span className='text-emerald-400 text-2xl'>{pageConfig.icon}</span>
+            <span className='text-emerald-400 text-2xl'>{pageConfig?.icon}</span>
           </div>
           <div className="flex-1">
-            <h2 className="text-white font-semibold text-lg">{pageConfig.title}</h2>
-            <p className="text-gray-500 text-sm">{pageConfig.subtitle}</p>
+            <h2 className="text-white font-semibold text-lg">{pageConfig?.title}</h2>
+            <p className="text-gray-500 text-sm">{pageConfig?.subtitle}</p>
           </div>
         </div>
 
@@ -310,7 +357,7 @@ export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
             <span className="text-white text-sm font-medium">Credits</span>
           </div>
           <div className="flex items-baseline gap-2 mb-1">
-            <span className="text-emerald-400 text-3xl font-bold">2,450</span>
+            <span className="text-emerald-400 text-3xl font-bold">{score}</span>
             <span className="text-gray-500 text-sm">remaining</span>
           </div>
           <div className="flex items-center gap-1 mb-4">
@@ -319,7 +366,7 @@ export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
             </div>
           </div>
           <p className="text-gray-500 text-xs mb-3">~245 messages left this month</p>
-          <button className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-black rounded-lg py-2.5 text-sm font-semibold flex items-center justify-center gap-2">
+          <button className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-black rounded-lg py-2.5 text-sm font-semibold flex items-center justify-center gap-2" onClick={handlePay}>
             <Crown size={16} />
             Upgrade to Pro
           </button>

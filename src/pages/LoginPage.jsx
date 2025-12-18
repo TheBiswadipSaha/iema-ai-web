@@ -191,7 +191,7 @@ export default function LoginPage() {
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className="w-full relative overflow-hidden bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-3.5 rounded-xl font-bold transition-all duration-300 hover:bg-emerald-600 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed group cursor-pointer"
+              className="w-full relative overflow-hidden bg-[#10B981] text-black py-3.5 rounded-xl font-bold transition-all duration-300 hover:bg-emerald-600 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed group cursor-pointer"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">

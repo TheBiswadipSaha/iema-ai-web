@@ -53,6 +53,9 @@ export const AuthProvider = ({ children }) => {
       
       sessionStorage.setItem("token", authToken);
       sessionStorage.setItem("user", JSON.stringify(userData));
+      sessionStorage.setItem("unknown",userData?.token);
+      localStorage.setItem("unknown",userData?.token);
+
       
       // Always navigate to protected home page after login
       if (navigate) {
@@ -69,6 +72,8 @@ export const AuthProvider = ({ children }) => {
     
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("user");
+    sessionStorage.removeItem("unknown");
+    clear();
   };
 
   return (
