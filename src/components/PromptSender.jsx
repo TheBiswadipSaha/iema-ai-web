@@ -81,7 +81,7 @@ export const PromptSender = ({ pageConfig, onSendMessage, disabled }) => {
         )}
 
         {/* Main Input Container */}
-        <div className="flex items-center gap-3 rounded-lg px-3 py-2 focus-within:border-emerald-500 transition-colors">
+        <div className="flex items-center gap-3 rounded-lg px-3 py-1 focus-within:border-emerald-500 transition-colors">
           {/* Image Upload Icon - Only for vision type */}
           {allowImageUpload && (
             <label className="cursor-pointer text-gray-400 hover:text-emerald-400 transition-colors">
@@ -119,7 +119,7 @@ export const PromptSender = ({ pageConfig, onSendMessage, disabled }) => {
           onClick={handleSend}
           disabled={disabled || (!prompt.trim() && !uploadedImage)}
           className="
-            flex items-center gap-1 px-5 py-3 rounded-full justify-center
+            flex items-center gap-1 px-5 py-2 rounded-lg justify-center
             bg-[#39E48F]
             text-[#000] hover:text-emerald-300
             font-semibold
@@ -130,8 +130,8 @@ export const PromptSender = ({ pageConfig, onSendMessage, disabled }) => {
             disabled:opacity-50
           "
         >
-          <span>Send</span>
           <Send size={20} />
+          <span>Send</span>
         </button>
 
         </div>
