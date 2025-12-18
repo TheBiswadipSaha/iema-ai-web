@@ -214,7 +214,8 @@ export const PageConfigs = {
       {
         heading: 'Language',
         icon: <Code size={16} />,
-        inputType: 'dropdown',
+        inputType: 'languageSelector',
+        default: 'Python',
         options: [
           { label: 'Python', icon: <Code size={14} /> },
           { label: 'JavaScript', icon: <Code size={14} /> },
@@ -224,7 +225,6 @@ export const PageConfigs = {
           { label: 'Rust', icon: <Code size={14} /> },
           { label: 'TypeScript', icon: <Code size={14} /> }
         ],
-        default: 'Python'
       }
     ]
   },
