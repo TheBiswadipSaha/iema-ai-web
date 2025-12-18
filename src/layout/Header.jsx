@@ -29,6 +29,7 @@ function Header({
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const dropdownRef = useRef(null);
   const { logout } = useAuth();
+  credits = localStorage.getItem('unknown') || sessionStorage.getItem('unknown') || 0;
 
   useEffect(() => {
     const handleClickOutside = (event) => {

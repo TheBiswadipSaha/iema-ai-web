@@ -188,8 +188,7 @@ export const ChatScreen = () => {
   const [activeFilters, setActiveFilters] = useState({});
   const [isThinking, setIsThinking] = useState(false);
   const [isLoading, setIsLoading] = useState(!!chatId);
-  // const token = sessionStorage.getItem("token");
-  const { token, score, setScore  } = useAuth();
+  const { token } = useAuth();
 
   // Refs for animation
   const avatarRef = useRef(null);
@@ -397,6 +396,8 @@ useEffect(() => {
           setCurrentChatId(newChatId);
           navigate(`/chat/${type}/${newChatId}`, { replace: true });
         }
+        localStorage.setItem("unknown", res.data?.token || 0);
+        sessionStorage.setItem("unknown", res.data?.token || 0);
 
         // ✅ Check if the reply is an image URL (generated image)
         const isGeneratedImage = res.data?.type === "image" && 
@@ -436,7 +437,6 @@ useEffect(() => {
       <ChattingSidebar
         pageConfig={currentConfig}
         onFilterChange={setActiveFilters}
-        score={score}
       />
 
       <div className="flex-1 flex flex-col">
