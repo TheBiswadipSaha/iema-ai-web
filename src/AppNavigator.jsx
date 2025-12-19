@@ -12,16 +12,17 @@ import { ChatScreen } from "./pages/ChatScreen";
 import SelectTutor from "./pages/SelectTutor";
 import SignUpPage from "./pages/SignUpPage";
 import { useAuth } from "./context/AuthContext";
+import PricingPage from "./pages/PricingPage";
 
 // Wrapper component to conditionally render HomePage based on auth status
-const HomePageWrapper = () => {
+const HomePageWrapper = ({ children }) => {
   const { isAuthenticated } = useAuth();
   
   if (isAuthenticated) {
     // Protected home page - chat screen mode with footer and hideFooter true
     return (
       <Layout hideFooter={false} isChatScreen={true} isBackPresent={false}>
-        <HomePage />
+        { children }
       </Layout>
     );
   }
@@ -29,7 +30,7 @@ const HomePageWrapper = () => {
   // Public home page - normal mode with footer visible
   return (
     <Layout>
-      <HomePage />
+      { children }
     </Layout>
   );
 };
@@ -42,7 +43,19 @@ const AppNavigator = () => {
           {/* Home Page - Works for both authenticated and unauthenticated users */}
           <Route 
             path="/" 
-            element={<HomePageWrapper />} 
+            element={<HomePageWrapper><HomePage /></HomePageWrapper>} 
+          />
+          <Route 
+            path="/pricing" 
+            element={
+                <HomePageWrapper><PricingPage /></HomePageWrapper>
+            } 
+          />
+          <Route 
+            path="/blog" 
+            element={
+                <HomePageWrapper><PricingPage /></HomePageWrapper>
+            } 
           />
           
           {/* Login/Signup - Redirect to home if authenticated */}
@@ -63,6 +76,7 @@ const AppNavigator = () => {
               </PublicRoute>
             } 
           />
+          
           
           {/* Select Tutor - Protected Route with Layout (no footer, chat screen mode) */}
           <Route 
