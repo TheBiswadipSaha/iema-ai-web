@@ -1,6 +1,8 @@
 import React from "react";
 import { Check, Gift, Sparkles, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { buyCredits } from "../apis/buyCredits";
 
 const plans = [
   {
@@ -80,7 +82,21 @@ const themeStyles = {
 };
 
 const PricingPage = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { token } = useAuth();
+
+  const handleBuyClick = (plan) => {
+    if (plan.disabled) return; // Free plan
+
+    if (token) {
+      // User is logged in, call buyCredits
+      buyCredits(plan.amount);
+    } else {
+      // Not logged in, redirect to login
+      navigate("/login");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white px-4 py-20">
       {/* Header */}
@@ -106,14 +122,12 @@ const PricingPage = () => {
               key={i}
               className={`relative rounded-2xl border p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${style.card}`}
             >
-              {/* Popular badge */}
               {plan.popular && (
                 <span className="absolute top-4 right-4 text-xs font-semibold px-3 py-1 rounded-full bg-yellow-400 text-black animate-pulse">
                   POPULAR
                 </span>
               )}
 
-              {/* Icon + Title */}
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center">
                   <Icon className="w-6 h-6" />
@@ -121,7 +135,6 @@ const PricingPage = () => {
                 <h2 className="text-xl font-semibold">{plan.name}</h2>
               </div>
 
-              {/* Price */}
               <div className="mt-2">
                 <span
                   className={`text-4xl font-bold ${
@@ -132,14 +145,12 @@ const PricingPage = () => {
                 </span>
               </div>
 
-              {/* Credits badge */}
               <div
                 className={`mt-2 inline-block px-4 py-1.5 rounded-full text-sm ${style.badge}`}
               >
                 {plan.credits}
               </div>
 
-              {/* Features */}
               <ul className="mt-6 space-y-3 text-sm text-gray-300">
                 {plan.features.map((f, idx) => (
                   <li key={idx} className="flex items-center gap-2">
@@ -149,10 +160,9 @@ const PricingPage = () => {
                 ))}
               </ul>
 
-              {/* Button */}
               <button
                 disabled={plan.disabled}
-                onClick={() => navigate('/login')}
+                onClick={() => handleBuyClick(plan)}
                 className={`mt-8 w-full rounded-xl py-3 font-semibold transition-transform duration-200 cursor-pointer ${
                   style.button
                 } ${!plan.disabled && "hover:scale-[1.02]"}`}
@@ -164,7 +174,6 @@ const PricingPage = () => {
         })}
       </div>
 
-      {/* Footer */}
       <p className="mt-14 text-center text-sm text-gray-500">
         ₹50 = 50 credits • ₹100 = 100 credits • No subscriptions • Credits never
         expire
