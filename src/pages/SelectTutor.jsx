@@ -70,7 +70,7 @@ function SelectTutor() {
                 {/* Footer */}
                 <div className="text-center mt-12">
                     <p className="text-gray-600 text-xs">
-                        Developed by IEMA Research and Development
+                        Developed by IEMA Research and Development Pvt. Ltd.
                     </p>
                 </div>
             </div>

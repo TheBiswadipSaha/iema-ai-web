@@ -3,6 +3,7 @@ import { Image, Crown, History, WandSparkles, ChevronDown, X, Sliders, CreditCar
 import { useHttp } from '../hooks/useHttp';
 import { useAuth } from '../context/AuthContext';
 import LanguageSelector from './LanguageSelector';
+import BuyCreditsModal from '../utils/BuyCreditsModal';
 
 export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
   const [width, setWidth] = useState(320); // Default width in pixels
@@ -13,10 +14,12 @@ export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
   const [activeTab, setActiveTab] = useState('generate');
   const [conversations, setConversations] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showBuyModal, setShowBuyModal] = useState(false);
+
   const { getReq } = useHttp();
   const {token} = useAuth();
   const score = localStorage.getItem('unknown') || sessionStorage.getItem('unknown') || 0;
-  const userData = JSON.parse(sessionStorage.getItem('user'));
+  // const userData = JSON.parse(sessionStorage.getItem('user'));
 
   const minWidth = 280;
   const maxWidth = 600;
@@ -94,46 +97,46 @@ export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
     }
   };
 
-  const loadRazorpay = () => {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = "https://checkout.razorpay.com/v1/checkout.js";
-      script.onload = () => resolve(true);
-      script.onerror = () => resolve(false);
-      document.body.appendChild(script);
-    });
-  };
+  // const loadRazorpay = () => {
+  //   return new Promise((resolve) => {
+  //     const script = document.createElement("script");
+  //     script.src = "https://checkout.razorpay.com/v1/checkout.js";
+  //     script.onload = () => resolve(true);
+  //     script.onerror = () => resolve(false);
+  //     document.body.appendChild(script);
+  //   });
+  // };
 
-  const handlePay = async () => {
-    const loaded = await loadRazorpay();
-    if(!loaded){
-      alert("Razorpay SDK failed to load. Are you online?");
-      return;
-    }
-    const options = {
-      key: "rzp_test_RkJWx59iPfx6C5",
-      amount: 50*100,
-      currency: "INR",
-      name: "IEMA AI",
-      description: "Test Transaction",
-      handler: function (response) {
-        console.log({response});
-      },
-      theme: {
-        color: "#10B981",
-      },
-      prefill: {
-        name: userData?.name,
-        email: userData?.email
-      },
-      modal: {
-        backdropclose: false,
-        escape: false,
-      }
-    };
-    const paymentObject = new window.Razorpay(options);
-    paymentObject.open();
-  }
+  // const handlePay = async () => {
+  //   const loaded = await loadRazorpay();
+  //   if(!loaded){
+  //     alert("Razorpay SDK failed to load. Are you online?");
+  //     return;
+  //   }
+  //   const options = {
+  //     key: "scsc",
+  //     amount: 50*100,
+  //     currency: "INR",
+  //     name: "IEMA AI",
+  //     description: "Test Transaction",
+  //     handler: function (response) {
+  //       console.log({response});
+  //     },
+  //     theme: {
+  //       color: "#10B981",
+  //     },
+  //     prefill: {
+  //       name: userData?.name,
+  //       email: userData?.email
+  //     },
+  //     modal: {
+  //       backdropclose: false,
+  //       escape: false,
+  //     }
+  //   };
+  //   const paymentObject = new window.Razorpay(options);
+  //   paymentObject.open();
+  // }
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -437,13 +440,14 @@ export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
               </div>
             </div>
             <p className="text-gray-500 text-xs mb-3">~245 messages left this month</p>
-            <button className="w-full bg-[#39E48F] hover:from-emerald-600 hover:to-emerald-700 text-black rounded-lg py-2.5 text-sm font-semibold flex items-center justify-center gap-2" onClick={handlePay}>
+            <button className="w-full bg-[#39E48F] hover:from-emerald-600 hover:to-emerald-700 text-black rounded-lg py-2.5 text-sm font-semibold flex items-center justify-center gap-2" onClick={() => setShowBuyModal(true)}>
               <Crown size={16} />
               Upgrade to Pro
             </button>
           </div>
         </div>
       </div>
+      {showBuyModal && <BuyCreditsModal open={showBuyModal} onClose={() => setShowBuyModal(false)} />}
 
       <style jsx>{`
         .slider-thumb::-webkit-slider-thumb {

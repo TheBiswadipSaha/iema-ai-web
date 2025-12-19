@@ -12,11 +12,11 @@ function Footer() {
                 <div className="flex space-x-3 pb-6">
                     <img 
                         src={logoImage} 
-                        alt="IEMA.AI Logo" 
+                        alt="IEMA AI Logo" 
                         className="w-10 h-10 rounded-lg"
                     />
                     <div className="flex flex-col">
-                        <h3 className="text-lg font-semibold">IEMA.AI</h3>
+                        <h3 className="text-lg font-semibold">IEMA AI</h3>
                         <p className="text-xs text-gray-400">Powered by IEM-UEM Group</p>
                     </div>
                 </div>
@@ -26,10 +26,10 @@ function Footer() {
 
                 {/* Second Row - Copyright and developed by */}
                 <div className="flex flex-col md:flex-row justify-between items-center text-xs text-gray-400 space-y-2 md:space-y-0">
-                    <p>© {new Date().getFullYear()} IEMA.AI. All rights reserved.</p>
+                    <p>© {new Date().getFullYear()} IEMA AI All rights reserved.</p>
                     <p className="flex items-center">
                         <span className="w-2 h-2 bg-emerald-500 rounded-full mr-2"></span>
-                        Developed by IEMA Research and Development
+                        Developed by IEMA Research and Development Pvt. Ltd.
                     </p>
                 </div>
             </div>
