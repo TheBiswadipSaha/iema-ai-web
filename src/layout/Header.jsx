@@ -125,7 +125,7 @@ function Header({
             </div>
 
             <div className="flex items-center gap-3">
-              <Bell size={18} className="text-gray-300" />
+              {/* <Bell size={18} className="text-gray-300" /> */}
               <span className="text-sm">
                 Credits: <span className="text-emerald-400">{credits}</span>
               </span>

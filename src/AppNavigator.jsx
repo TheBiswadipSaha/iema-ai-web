@@ -13,6 +13,7 @@ import SelectTutor from "./pages/SelectTutor";
 import SignUpPage from "./pages/SignUpPage";
 import { useAuth } from "./context/AuthContext";
 import PricingPage from "./pages/PricingPage";
+import Blogs from "./pages/Blogs";
 
 // Wrapper component to conditionally render HomePage based on auth status
 const HomePageWrapper = ({ children }) => {
@@ -54,7 +55,7 @@ const AppNavigator = () => {
           <Route 
             path="/blog" 
             element={
-                <HomePageWrapper><PricingPage /></HomePageWrapper>
+                <HomePageWrapper><Blogs /></HomePageWrapper>
             } 
           />
           
