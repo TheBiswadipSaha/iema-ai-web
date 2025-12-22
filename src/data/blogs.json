@@ -1,0 +1,83 @@
+{
+  "featuredBlogs": [
+    {
+      "id": 1,
+      "title": "Cybersecurity in 2025: 5 Trends That Will Define the Digital Battlefield",
+      "category": "Breaking News",
+      "image": "https://images.unsplash.com/photo-1605902711622-cfb43c4437d1",
+      "link": "https://google.com"
+    },
+    {
+      "id": 2,
+      "title": "AI Regulation: What Governments Are Planning Next",
+      "category": "Breaking News",
+      "image": "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a",
+      "link": "https://google.com"
+    },
+    {
+      "id": 3,
+      "title": "How AI Is Transforming Global Defense Systems",
+      "category": "Political",
+      "image": "https://images.unsplash.com/photo-1604079628040-94301bb21b91",
+      "link": "https://google.com"
+    },
+    {
+      "id": 4,
+      "title": "Elections in the Age of Artificial Intelligence",
+      "category": "Political",
+      "image": "https://images.unsplash.com/photo-1555967522-37949fc21dcb",
+      "link": "https://google.com"
+    },
+    {
+      "id": 5,
+      "title": "AI-Generated Movies: The Future of Entertainment",
+      "category": "Entertainment",
+      "image": "https://images.unsplash.com/photo-1517602302552-471fe67acf66",
+      "link": "https://google.com"
+    },
+    {
+      "id": 6,
+      "title": "How Virtual Influencers Are Changing Media",
+      "category": "Entertainment",
+      "image": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d",
+      "link": "https://google.com"
+    },
+    {
+      "id": 6,
+      "title": "How Virtual Influencers Are Changing Media",
+      "category": "Law",
+      "image": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d"
+    }
+  ],
+
+  "listBlogs": {
+    "Recent": [
+      { "id": 1, "title": "Neural Networks Explained Simply", "date": "11 May 2025", "image": "https://images.unsplash.com/photo-1581091012184-5c7f37fba8d4" },
+      { "id": 2, "title": "How AI Understands Language", "date": "10 May 2025", "image": "https://images.unsplash.com/photo-1526378722484-cc5c5103b1f3" },
+      { "id": 3, "title": "Future of Robotics in Healthcare", "date": "09 May 2025", "image": "https://images.unsplash.com/photo-1581093588401-16c1f8c38d8a" },
+      { "id": 4, "title": "What is Edge AI?", "date": "08 May 2025", "image": "https://images.unsplash.com/photo-1581092160607-ee67f6aa17d8" },
+      { "id": 5, "title": "AI Chips Explained", "date": "07 May 2025", "image": "https://images.unsplash.com/photo-1518770660439-4636190af475" }
+    ],
+    "Popular": [
+      { "id": 6, "title": "Rise of AI Tutors", "date": "19 June 2025", "image": "https://images.unsplash.com/photo-1581092334431-4c4b1f1fcb6c" },
+      { "id": 7, "title": "ChatGPT vs Humans", "date": "18 June 2025", "image": "https://images.unsplash.com/photo-1535378917042-10a22c95931a" },
+      { "id": 8, "title": "AI in Finance", "date": "17 June 2025", "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71" },
+      { "id": 9, "title": "Machine Learning Myths", "date": "16 June 2025", "image": "https://images.unsplash.com/photo-1581090700227-3ec47c1c4f6c" },
+      { "id": 10, "title": "Future of Jobs with AI", "date": "15 June 2025", "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c" }
+    ],
+    "Trending": [
+      { "id": 11, "title": "Web3 Explained", "date": "05 June 2025", "image": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0" },
+      { "id": 12, "title": "Metaverse in 2025", "date": "04 June 2025", "image": "https://images.unsplash.com/photo-1633114128729-1a4d68f3a1b2" },
+      { "id": 13, "title": "AI Influencers", "date": "03 June 2025", "image": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d" },
+      { "id": 14, "title": "NFTs & AI", "date": "02 June 2025", "image": "https://images.unsplash.com/photo-1642784353721-9f3f5b2a4c0a" },
+      { "id": 15, "title": "Future of Internet", "date": "01 June 2025", "image": "https://images.unsplash.com/photo-1535223289827-42f1e9919769" }
+    ],
+    "Market Reports": [
+      { "id": 16, "title": "AI Market Growth 2025–2030", "date": "01 April 2025", "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71" },
+      { "id": 17, "title": "Global AI Investment Trends", "date": "30 March 2025", "image": "https://images.unsplash.com/photo-1507679799987-c73779587ccf" },
+      { "id": 18, "title": "AI Startups to Watch", "date": "29 March 2025", "image": "https://images.unsplash.com/photo-1559136555-9303baea8ebd" },
+      { "id": 19, "title": "Enterprise AI Adoption", "date": "28 March 2025", "image": "https://images.unsplash.com/photo-1556761175-4b46a572b786" },
+      { "id": 20, "title": "AI in Manufacturing", "date": "27 March 2025", "image": "https://images.unsplash.com/photo-1581090700227-3ec47c1c4f6c" }
+    ]
+  }
+}
