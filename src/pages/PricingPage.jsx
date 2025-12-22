@@ -2,7 +2,9 @@ import React from "react";
 import { Check, Gift, Sparkles, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+// import { useHttp } from "../hooks/useHttp";
 import { buyCredits } from "../apis/buyCredits";
+import { useHttp } from "../hooks/useHttp";
 
 const plans = [
   {
@@ -84,13 +86,14 @@ const themeStyles = {
 const PricingPage = () => {
   const navigate = useNavigate();
   const { token } = useAuth();
+  const { postReq } = useHttp(); // ✅ Call the hook here
 
   const handleBuyClick = (plan) => {
     if (plan.disabled) return; // Free plan
 
     if (token) {
-      // User is logged in, call buyCredits
-      buyCredits(plan.amount);
+      // User is logged in, call buyCredits with postReq
+      buyCredits(plan.amount, postReq); // ✅ Pass postReq
     } else {
       // Not logged in, redirect to login
       navigate("/login");

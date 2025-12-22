@@ -1,10 +1,7 @@
 import React from "react";
-import { useHttp } from "../hooks/useHttp";
 
-export const buyCredits = async (amount) => {
+export const buyCredits = async (amount, postReq) => {
   console.log("Buying credits for amount:", amount);
-
-  const { postReq } = useHttp();
 
   // Load Razorpay script
   const loadRazorpay = () =>

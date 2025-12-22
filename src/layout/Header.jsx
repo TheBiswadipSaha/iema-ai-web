@@ -7,7 +7,9 @@ import {
   X,
   ArrowLeft,
   LogOut,
-  UserCircle
+  UserCircle,
+  PrinterCheck,
+  Gem
 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logoImg from '../assets/logo.png';
@@ -91,6 +93,16 @@ function Header({
           >
             <UserCircle size={18} />
             Profile
+          </button>
+          
+          <button
+            onClick={() => {
+              navigate('/pricing');
+            }}
+            className="w-full flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-gray-900"
+          >
+            <Gem size={18} />
+            Pricing
           </button>
 
           <button
