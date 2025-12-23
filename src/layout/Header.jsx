@@ -9,7 +9,8 @@ import {
   LogOut,
   UserCircle,
   PrinterCheck,
-  Gem
+  Gem,
+  Coins
 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logoImg from '../assets/logo.png';
@@ -100,8 +101,8 @@ function Header({
             }}
             className="w-full flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-gray-900 cursor-pointer"
           >
-            <Gem size={18} />
-            Pricing
+            <Coins size={18} />
+            Buy Credits
           </button>
 
           <button
@@ -137,10 +138,25 @@ function Header({
 
             <div className="flex items-center gap-3 s select-none">
               {/* <Bell size={18} className="text-gray-300" /> */}
-              <span className="text-sm">
-                Credits: <span className="text-emerald-400 select-none">{credits}</span>
-              </span>
-                <UserDropdown />
+              <div className="relative group">
+                <div className="flex items-center gap-2 px-4 py-2 bg-black/40 rounded-full border border-emerald-500/20 backdrop-blur-sm hover:border-emerald-500/40 transition-all duration-300">
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                  <span className="text-sm font-medium">
+                    <span className="text-emerald-400">{credits.toLocaleString()}</span>
+                    <span className="text-gray-500 ml-1">credits</span>
+                  </span>
+
+                  {/* Expandable button on hover */}
+                  <button
+                    onClick={() => navigate('/pricing')}
+                    className="flex cursor-pointer items-center gap-1 ml-2 px-0 overflow-hidden max-w-0 group-hover:max-w-[100px] group-hover:px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-xs font-medium transition-all duration-300 hover:bg-emerald-500 hover:text-black whitespace-nowrap"
+                  >
+                    <Coins size={12} />
+                    <span>Buy More</span>
+                  </button>
+                </div>
+              </div>
+              <UserDropdown />
             </div>
           </div>
         </header>
@@ -170,8 +186,8 @@ function Header({
                 key={item.path}
                 onClick={() => handleNavigation(item.path)}
                 className={`text-sm transition ${currentPath === item.path
-                    ? 'text-emerald-400'
-                    : 'text-gray-300 hover:text-emerald-400 cursor-pointer'
+                  ? 'text-emerald-400'
+                  : 'text-gray-300 hover:text-emerald-400 cursor-pointer'
                   }`}
               >
                 {item.label}

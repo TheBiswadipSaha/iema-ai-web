@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Send, Image, Paperclip, Download, X, ZoomIn, Copy, Check } from "lucide-react";
+import { Send, Image, Paperclip, Download, X, ZoomIn, Copy, Check, Flag } from "lucide-react";
 import gsap from "gsap";
 import { ChattingSidebar } from "../components/ChattingSidebar";
 import { PromptSender } from "../components/PromptSender";
@@ -169,6 +169,97 @@ const GeneratedImageMessage = ({ imageUrl }) => {
   );
 };
 
+// Report Modal Component
+const ReportModal = ({ onClose, onSubmit }) => {
+  const [selectedReason, setSelectedReason] = useState("");
+  const [details, setDetails] = useState("");
+
+  const reasons = [
+    "Inaccurate or misleading information",
+    "Inappropriate or offensive content",
+    "Harmful or dangerous advice",
+    "Privacy concerns",
+    "Copyright violation",
+    "Other"
+  ];
+
+  const handleSubmit = () => {
+    if (selectedReason) {
+      onSubmit({ reason: selectedReason, details });
+      onClose();
+    }
+  };
+
+  return (
+    <div 
+      className="fixed inset-0 bg-[#00000070] bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <div 
+        className="bg-gray-800 rounded-xl p-6 max-w-md w-full shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-xl font-bold text-white">Report Response</h3>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-white transition-colors cursor-pointer"
+          >
+            <X size={24} />
+          </button>
+        </div>
+
+        <p className="text-gray-300 text-sm mb-4">
+          Help us improve by reporting any issues with this AI response.
+        </p>
+
+        <div className="space-y-3 mb-4">
+          {reasons.map((reason) => (
+            <label
+              key={reason}
+              className="flex items-center gap-3 p-3 bg-gray-700 hover:bg-gray-650 rounded-lg cursor-pointer transition-colors"
+            >
+              <input
+                type="radio"
+                name="reason"
+                value={reason}
+                checked={selectedReason === reason}
+                onChange={(e) => setSelectedReason(e.target.value)}
+                className="w-4 h-4 text-emerald-500 focus:ring-emerald-500"
+              />
+              <span className="text-gray-200 text-sm">{reason}</span>
+            </label>
+          ))}
+        </div>
+
+        <textarea
+          placeholder="Additional details (optional)"
+          value={details}
+          onChange={(e) => setDetails(e.target.value)}
+          className="w-full bg-gray-700 text-gray-200 rounded-lg p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 mb-4"
+          rows="3"
+        />
+
+        <div className="flex gap-3">
+          <button
+            onClick={onClose}
+            className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-200 rounded-lg text-sm transition-colors cursor-pointer"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleSubmit}
+            disabled={!selectedReason}
+            className="flex-1 px-4 py-2 cursor-pointer bg-red-600 hover:bg-red-500 text-white rounded-lg text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Submit Report
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Skeleton Loader Component
 const SkeletonLoader = ({ currentConfig, setActiveFilters, onSendMessage }) => {
   return (
@@ -225,6 +316,7 @@ export const ChatScreen = () => {
   const [activeFilters, setActiveFilters] = useState({});
   const [isThinking, setIsThinking] = useState(false);
   const [isLoading, setIsLoading] = useState(!!chatId);
+  const [reportingMessageIndex, setReportingMessageIndex] = useState(null);
 
   // Refs for animation
   const avatarRef = useRef(null);
@@ -309,7 +401,7 @@ export const ChatScreen = () => {
     };
 
     fetchConversationHistory();
-  }, [chatId, token]); // Added token dependency
+  }, [chatId, token]);
 
   // Animation effect - only run when messages are loaded and empty
   useEffect(() => {
@@ -432,6 +524,36 @@ export const ChatScreen = () => {
     }
   };
 
+  // Handle report submission
+  const handleReportSubmit = async (reportData) => {
+    try {
+      const messageToReport = messages[reportingMessageIndex];
+      
+      // Here you would typically send this to your backend
+      console.log("Report submitted:", {
+        messageIndex: reportingMessageIndex,
+        messageContent: messageToReport.text,
+        ...reportData,
+        conversationId: currentChatId,
+        timestamp: new Date().toISOString()
+      });
+      
+      showNotification("Report submitted successfully. Thank you for your feedback.", "success");
+      
+      // Optionally, send to backend:
+      // await postReq("api/chat/report", token, {
+      //   conversationId: currentChatId,
+      //   messageIndex: reportingMessageIndex,
+      //   messageContent: messageToReport.text,
+      //   ...reportData
+      // });
+      
+    } catch (error) {
+      console.error("Failed to submit report:", error);
+      showNotification("Failed to submit report. Please try again.", "error");
+    }
+  };
+
   if (isLoading) {
     return (
       <SkeletonLoader 
@@ -504,63 +626,76 @@ export const ChatScreen = () => {
                   key={idx}
                   className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
                 >
-                  <div
-                    className={`max-w-[70%] min-w-0 px-4 py-3 rounded-2xl ${
-                      msg.sender === "user"
-                        ? "bg-emerald-500 text-white"
-                        : msg.isGeneratedImage
-                        ? "bg-transparent p-0"
-                        : "bg-gray-800 text-gray-200"
-                    }`}
-                  >
-                    {msg.imageUrl && msg.sender === "user" && (
-                      <div className="mb-2">
-                        <img 
-                          src={msg.imageUrl} 
-                          alt="Uploaded content" 
-                          className="max-w-full max-h-64 rounded-lg"
-                        />
-                      </div>
-                    )}
+                  <div className={`${msg.sender === "ai" ? "relative group" : ""} max-w-[70%]`}>
+                    <div
+                      className={`min-w-0 px-4 py-3 rounded-2xl ${
+                        msg.sender === "user"
+                          ? "bg-emerald-500 text-white"
+                          : msg.isGeneratedImage
+                          ? "bg-transparent p-0"
+                          : "bg-gray-800 text-gray-200"
+                      }`}
+                    >
+                      {msg.imageUrl && msg.sender === "user" && (
+                        <div className="mb-2">
+                          <img 
+                            src={msg.imageUrl} 
+                            alt="Uploaded content" 
+                            className="max-w-full max-h-64 rounded-lg"
+                          />
+                        </div>
+                      )}
+                      
+                      {msg.isGeneratedImage && msg.sender === "ai" ? (
+                        <GeneratedImageMessage imageUrl={msg.text} />
+                      ) : msg.sender === "ai" ? (
+                        <div className="markdown-content prose prose-invert max-w-none">
+                          <ReactMarkdown
+                            components={{
+                              h1: ({node, ...props}) => <h1 className="text-2xl font-bold mb-3 mt-4" {...props} />,
+                              h2: ({node, ...props}) => <h2 className="text-xl font-bold mb-2 mt-3" {...props} />,
+                              h3: ({node, ...props}) => <h3 className="text-lg font-semibold mb-2 mt-2" {...props} />,
+                              h4: ({node, ...props}) => <h4 className="text-base font-semibold mb-1 mt-2" {...props} />,
+                              p: ({node, ...props}) => <p className="mb-2 leading-relaxed" {...props} />,
+                              ul: ({node, ...props}) => <ul className="list-disc list-inside mb-2 space-y-1" {...props} />,
+                              ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-2 space-y-1" {...props} />,
+                              li: ({node, ...props}) => <li className="ml-2" {...props} />,
+                              code: ({node, inline, className, children, ...props}) => (
+                                <CodeBlock inline={inline}>
+                                  {children}
+                                </CodeBlock>
+                              ),
+                              pre: ({node, children, ...props}) => <>{children}</>,
+                              blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-emerald-500 pl-4 italic my-2" {...props} />,
+                              a: ({node, ...props}) => <a className="text-emerald-400 hover:text-emerald-300 underline" {...props} />,
+                              strong: ({node, ...props}) => <strong className="font-bold text-white" {...props} />,
+                              em: ({node, ...props}) => <em className="italic" {...props} />,
+                              hr: ({node, ...props}) => <hr className="border-gray-600 my-4" {...props} />,
+                              table: ({node, ...props}) => <table className="border-collapse border border-gray-600 my-2" {...props} />,
+                              thead: ({node, ...props}) => <thead className="bg-gray-700" {...props} />,
+                              tbody: ({node, ...props}) => <tbody {...props} />,
+                              tr: ({node, ...props}) => <tr className="border-b border-gray-600" {...props} />,
+                              td: ({node, ...props}) => <td className="border border-gray-600 px-3 py-2" {...props} />,
+                              th: ({node, ...props}) => <th className="border border-gray-600 px-3 py-2 font-semibold" {...props} />,
+                            }}
+                          >
+                            {msg.text}
+                          </ReactMarkdown>
+                        </div>
+                      ) : (
+                        <span className="break-words">{msg.text}</span>
+                      )}
+                    </div>
                     
-                    {msg.isGeneratedImage && msg.sender === "ai" ? (
-                      <GeneratedImageMessage imageUrl={msg.text} />
-                    ) : msg.sender === "ai" ? (
-                      <div className="markdown-content prose prose-invert max-w-none">
-                        <ReactMarkdown
-                          components={{
-                            h1: ({node, ...props}) => <h1 className="text-2xl font-bold mb-3 mt-4" {...props} />,
-                            h2: ({node, ...props}) => <h2 className="text-xl font-bold mb-2 mt-3" {...props} />,
-                            h3: ({node, ...props}) => <h3 className="text-lg font-semibold mb-2 mt-2" {...props} />,
-                            h4: ({node, ...props}) => <h4 className="text-base font-semibold mb-1 mt-2" {...props} />,
-                            p: ({node, ...props}) => <p className="mb-2 leading-relaxed" {...props} />,
-                            ul: ({node, ...props}) => <ul className="list-disc list-inside mb-2 space-y-1" {...props} />,
-                            ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-2 space-y-1" {...props} />,
-                            li: ({node, ...props}) => <li className="ml-2" {...props} />,
-                            code: ({node, inline, className, children, ...props}) => (
-                              <CodeBlock inline={inline}>
-                                {children}
-                              </CodeBlock>
-                            ),
-                            pre: ({node, children, ...props}) => <>{children}</>,
-                            blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-emerald-500 pl-4 italic my-2" {...props} />,
-                            a: ({node, ...props}) => <a className="text-emerald-400 hover:text-emerald-300 underline" {...props} />,
-                            strong: ({node, ...props}) => <strong className="font-bold text-white" {...props} />,
-                            em: ({node, ...props}) => <em className="italic" {...props} />,
-                            hr: ({node, ...props}) => <hr className="border-gray-600 my-4" {...props} />,
-                            table: ({node, ...props}) => <table className="border-collapse border border-gray-600 my-2" {...props} />,
-                            thead: ({node, ...props}) => <thead className="bg-gray-700" {...props} />,
-                            tbody: ({node, ...props}) => <tbody {...props} />,
-                            tr: ({node, ...props}) => <tr className="border-b border-gray-600" {...props} />,
-                            td: ({node, ...props}) => <td className="border border-gray-600 px-3 py-2" {...props} />,
-                            th: ({node, ...props}) => <th className="border border-gray-600 px-3 py-2 font-semibold" {...props} />,
-                          }}
-                        >
-                          {msg.text}
-                        </ReactMarkdown>
-                      </div>
-                    ) : (
-                      <span className="break-words">{msg.text}</span>
+                    {/* Report Button - Only for AI messages */}
+                    {msg.sender === "ai" && (
+                      <button
+                        onClick={() => setReportingMessageIndex(idx)}
+                        className="absolute top-2 right-2 p-2 bg-gray-700 hover:bg-red-600 text-gray-300 hover:text-white rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 cursor-pointer"
+                        title="Report this response"
+                      >
+                        <Flag size={16} />
+                      </button>
                     )}
                   </div>
                 </div>
@@ -597,6 +732,14 @@ export const ChatScreen = () => {
           />
         </div>
       </div>
+
+      {/* Report Modal */}
+      {reportingMessageIndex !== null && (
+        <ReportModal
+          onClose={() => setReportingMessageIndex(null)}
+          onSubmit={handleReportSubmit}
+        />
+      )}
 
       <style>{`
         @keyframes blink {
