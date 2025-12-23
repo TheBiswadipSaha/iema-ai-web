@@ -38,7 +38,7 @@ const CodeBlock = ({ children, inline }) => {
     <div className="relative group my-2">
       <button
         onClick={handleCopy}
-        className="absolute top-2 right-2 p-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 flex items-center gap-1 text-xs"
+        className="absolute cursor-pointer top-2 right-2 p-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 flex items-center gap-1 text-xs"
         title="Copy code"
       >
         {copied ? (

@@ -14,9 +14,9 @@ const plans = [
     icon: Gift,
     theme: "gray",
     features: [
-      "Access basic AI models",
-      "Standard generation speed",
-      "Community support",
+      "Everything in Free",
+      "Access all AI models",
+      "Priority generation speed"
     ],
     buttonText: "Current Plan",
     disabled: true,
@@ -29,11 +29,8 @@ const plans = [
     icon: Sparkles,
     theme: "purple",
     features: [
-      "Everything in Free +",
-      "Access all AI models",
-      "Priority generation speed",
-      "Credits never expire",
-      "Premium support",
+      "Everything in the free plan",
+      "Get extra 50 credits"
     ],
     buttonText: "Buy Now",
   },
@@ -46,11 +43,8 @@ const plans = [
     theme: "green",
     popular: true,
     features: [
-      "Everything in Free +",
-      "Access all AI models",
-      "Priority generation speed",
-      "Credits never expire",
-      "Premium support",
+      "Everything in the free plan",
+      "Get extra 100 credits"
     ],
     buttonText: "Buy Now",
   },
@@ -123,7 +117,7 @@ const PricingPage = () => {
           return (
             <div
               key={i}
-              className={`relative rounded-2xl border p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${style.card}`}
+              className={`relative rounded-2xl border p-8 transition-all duration-300 hover:-translate-y-2 shadow ${style.card}`}
             >
               {plan.popular && (
                 <span className="absolute top-4 right-4 text-xs font-semibold px-3 py-1 rounded-full bg-yellow-400 text-black animate-pulse">
@@ -140,9 +134,8 @@ const PricingPage = () => {
 
               <div className="mt-2">
                 <span
-                  className={`text-4xl font-bold ${
-                    style.price || "text-white"
-                  }`}
+                  className={`text-4xl font-bold ${style.price || "text-white"
+                    }`}
                 >
                   {plan.price}
                 </span>
@@ -166,9 +159,8 @@ const PricingPage = () => {
               <button
                 disabled={plan.disabled}
                 onClick={() => handleBuyClick(plan)}
-                className={`mt-8 w-full rounded-xl py-3 font-semibold transition-transform duration-200 cursor-pointer ${
-                  style.button
-                } ${!plan.disabled && "hover:scale-[1.02]"}`}
+                className={`mt-8 w-full rounded-xl py-3 font-semibold transition-transform duration-200 cursor-pointer ${style.button
+                  } ${!plan.disabled && "hover:scale-[1.02]"}`}
               >
                 {plan.buttonText}
               </button>

@@ -17,13 +17,13 @@ import Blogs from "./pages/Blogs";
 import BlogDetail from "./pages/BlogDetail";
 
 // Wrapper component to conditionally render HomePage based on auth status
-const HomePageWrapper = ({ children }) => {
+const HomePageWrapper = ({ children, showBackButton = false }) => {
   const { isAuthenticated } = useAuth();
   
   if (isAuthenticated) {
-    // Protected home page - chat screen mode with footer and hideFooter true
+    // Protected home page - chat screen mode with footer and back button based on prop
     return (
-      <Layout hideFooter={false} isChatScreen={true} isBackPresent={false}>
+      <Layout hideFooter={false} isChatScreen={true} isBackPresent={showBackButton}>
         { children }
       </Layout>
     );
@@ -50,7 +50,7 @@ const AppNavigator = () => {
           <Route 
             path="/pricing" 
             element={
-                <HomePageWrapper><PricingPage /></HomePageWrapper>
+                <HomePageWrapper showBackButton={true}><PricingPage /></HomePageWrapper>
             } 
           />
           <Route 

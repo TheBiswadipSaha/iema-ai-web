@@ -171,7 +171,7 @@ function Header({
                 onClick={() => handleNavigation(item.path)}
                 className={`text-sm transition ${currentPath === item.path
                     ? 'text-emerald-400'
-                    : 'text-gray-300 hover:text-emerald-400'
+                    : 'text-gray-300 hover:text-emerald-400 cursor-pointer'
                   }`}
               >
                 {item.label}
@@ -216,7 +216,7 @@ function Header({
               <button
                 key={item.path}
                 onClick={() => handleNavigation(item.path)}
-                className="block w-full text-left py-3 text-gray-300 hover:text-emerald-400"
+                className="block w-full text-left py-3 text-gray-300 hover:text-emerald-400 cursor-pointer"
               >
                 {item.label}
               </button>
