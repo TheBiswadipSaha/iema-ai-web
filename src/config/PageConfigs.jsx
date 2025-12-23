@@ -248,42 +248,6 @@ export const PageConfigs = {
           { label: 'Informative', icon: <BookOpen size={14} /> }
         ]
       },
-      // {
-      //   heading: 'Upload Image',
-      //   icon: <Image size={16} />,
-      //   inputType: 'file',
-      //   acceptedFormats: ['JPG', 'PNG', 'JPEG'],
-      //   maxSize: '10MB'
-      // }
     ]
   },
-  // 'image-playground': {
-  //   title: 'Image Playground',
-  //   subtitle: 'Upload and analyze images',
-  //   icon: <Image size={20} />,
-  //   type: 'vision',
-  //   allowImageUpload: true,
-  //   placeholder: 'Describe what you want...',
-  //   filters: [
-  //     {
-  //       heading: 'Upload Image',
-  //       icon: <Image size={16} />,
-  //       inputType: 'file',
-  //       acceptedFormats: ['JPG', 'PNG', 'JPEG'],
-  //       maxSize: '10MB',
-  //       placeholder: 'Click to upload'
-  //     },
-  //     {
-  //       heading: 'Select Tone',
-  //       icon: <MessageSquare size={16} />,
-  //       options: [
-  //         { label: 'Formal', icon: <FileText size={14} /> },
-  //         { label: 'Friendly', icon: <Smile size={14} /> },
-  //         { label: 'Creative', icon: <Wand2 size={14} /> },
-  //         { label: 'Professional', icon: <Users size={14} /> },
-  //         { label: 'Informative', icon: <BookOpen size={14} /> }
-  //       ]
-  //     }
-  //   ]
-  // }
 };
