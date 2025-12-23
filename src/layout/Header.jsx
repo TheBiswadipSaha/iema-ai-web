@@ -210,7 +210,7 @@ function Header({
             ) : (
               <button
                 onClick={() => navigate('/login')}
-                className="bg-emerald-500 text-black px-6 py-2 rounded-full flex items-center gap-2"
+                className="bg-emerald-500 text-black px-6 py-2 rounded-full flex items-center gap-2 cursor-pointer"
               >
                 <Sparkles size={16} />
                 Get Started

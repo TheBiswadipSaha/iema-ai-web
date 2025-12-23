@@ -20,6 +20,7 @@ export const buyCredits = async (amount, postReq) => {
   }
 
   const userData = JSON.parse(sessionStorage.getItem("user"));
+  const token= sessionStorage.getItem("token")
 
   const options = {
     key: "rzp_test_RkJWx59iPfx6C5", // 🔴 replace with real Razorpay key
@@ -34,7 +35,7 @@ export const buyCredits = async (amount, postReq) => {
         // Call your backend verification API
         const verifyResponse = await postReq(
           "api/payments/verify-payment",
-          "", // pass token if needed
+          token, // pass token if needed
           {
             subscriptionAmount: amount,
             razorpay_payment_id: response.razorpay_payment_id,

@@ -630,7 +630,7 @@ export const ChatScreen = () => {
                     <div
                       className={`min-w-0 px-4 py-3 rounded-2xl ${
                         msg.sender === "user"
-                          ? "bg-emerald-500 text-white"
+                          ? "bg-[#47474786] text-white"
                           : msg.isGeneratedImage
                           ? "bg-transparent p-0"
                           : "bg-gray-800 text-gray-200"
