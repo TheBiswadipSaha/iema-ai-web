@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import blogsData from "../data/blogs.json";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const categories = ["Breaking News", "Political", "Entertainment", "Law"];
 const tabs = ["Recent", "Popular", "Trending", "Market Reports"];
 
 const Blogs = () => {
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("Breaking News");
   const [activeTab, setActiveTab] = useState("Popular");
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -26,6 +27,14 @@ const Blogs = () => {
     setCurrentSlide((prev) =>
       prev === 0 ? featuredBlogs.length - 1 : prev - 1
     );
+
+  const handleReadMore = (blogId) => {
+    navigate(`/blog-details/${blogId}`);
+  };
+
+  const handleBlogCardClick = (blogId) => {
+    navigate(`/blog-details/${blogId}`);
+  };
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
@@ -86,14 +95,12 @@ const Blogs = () => {
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-4">
                   {blog.title}
                 </h2>
-                <a
-                  href={blog.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-emerald-500 text-black px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition"
+                <button
+                  onClick={() => handleReadMore(blog.id)}
+                  className="bg-emerald-500 text-black px-6 py-2 rounded-full text-sm font-medium hover:bg-emerald-400 transition cursor-pointer"
                 >
                   Read More
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -159,6 +166,7 @@ const Blogs = () => {
           {listBlogs.slice(0, 5).map((blog) => (
             <div
               key={blog.id}
+              onClick={() => handleBlogCardClick(blog.id)}
               className="bg-white/5 hover:bg-white/10 transition rounded-xl overflow-hidden cursor-pointer"
             >
               <img

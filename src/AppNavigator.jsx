@@ -14,6 +14,7 @@ import SignUpPage from "./pages/SignUpPage";
 import { useAuth } from "./context/AuthContext";
 import PricingPage from "./pages/PricingPage";
 import Blogs from "./pages/Blogs";
+import BlogDetail from "./pages/BlogDetail";
 
 // Wrapper component to conditionally render HomePage based on auth status
 const HomePageWrapper = ({ children }) => {
@@ -56,6 +57,14 @@ const AppNavigator = () => {
             path="/blog" 
             element={
                 <HomePageWrapper><Blogs /></HomePageWrapper>
+            } 
+          />
+          
+          {/* Blog Detail with dynamic ID */}
+          <Route 
+            path="/blog-details/:id" 
+            element={
+                <HomePageWrapper><BlogDetail /></HomePageWrapper>
             } 
           />
           
