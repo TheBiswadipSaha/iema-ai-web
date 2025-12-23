@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useTransition } from 'react';
 import { useHttp } from '../hooks/useHttp';
 
 function ProfilePopup({ isOpen, onClose, user: initialUser }) {
@@ -7,12 +7,13 @@ function ProfilePopup({ isOpen, onClose, user: initialUser }) {
   const [fetchError, setFetchError] = useState(null);
   const [hasFetched, setHasFetched] = useState(false);
   const { getReq, loading } = useHttp();
+  const [isPending, startTransition] = useTransition();
   
   // Fetch profile data when popup opens
   useEffect(() => {
     const fetchProfile = async () => {
       console.log("yo")
-      if (isOpen  || !hasFetched) {
+      if (isOpen || !hasFetched) {
         console.log('Fetching profile data...');
         setHasFetched(true);
         
@@ -23,14 +24,17 @@ function ProfilePopup({ isOpen, onClose, user: initialUser }) {
         const result = await getReq('api/auth/profile', token);
         console.log('Profile API Response:', result);
         
-        if (result.success) {
-          // Adjust based on your API response structure
-          setUser(result?.data);
-          console.log({user})
-          setFetchError(null);
-        } else {
-          setFetchError(result.message || 'Failed to load profile');
-        }
+        // Wrap state updates in startTransition to make them non-blocking
+        startTransition(() => {
+          if (result.success) {
+            // Adjust based on your API response structure
+            setUser(result?.data);
+            console.log({user})
+            setFetchError(null);
+          } else {
+            setFetchError(result.message || 'Failed to load profile');
+          }
+        });
       }
     };
 
@@ -64,6 +68,9 @@ function ProfilePopup({ isOpen, onClose, user: initialUser }) {
     return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
   };
 
+  // Show loading state if either the HTTP request is loading or transition is pending
+  const isLoading = loading || isPending;
+
   return (
     <div className="fixed inset-0 bg-[#00000065] backdrop-blur-lg bg-opacity-50 flex items-center justify-center z-50">
       <div ref={popupRef} className="bg-[#2a2a2a] rounded-2xl p-8 w-full max-w-md mx-4">
@@ -78,7 +85,7 @@ function ProfilePopup({ isOpen, onClose, user: initialUser }) {
           </button>
         </div>
         
-        {loading ? (
+        {isLoading ? (
           <div className="flex justify-center items-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500"></div>
           </div>
@@ -98,7 +105,7 @@ function ProfilePopup({ isOpen, onClose, user: initialUser }) {
             <div className="flex justify-center mb-6">
               <div className="w-32 h-32 rounded-full bg-emerald-500 flex items-center justify-center">
                 <span className="text-white text-4xl font-bold">
-                  {getInitials( user?.name)}
+                  {getInitials(user?.name)}
                 </span>
               </div>
             </div>
@@ -111,11 +118,11 @@ function ProfilePopup({ isOpen, onClose, user: initialUser }) {
               </div>
             </div>
 
-            {/* Username */}
+            {/* Email */}
             <div className="mb-4">
               <label className="text-gray-400 text-sm block mb-2">Email ID</label>
-              <div className="bg-[#1a1a1a] border border-gray-700 rounded-lg px-4 py-3 text-white">
-                {user?.email}
+              <div className="bg-[#1a1a1a] border border-gray-700 rounded-lg px-4 py-3 text-white break-all">
+                {user?.email|| user?.emailId || user?.mail || user?.userEmail || 'No email available'}
               </div>
             </div>
 
