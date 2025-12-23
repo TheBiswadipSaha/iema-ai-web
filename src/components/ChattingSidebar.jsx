@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Image, Crown, History, WandSparkles, ChevronDown, X, Sliders, CreditCard } from 'lucide-react';
+import { Image, Crown, History, WandSparkles, ChevronDown, X, Sliders, CreditCard, MessageSquare, Calendar, ArrowRight, Sparkles, Clock } from 'lucide-react';
 import { useHttp } from '../hooks/useHttp';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import LanguageSelector from './LanguageSelector';
 import BuyCreditsModal from '../utils/BuyCreditsModal';
 
-export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
-  const [width, setWidth] = useState(320); // Default width in pixels
+export const ChattingSidebar = ({ pageConfig, onFilterChange, toolName }) => {
+  const [width, setWidth] = useState(320);
   const [isResizing, setIsResizing] = useState(false);
   const [filters, setFilters] = useState({});
   const [expanded, setExpanded] = useState({});
@@ -17,9 +18,9 @@ export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
   const [showBuyModal, setShowBuyModal] = useState(false);
 
   const { getReq } = useHttp();
-  const {token} = useAuth();
+  const { token } = useAuth();
+  const navigate = useNavigate();
   const score = localStorage.getItem('unknown') || sessionStorage.getItem('unknown') || 0;
-  // const userData = JSON.parse(sessionStorage.getItem('user'));
 
   const minWidth = 280;
   const maxWidth = 600;
@@ -84,65 +85,74 @@ export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
   };
 
   const fetchConversations = async () => {
+    if (!toolName) {
+      console.error('Tool name is required to fetch conversations');
+      return;
+    }
+
     setLoading(true);
     try {
-      const response = await getReq('api/conversations/get-all-conversations', token);
+      const response = await getReq(`api/conversations/get-all-conversations?toolName=${encodeURIComponent(toolName)}`, token);
       if (response?.data) {
         setConversations(response.data);
       }
     } catch (error) {
       console.error('Failed to fetch conversations:', error);
+      setConversations([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // const loadRazorpay = () => {
-  //   return new Promise((resolve) => {
-  //     const script = document.createElement("script");
-  //     script.src = "https://checkout.razorpay.com/v1/checkout.js";
-  //     script.onload = () => resolve(true);
-  //     script.onerror = () => resolve(false);
-  //     document.body.appendChild(script);
-  //   });
-  // };
-
-  // const handlePay = async () => {
-  //   const loaded = await loadRazorpay();
-  //   if(!loaded){
-  //     alert("Razorpay SDK failed to load. Are you online?");
-  //     return;
-  //   }
-  //   const options = {
-  //     key: "scsc",
-  //     amount: 50*100,
-  //     currency: "INR",
-  //     name: "IEMA AI",
-  //     description: "Test Transaction",
-  //     handler: function (response) {
-  //       console.log({response});
-  //     },
-  //     theme: {
-  //       color: "#10B981",
-  //     },
-  //     prefill: {
-  //       name: userData?.name,
-  //       email: userData?.email
-  //     },
-  //     modal: {
-  //       backdropclose: false,
-  //       escape: false,
-  //     }
-  //   };
-  //   const paymentObject = new window.Razorpay(options);
-  //   paymentObject.open();
-  // }
-
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    if (tab === 'history' && conversations.length === 0) {
+    if (tab === 'history' && toolName) {
       fetchConversations();
     }
+  };
+
+  // Fetch conversations when component mounts if history tab is active
+  useEffect(() => {
+    if (activeTab === 'history' && toolName && conversations.length === 0) {
+      fetchConversations();
+    }
+  }, [activeTab, toolName]);
+
+  const handleConversationClick = (conversationId) => {
+    if (!conversationId) return;
+    
+    // Convert toolName to URL-friendly format (e.g., "Blog Generator" -> "blog-generator")
+    const urlFriendlyToolName = toolName
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^a-z0-9-]/g, '');
+    
+    navigate(`/chat/${urlFriendlyToolName}/${conversationId}`);
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return 'Recent';
+    
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffTime = Math.abs(now - date);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) {
+      return 'Today';
+    } else if (diffDays === 1) {
+      return 'Yesterday';
+    } else if (diffDays < 7) {
+      return `${diffDays} days ago`;
+    } else {
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+  };
+
+  const formatTime = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
   };
 
   const activeCount = Object.values(filters).filter(Boolean).length;
@@ -374,11 +384,11 @@ export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
               </div>
             ) : conversations.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full text-center px-4">
-                <div className="p-4 bg-gray-800/30 rounded-full mb-4">
-                  <History size={32} className="text-gray-600" />
+                <div className="p-4 bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 rounded-full mb-4 border border-emerald-500/20">
+                  <History size={32} className="text-emerald-400" />
                 </div>
-                <h3 className="text-white font-medium mb-2">No conversations yet</h3>
-                <p className="text-gray-500 text-sm">
+                <h3 className="text-white font-semibold mb-2 text-lg">No conversations yet</h3>
+                <p className="text-gray-500 text-sm max-w-[240px]">
                   Your conversation history will appear here once you start generating content.
                 </p>
               </div>
@@ -387,32 +397,65 @@ export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
                 {conversations.map((conversation, idx) => (
                   <div
                     key={conversation.id || idx}
-                    className="rounded-xl border border-gray-800/50 bg-[#0F0F11] p-4 hover:border-emerald-500/30 hover:bg-gray-800/30 transition-all cursor-pointer group"
+                    onClick={() => handleConversationClick(conversation.id)}
+                    className="group relative rounded-xl border border-gray-800/50 bg-[#0F0F11] p-4 hover:border-emerald-500/40 hover:bg-gray-800/40 transition-all cursor-pointer overflow-hidden"
                   >
-                    <div className="flex items-start justify-between mb-2">
-                      <h4 className="text-white text-sm font-medium line-clamp-1 flex-1 group-hover:text-[#39E48F] transition-colors">
-                        {conversation.title || 'Untitled Conversation'}
-                      </h4>
-                      <span className="text-gray-500 text-xs whitespace-nowrap ml-2">
-                        {conversation.createdAt ? new Date(conversation.createdAt).toLocaleDateString() : 'Recent'}
-                      </span>
-                    </div>
-                    {conversation.preview && (
-                      <p className="text-gray-400 text-xs line-clamp-2 mb-3">
-                        {conversation.preview}
-                      </p>
-                    )}
-                    <div className="flex items-center gap-2 text-xs">
-                      {conversation.messageCount && (
-                        <span className="px-2 py-1 bg-gray-800/50 text-gray-400 rounded-md">
-                          {conversation.messageCount} messages
-                        </span>
-                      )}
-                      {conversation.type && (
-                        <span className="px-2 py-1 bg-emerald-500/10 text-[#39E48F] rounded-md border border-emerald-500/20">
-                          {conversation.type}
-                        </span>
-                      )}
+                    {/* Hover Effect Gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/5 to-emerald-500/0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                    
+                    {/* Content */}
+                    <div className="relative">
+                      {/* Header with Title and Date */}
+                      <div className="flex items-start justify-between mb-3 gap-3">
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-white text-sm font-semibold line-clamp-2 group-hover:text-[#39E48F] transition-colors mb-1">
+                            {conversation.title || 'Untitled Conversation'}
+                          </h4>
+                          {conversation.preview && (
+                            <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed">
+                              {conversation.preview}
+                            </p>
+                          )}
+                        </div>
+                        <ArrowRight 
+                          size={18} 
+                          className="text-gray-600 group-hover:text-[#39E48F] group-hover:translate-x-1 transition-all flex-shrink-0 mt-0.5" 
+                        />
+                      </div>
+
+                      {/* Footer with Metadata */}
+                      <div className="flex items-center justify-between gap-3 pt-3 border-t border-gray-800/50">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          {/* Message Count */}
+                          {conversation.messageCount !== undefined && (
+                            <div className="flex items-center gap-1.5 px-2 py-1 bg-gray-800/60 rounded-md">
+                              <MessageSquare size={12} className="text-gray-400" />
+                              <span className="text-gray-400 text-xs font-medium">
+                                {conversation.messageCount}
+                              </span>
+                            </div>
+                          )}
+
+                          {/* Type Badge */}
+                          {conversation.type && (
+                            <div className="flex items-center gap-1.5 px-2 py-1 bg-emerald-500/10 rounded-md border border-emerald-500/20">
+                              <Sparkles size={12} className="text-[#39E48F]" />
+                              <span className="text-[#39E48F] text-xs font-medium">
+                                {conversation.type}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Date and Time */}
+                        <div className="flex items-center gap-1.5 text-xs text-gray-500 whitespace-nowrap">
+                          <Clock size={12} className="text-gray-600" />
+                          <span>{formatDate(conversation.createdAt)}</span>
+                          {conversation.createdAt && (
+                            <span className="text-gray-600">• {formatTime(conversation.createdAt)}</span>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -440,7 +483,7 @@ export const ChattingSidebar = ({ pageConfig, onFilterChange }) => {
               </div>
             </div>
             <p className="text-gray-500 text-xs mb-3">~245 messages left this month</p>
-            <button className="w-full bg-[#39E48F] hover:from-emerald-600 hover:to-emerald-700 text-black rounded-lg py-2.5 text-sm font-semibold flex items-center justify-center gap-2" onClick={() => setShowBuyModal(true)}>
+            <button className="w-full bg-[#39E48F] hover:from-emerald-600 hover:to-emerald-700 text-black rounded-lg py-2.5 text-sm font-semibold flex items-center justify-center gap-2 transition-all hover:shadow-lg hover:shadow-emerald-500/20" onClick={() => setShowBuyModal(true)}>
               <Crown size={16} />
               Upgrade to Pro
             </button>
