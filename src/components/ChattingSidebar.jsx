@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Image, Crown, History, WandSparkles, ChevronDown, X, Sliders, CreditCard, MessageSquare, Calendar, ArrowRight, Sparkles, Clock } from 'lucide-react';
+import { Image, Crown, History, WandSparkles, ChevronDown, X, Sliders, CreditCard, MessageSquare, Calendar, ArrowRight, Sparkles, Clock, Coins } from 'lucide-react';
 import { useHttp } from '../hooks/useHttp';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -482,10 +482,10 @@ export const ChattingSidebar = ({ pageConfig, onFilterChange, toolName }) => {
                 <div className="h-full bg-[#39E48F] w-[65%] rounded-full"></div>
               </div>
             </div>
-            <p className="text-gray-500 text-xs mb-3">~245 messages left this month</p>
+            {/* <p className="text-gray-500 text-xs mb-3">~245 messages left this month</p> */}
             <button className="w-full bg-[#39E48F] hover:from-emerald-600 hover:to-emerald-700 text-black rounded-lg py-2.5 text-sm font-semibold flex items-center justify-center gap-2 transition-all hover:shadow-lg hover:shadow-emerald-500/20" onClick={() => setShowBuyModal(true)}>
-              <Crown size={16} />
-              Upgrade to Pro
+              <Coins size={16} />
+              Buy More Credit
             </button>
           </div>
         </div>

@@ -72,9 +72,8 @@ function Header({
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-        className={`p-2 rounded-full transition ${
-          isChatScreen ? 'bg-gray-900' : 'bg-emerald-900'
-        }`}
+        className={`p-2 rounded-full transition  cursor-pointer ${isChatScreen ? 'bg-gray-900' : 'bg-emerald-900'
+          }`}
       >
         <User
           size={18}
@@ -89,17 +88,17 @@ function Header({
               setIsDropdownOpen(false);
               setIsProfileOpen(true);
             }}
-            className="w-full flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-gray-900"
+            className="w-full flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-gray-900 cursor-pointer"
           >
             <UserCircle size={18} />
             Profile
           </button>
-          
+
           <button
             onClick={() => {
               navigate('/pricing');
             }}
-            className="w-full flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-gray-900"
+            className="w-full flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-gray-900 cursor-pointer"
           >
             <Gem size={18} />
             Pricing
@@ -107,7 +106,7 @@ function Header({
 
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-gray-900 hover:text-red-400"
+            className="w-full flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-gray-900 hover:text-red-400 cursor-pointer"
           >
             <LogOut size={18} />
             Logout
@@ -136,12 +135,12 @@ function Header({
               <span className="font-bold hidden sm:block">{logo}</span>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 s select-none">
               {/* <Bell size={18} className="text-gray-300" /> */}
               <span className="text-sm">
-                Credits: <span className="text-emerald-400">{credits}</span>
+                Credits: <span className="text-emerald-400 select-none">{credits}</span>
               </span>
-              <UserDropdown />
+                <UserDropdown />
             </div>
           </div>
         </header>
@@ -170,11 +169,10 @@ function Header({
               <button
                 key={item.path}
                 onClick={() => handleNavigation(item.path)}
-                className={`text-sm transition ${
-                  currentPath === item.path
+                className={`text-sm transition ${currentPath === item.path
                     ? 'text-emerald-400'
                     : 'text-gray-300 hover:text-emerald-400'
-                }`}
+                  }`}
               >
                 {item.label}
               </button>
