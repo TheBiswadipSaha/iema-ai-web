@@ -18,9 +18,9 @@ function Header({
   logo = 'IEMA AI',
   isBackPresent = true,
   menuItems = [
-    { label: 'Features', path: '/features' },
+    { label: 'Features', path: '/' },
     { label: 'Pricing', path: '/pricing' },
-    { label: 'Docs', path: '/docs' },
+    // { label: 'Docs', path: '/docs' },
     { label: 'Blog', path: '/blog' }
   ],
   isLoggedIn = false,
