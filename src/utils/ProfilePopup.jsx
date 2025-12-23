@@ -114,7 +114,7 @@ function ProfilePopup({ isOpen, onClose, user: initialUser }) {
             <div className="mb-4">
               <label className="text-gray-400 text-sm block mb-2">Name</label>
               <div className="bg-[#1a1a1a] border border-gray-700 rounded-lg px-4 py-3 text-white">
-                {user?.name || 'User'}
+                {user?.user?.name || 'User'}
               </div>
             </div>
 
@@ -122,7 +122,7 @@ function ProfilePopup({ isOpen, onClose, user: initialUser }) {
             <div className="mb-4">
               <label className="text-gray-400 text-sm block mb-2">Email ID</label>
               <div className="bg-[#1a1a1a] border border-gray-700 rounded-lg px-4 py-3 text-white break-all">
-                {user?.email|| user?.emailId || user?.mail || user?.userEmail || 'No email available'}
+                {user?.user?.email || 'No email available'}
               </div>
             </div>
 
