@@ -4,80 +4,391 @@
       "id": 1,
       "title": "Cybersecurity in 2025: 5 Trends That Will Define the Digital Battlefield",
       "category": "Breaking News",
-      "image": "https://images.unsplash.com/photo-1605902711622-cfb43c4437d1",
-      "link": "https://google.com"
+      "tag": "Technology",
+      "date": "19 June 2025",
+      "image": "https://share.google/iWYI6fgxaMTbs2bT3",
+      "excerpt": "As we move deeper into the digital age, cybersecurity is becoming more critical than ever. Cyber threats are not just targeting large organizations anymore; they're evolving just as fast. Here are the key cybersecurity trends shaping 2025 and beyond.",
+      "content": [
+        {
+          "heading": "AI-Powered Attacks and Defenses",
+          "text": "Cybercriminals are using AI to create more sophisticated attacks, while companies are adopting AI-driven defense systems in response. Expect smarter threats and AI-based security tools to grow exponentially."
+        },
+        {
+          "heading": "Zero Trust Architecture Goes Mainstream",
+          "text": "Never trust; always verify. In 2025, zero trust will become a standard approach, ensuring that every device and app is continuously verified—no matter where users are connecting from."
+        },
+        {
+          "heading": "Quantum-Resistant Encryption",
+          "text": "With the rise of quantum computing, traditional encryption methods are at risk. Companies are now adopting quantum-resistant algorithms to safeguard sensitive data against future threats."
+        },
+        {
+          "heading": "5G Networks and IoT Security Concerns",
+          "text": "As 5G adoption increases, so do the risks. The interconnected world of IoT devices creates vulnerabilities that cybercriminals are eager to exploit. Organizations must implement stronger security protocols to protect these endpoints."
+        }
+      ]
     },
     {
       "id": 2,
       "title": "AI Regulation: What Governments Are Planning Next",
       "category": "Breaking News",
+      "tag": "Policy",
+      "date": "15 June 2025",
       "image": "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a",
-      "link": "https://google.com"
+      "excerpt": "Governments worldwide are racing to create frameworks that balance innovation with safety. From the EU's AI Act to new regulations in the US and Asia, here's what's coming.",
+      "content": [
+        {
+          "heading": "The EU AI Act Takes Effect",
+          "text": "Europe is leading with comprehensive AI regulation that classifies systems by risk level. High-risk AI applications face strict requirements for transparency, safety, and human oversight."
+        },
+        {
+          "heading": "US Federal AI Guidelines",
+          "text": "The United States is developing sector-specific guidelines rather than blanket regulation. Focus areas include healthcare AI, financial algorithms, and autonomous vehicles."
+        },
+        {
+          "heading": "China's AI Governance Model",
+          "text": "China continues to balance innovation promotion with strict government oversight. New regulations focus on algorithm transparency and data protection."
+        }
+      ]
     },
     {
       "id": 3,
       "title": "How AI Is Transforming Global Defense Systems",
       "category": "Political",
+      "tag": "Defense",
+      "date": "12 June 2025",
       "image": "https://images.unsplash.com/photo-1604079628040-94301bb21b91",
-      "link": "https://google.com"
+      "excerpt": "Artificial intelligence is revolutionizing military strategy, from autonomous drones to predictive intelligence systems. Nations are investing billions in AI defense capabilities.",
+      "content": [
+        {
+          "heading": "Autonomous Weapons Systems",
+          "text": "Military forces are deploying AI-powered drones and vehicles capable of independent decision-making. These systems can identify threats and respond faster than human operators."
+        },
+        {
+          "heading": "Predictive Intelligence",
+          "text": "AI algorithms analyze massive datasets to predict potential conflicts, identify emerging threats, and recommend strategic responses before situations escalate."
+        },
+        {
+          "heading": "Cybersecurity Defense",
+          "text": "National defense networks use AI to detect and neutralize cyber attacks in real-time, protecting critical infrastructure from sophisticated threats."
+        }
+      ]
     },
     {
       "id": 4,
       "title": "Elections in the Age of Artificial Intelligence",
       "category": "Political",
+      "tag": "Politics",
+      "date": "08 June 2025",
       "image": "https://images.unsplash.com/photo-1555967522-37949fc21dcb",
-      "link": "https://google.com"
+      "excerpt": "AI is reshaping democratic processes, from campaign strategies to voter engagement. But concerns about deepfakes and misinformation are growing.",
+      "content": [
+        {
+          "heading": "AI-Powered Campaign Analytics",
+          "text": "Political campaigns use sophisticated AI to analyze voter sentiment, optimize messaging, and target specific demographics with unprecedented precision."
+        },
+        {
+          "heading": "The Deepfake Threat",
+          "text": "Fabricated videos and audio recordings pose serious risks to election integrity. Governments and tech companies are developing detection tools and legal frameworks."
+        },
+        {
+          "heading": "Automated Fact-Checking",
+          "text": "AI systems now assist in verifying political claims in real-time, helping voters make informed decisions based on accurate information."
+        }
+      ]
     },
     {
       "id": 5,
       "title": "AI-Generated Movies: The Future of Entertainment",
       "category": "Entertainment",
+      "tag": "Media",
+      "date": "05 June 2025",
       "image": "https://images.unsplash.com/photo-1517602302552-471fe67acf66",
-      "link": "https://google.com"
+      "excerpt": "Hollywood is embracing AI for scriptwriting, visual effects, and even acting. The first fully AI-generated feature film is set to premiere next year.",
+      "content": [
+        {
+          "heading": "AI Scriptwriters",
+          "text": "Machine learning models trained on thousands of screenplays can now generate compelling narratives, though human oversight remains crucial for emotional depth."
+        },
+        {
+          "heading": "Virtual Actors and De-aging",
+          "text": "Studios use AI to create digital performances and de-age actors seamlessly. This technology is reducing production costs while expanding creative possibilities."
+        },
+        {
+          "heading": "Personalized Content",
+          "text": "Future streaming platforms may use AI to create unique versions of content tailored to individual viewer preferences, revolutionizing how we consume entertainment."
+        }
+      ]
     },
     {
       "id": 6,
       "title": "How Virtual Influencers Are Changing Media",
       "category": "Entertainment",
+      "tag": "Social Media",
+      "date": "02 June 2025",
       "image": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d",
-      "link": "https://google.com"
+      "excerpt": "Computer-generated personalities are amassing millions of followers and landing major brand deals. Virtual influencers are becoming indistinguishable from human creators.",
+      "content": [
+        {
+          "heading": "The Rise of Digital Personalities",
+          "text": "Virtual influencers like Lil Miquela and Imma have millions of followers and collaborate with top fashion brands. They offer perfect consistency and 24/7 availability."
+        },
+        {
+          "heading": "Brand Partnerships",
+          "text": "Companies prefer virtual influencers for their reliability and lack of controversy. These digital entities can be precisely controlled to align with brand values."
+        },
+        {
+          "heading": "Authenticity Questions",
+          "text": "As virtual influencers become more realistic, questions arise about transparency and the psychological impact on audiences who may not realize they're following AI."
+        }
+      ]
     },
     {
-      "id": 6,
-      "title": "How Virtual Influencers Are Changing Media",
+      "id": 7,
+      "title": "Legal AI: Transforming the Justice System",
       "category": "Law",
-      "image": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d"
+      "tag": "Legal Tech",
+      "date": "28 May 2025",
+      "image": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f",
+      "excerpt": "Artificial intelligence is revolutionizing legal practice, from contract analysis to case prediction. Law firms are adopting AI tools at unprecedented rates.",
+      "content": [
+        {
+          "heading": "Automated Contract Review",
+          "text": "AI systems can analyze thousands of legal documents in minutes, identifying risks and suggesting improvements faster than teams of paralegals."
+        },
+        {
+          "heading": "Predictive Case Outcomes",
+          "text": "Machine learning models trained on historical data help lawyers assess the likelihood of success and develop stronger strategies."
+        },
+        {
+          "heading": "Access to Justice",
+          "text": "AI-powered legal assistants are making legal advice more accessible to people who can't afford traditional representation."
+        }
+      ]
     }
   ],
 
   "listBlogs": {
     "Recent": [
-      { "id": 1, "title": "Neural Networks Explained Simply", "date": "11 May 2025", "image": "https://images.unsplash.com/photo-1581091012184-5c7f37fba8d4" },
-      { "id": 2, "title": "How AI Understands Language", "date": "10 May 2025", "image": "https://images.unsplash.com/photo-1526378722484-cc5c5103b1f3" },
-      { "id": 3, "title": "Future of Robotics in Healthcare", "date": "09 May 2025", "image": "https://images.unsplash.com/photo-1581093588401-16c1f8c38d8a" },
-      { "id": 4, "title": "What is Edge AI?", "date": "08 May 2025", "image": "https://images.unsplash.com/photo-1581092160607-ee67f6aa17d8" },
-      { "id": 5, "title": "AI Chips Explained", "date": "07 May 2025", "image": "https://images.unsplash.com/photo-1518770660439-4636190af475" }
+      { 
+        "id": 21, 
+        "title": "Neural Networks Explained Simply", 
+        "date": "11 May 2025", 
+        "category": "Breaking News",
+        "tag": "AI Basics",
+        "image": "https://images.unsplash.com/photo-1581091012184-5c7f37fba8d4",
+        "excerpt": "Understanding the fundamentals of neural networks and how they power modern AI systems.",
+        "content": [
+          {
+            "heading": "What Are Neural Networks?",
+            "text": "Neural networks are computing systems inspired by biological neural networks. They consist of interconnected nodes that process and transmit information."
+          },
+          {
+            "heading": "How They Learn",
+            "text": "Through a process called backpropagation, neural networks adjust their connections based on errors, gradually improving their performance on tasks."
+          }
+        ]
+      },
+      { 
+        "id": 22, 
+        "title": "How AI Understands Language", 
+        "date": "10 May 2025", 
+        "category": "Breaking News",
+        "tag": "NLP",
+        "image": "https://images.unsplash.com/photo-1526378722484-cc5c5103b1f3",
+        "excerpt": "Exploring natural language processing and how machines comprehend human communication.",
+        "content": [
+          {
+            "heading": "Natural Language Processing",
+            "text": "NLP combines linguistics and machine learning to enable computers to understand, interpret, and generate human language meaningfully."
+          }
+        ]
+      },
+      { 
+        "id": 23, 
+        "title": "Future of Robotics in Healthcare", 
+        "date": "09 May 2025", 
+        "category": "Breaking News",
+        "tag": "Healthcare",
+        "image": "https://images.unsplash.com/photo-1581093588401-16c1f8c38d8a",
+        "excerpt": "Robotic systems are transforming medical procedures and patient care.",
+        "content": []
+      },
+      { 
+        "id": 24, 
+        "title": "What is Edge AI?", 
+        "date": "08 May 2025", 
+        "category": "Breaking News",
+        "tag": "Technology",
+        "image": "https://images.unsplash.com/photo-1581092160607-ee67f6aa17d8",
+        "excerpt": "Processing AI computations locally on devices instead of in the cloud.",
+        "content": []
+      },
+      { 
+        "id": 25, 
+        "title": "AI Chips Explained", 
+        "date": "07 May 2025", 
+        "category": "Breaking News",
+        "tag": "Hardware",
+        "image": "https://images.unsplash.com/photo-1518770660439-4636190af475",
+        "excerpt": "Specialized processors designed specifically for AI workloads.",
+        "content": []
+      }
     ],
     "Popular": [
-      { "id": 6, "title": "Rise of AI Tutors", "date": "19 June 2025", "image": "https://images.unsplash.com/photo-1581092334431-4c4b1f1fcb6c" },
-      { "id": 7, "title": "ChatGPT vs Humans", "date": "18 June 2025", "image": "https://images.unsplash.com/photo-1535378917042-10a22c95931a" },
-      { "id": 8, "title": "AI in Finance", "date": "17 June 2025", "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71" },
-      { "id": 9, "title": "Machine Learning Myths", "date": "16 June 2025", "image": "https://images.unsplash.com/photo-1581090700227-3ec47c1c4f6c" },
-      { "id": 10, "title": "Future of Jobs with AI", "date": "15 June 2025", "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c" }
+      { 
+        "id": 6, 
+        "title": "Rise of AI Tutors", 
+        "date": "19 June 2025", 
+        "category": "Entertainment",
+        "tag": "Education",
+        "image": "https://images.unsplash.com/photo-1581092334431-4c4b1f1fcb6c",
+        "excerpt": "Personalized learning experiences powered by artificial intelligence.",
+        "content": []
+      },
+      { 
+        "id": 7, 
+        "title": "ChatGPT vs Humans", 
+        "date": "18 June 2025", 
+        "category": "Breaking News",
+        "tag": "AI",
+        "image": "https://images.unsplash.com/photo-1535378917042-10a22c95931a",
+        "excerpt": "Comparing AI language models with human intelligence and capabilities.",
+        "content": []
+      },
+      { 
+        "id": 8, 
+        "title": "AI in Finance", 
+        "date": "17 June 2025", 
+        "category": "Political",
+        "tag": "Finance",
+        "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71",
+        "excerpt": "Machine learning algorithms revolutionizing trading and risk management.",
+        "content": []
+      },
+      { 
+        "id": 9, 
+        "title": "Machine Learning Myths", 
+        "date": "16 June 2025", 
+        "category": "Breaking News",
+        "tag": "Education",
+        "image": "https://images.unsplash.com/photo-1581090700227-3ec47c1c4f6c",
+        "excerpt": "Debunking common misconceptions about machine learning and AI.",
+        "content": []
+      },
+      { 
+        "id": 10, 
+        "title": "Future of Jobs with AI", 
+        "date": "15 June 2025", 
+        "category": "Political",
+        "tag": "Employment",
+        "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
+        "excerpt": "How artificial intelligence is reshaping the workforce and creating new opportunities.",
+        "content": []
+      }
     ],
     "Trending": [
-      { "id": 11, "title": "Web3 Explained", "date": "05 June 2025", "image": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0" },
-      { "id": 12, "title": "Metaverse in 2025", "date": "04 June 2025", "image": "https://images.unsplash.com/photo-1633114128729-1a4d68f3a1b2" },
-      { "id": 13, "title": "AI Influencers", "date": "03 June 2025", "image": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d" },
-      { "id": 14, "title": "NFTs & AI", "date": "02 June 2025", "image": "https://images.unsplash.com/photo-1642784353721-9f3f5b2a4c0a" },
-      { "id": 15, "title": "Future of Internet", "date": "01 June 2025", "image": "https://images.unsplash.com/photo-1535223289827-42f1e9919769" }
+      { 
+        "id": 11, 
+        "title": "Web3 Explained", 
+        "date": "05 June 2025", 
+        "category": "Breaking News",
+        "tag": "Blockchain",
+        "image": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0",
+        "excerpt": "The decentralized internet and its implications for the future.",
+        "content": []
+      },
+      { 
+        "id": 12, 
+        "title": "Metaverse in 2025", 
+        "date": "04 June 2025", 
+        "category": "Entertainment",
+        "tag": "Virtual Reality",
+        "image": "https://images.unsplash.com/photo-1633114128729-1a4d68f3a1b2",
+        "excerpt": "Virtual worlds are becoming more immersive and interconnected.",
+        "content": []
+      },
+      { 
+        "id": 13, 
+        "title": "AI Influencers", 
+        "date": "03 June 2025", 
+        "category": "Entertainment",
+        "tag": "Social Media",
+        "image": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d",
+        "excerpt": "Digital personalities are taking over social media platforms.",
+        "content": []
+      },
+      { 
+        "id": 14, 
+        "title": "NFTs & AI", 
+        "date": "02 June 2025", 
+        "category": "Breaking News",
+        "tag": "Digital Art",
+        "image": "https://images.unsplash.com/photo-1642784353721-9f3f5b2a4c0a",
+        "excerpt": "How AI is creating and valuing digital collectibles.",
+        "content": []
+      },
+      { 
+        "id": 15, 
+        "title": "Future of Internet", 
+        "date": "01 June 2025", 
+        "category": "Breaking News",
+        "tag": "Technology",
+        "image": "https://images.unsplash.com/photo-1535223289827-42f1e9919769",
+        "excerpt": "Next-generation connectivity and what it means for society.",
+        "content": []
+      }
     ],
     "Market Reports": [
-      { "id": 16, "title": "AI Market Growth 2025–2030", "date": "01 April 2025", "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71" },
-      { "id": 17, "title": "Global AI Investment Trends", "date": "30 March 2025", "image": "https://images.unsplash.com/photo-1507679799987-c73779587ccf" },
-      { "id": 18, "title": "AI Startups to Watch", "date": "29 March 2025", "image": "https://images.unsplash.com/photo-1559136555-9303baea8ebd" },
-      { "id": 19, "title": "Enterprise AI Adoption", "date": "28 March 2025", "image": "https://images.unsplash.com/photo-1556761175-4b46a572b786" },
-      { "id": 20, "title": "AI in Manufacturing", "date": "27 March 2025", "image": "https://images.unsplash.com/photo-1581090700227-3ec47c1c4f6c" }
+      { 
+        "id": 16, 
+        "title": "AI Market Growth 2025–2030", 
+        "date": "01 April 2025", 
+        "category": "Political",
+        "tag": "Market Analysis",
+        "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71",
+        "excerpt": "Projected growth trajectories for the global AI industry.",
+        "content": []
+      },
+      { 
+        "id": 17, 
+        "title": "Global AI Investment Trends", 
+        "date": "30 March 2025", 
+        "category": "Political",
+        "tag": "Investment",
+        "image": "https://images.unsplash.com/photo-1507679799987-c73779587ccf",
+        "excerpt": "Where venture capital and governments are investing in AI.",
+        "content": []
+      },
+      { 
+        "id": 18, 
+        "title": "AI Startups to Watch", 
+        "date": "29 March 2025", 
+        "category": "Breaking News",
+        "tag": "Startups",
+        "image": "https://images.unsplash.com/photo-1559136555-9303baea8ebd",
+        "excerpt": "Emerging companies disrupting industries with innovative AI solutions.",
+        "content": []
+      },
+      { 
+        "id": 19, 
+        "title": "Enterprise AI Adoption", 
+        "date": "28 March 2025", 
+        "category": "Political",
+        "tag": "Enterprise",
+        "image": "https://images.unsplash.com/photo-1556761175-4b46a572b786",
+        "excerpt": "How large corporations are integrating AI into their operations.",
+        "content": []
+      },
+      { 
+        "id": 20, 
+        "title": "AI in Manufacturing", 
+        "date": "27 March 2025", 
+        "category": "Breaking News",
+        "tag": "Industry",
+        "image": "https://images.unsplash.com/photo-1581090700227-3ec47c1c4f6c",
+        "excerpt": "Automation and predictive maintenance transforming production.",
+        "content": []
+      }
     ]
   }
 }

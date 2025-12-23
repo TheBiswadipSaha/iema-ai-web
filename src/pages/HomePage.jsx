@@ -98,7 +98,7 @@ export default function HomePage() {
                 </div>
                 <div className="mt-12 sm:mt-16 md:mt-20 w-full max-w-[90%] md:max-w-[80%] lg:max-w-[100%]">
                     <HomeCard cards={cards}/>
-                    <SearchComponent />
+                    {/* <SearchComponent /> */}
                 </div>
 
             </div>
